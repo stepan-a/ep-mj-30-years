@@ -1,0 +1,463 @@
+Starting Dynare (version 7-unstable).
+Calling Dynare with arguments: none
+Using build directory: /home/stepan/works/Dynare/dynare/matlab/../build-matlab
+Starting preprocessing of the model file ...
+Spawning 16 threads for compiling MEX files.
+Found 2 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+2 block(s) found:
+  2 recursive block(s) and 0 simultaneous block(s).
+  the largest simultaneous block has 0 equation(s)
+                                 and 0 feedback variable(s).
+Computing dynamic model derivatives (order 3).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+2 block(s) found:
+  2 recursive block(s) and 0 simultaneous block(s).
+  the largest simultaneous block has 0 equation(s)
+                                 and 0 feedback variable(s).
+Compiling burnside/model/src/sparse/static_resid_tt.o
+Compiling burnside/model/src/sparse/static_resid.o
+Compiling +burnside/+sparse/static_resid.mexa64
+Compiling burnside/model/src/sparse/static_g1_tt.o
+Compiling burnside/model/src/sparse/static_g1.o
+Compiling +burnside/+sparse/static_g1.mexa64
+Compiling +burnside/+sparse/+block/static_1.mexa64
+Compiling +burnside/+sparse/+block/static_2.mexa64
+Compiling burnside/model/src/dynamic_resid_tt.o
+Compiling burnside/model/src/dynamic_resid.o
+Compiling burnside/model/src/dynamic_g1_tt.o
+Compiling burnside/model/src/dynamic_g1.o
+Compiling burnside/model/src/dynamic_g2_tt.o
+Compiling burnside/model/src/dynamic_g2.o
+Compiling burnside/model/src/dynamic_g3_tt.o
+Compiling burnside/model/src/dynamic_g3.o
+Compiling +burnside/dynamic.mexa64
+Compiling burnside/model/src/sparse/dynamic_resid_tt.o
+Compiling burnside/model/src/sparse/dynamic_resid.o
+Compiling +burnside/+sparse/dynamic_resid.mexa64
+Compiling burnside/model/src/sparse/dynamic_g1_tt.o
+Compiling burnside/model/src/sparse/dynamic_g1.o
+Compiling +burnside/+sparse/dynamic_g1.mexa64
+Compiling burnside/model/src/sparse/dynamic_g2_tt.o
+Compiling burnside/model/src/sparse/dynamic_g2.o
+Compiling +burnside/+sparse/dynamic_g2.mexa64
+Compiling burnside/model/src/sparse/dynamic_g3_tt.o
+Compiling burnside/model/src/sparse/dynamic_g3.o
+Compiling +burnside/+sparse/dynamic_g3.mexa64
+Compiling +burnside/+sparse/+block/dynamic_1.mexa64
+Compiling +burnside/+sparse/+block/dynamic_2.mexa64
+Preprocessing completed.
+Preprocessing time: 0h00m00s.
+
+
+Residuals of the static equations:
+Equation number 1: 1 :       0.000000
+Equation number 2: x :       0.000000
+
+
+
+STEADY-STATE RESULTS:
+
+y 		 12.3035
+x 		 0.0179
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+           0.139           -0.139                0
+           1.081            1.081                0
+       1.851e+17        1.851e+17                0
+
+There are 2 eigenvalue(s) larger than 1 in modulus for 2 forward-looking variable(s)
+The rank condition is verified.
+
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               x
+Constant                   12.303515        0.017900
+x(-1)                      -0.315957       -0.139000
+e                           2.273075        1.000000
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.303685        0.081203        0.006594        0.006619        0.004229
+x                 0.017975        0.035724        0.001276        0.006619        0.004229
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+x           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               x
+Constant                   12.478845        0.017900
+(correction)                0.175330               0
+x(-1)                      -0.315957       -0.139000
+e                           2.273075        1.000000
+x(-1),x(-1)                 0.004062               0
+e,e                         0.210263               0
+x(-1),e                    -0.058453               0
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.479284        0.081207        0.006594        0.026484        0.004140
+x                 0.017975        0.035724        0.001276        0.006619        0.004229
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1203   0.0062   0.0021  -0.0185  -0.0114
+x           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               x
+Constant                   12.478845        0.017900
+(correction)                0.175330               0
+x(-1)                      -0.315957       -0.139000
+e                           2.273075        1.000000
+x(-1),x(-1)                 0.004062               0
+e,e                         0.210263               0
+x(-1),e                    -0.058453               0
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.479284        0.081207        0.006594        0.026484        0.004140
+x                 0.017975        0.035724        0.001276        0.006619        0.004229
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1203   0.0062   0.0021  -0.0185  -0.0114
+x           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.479287        0.082356        0.006782        0.026207        0.004314
+x                 0.017975        0.035724        0.001276        0.006619        0.004229
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1203   0.0062   0.0021  -0.0185  -0.0114
+x           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.479287        0.082356        0.006782        0.026207        0.004314
+x                 0.017975        0.035724        0.001276        0.006619        0.004229
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1203   0.0062   0.0021  -0.0185  -0.0114
+x           -0.1204   0.0061   0.0022  -0.0185  -0.0113
+   12.3035
+
+   12.4812
+
+True mean and standard deviation
+   12.4817
+
+    0.0824
+
+Order 1 perturbation mean and standard deviation
+   12.3037
+
+    0.0812
+
+Order 2 perturbation mean and standard deviation
+   12.4793
+
+    0.0812
+
+Order 2 (with pruning) perturbation mean and standard deviation
+   12.4793
+
+    0.0812
+
+Order 3 perturbation mean and standard deviation
+   12.4793
+
+    0.0824
+
+Order 3 (with pruning) perturbation mean and standard deviation
+   12.4793
+
+    0.0824
+
+Extended path mean and standard deviation
+   12.3039
+
+    0.0812
+
+Stochastic extended (order=2) path mean and standard deviation
+   12.3252
+
+    0.0813
+
+Stochastic extended (order=2,hybrid) path mean and standard deviation
+   12.4796
+
+    0.0824
+
+Stochastic extended (order=5,hybrid) path mean and standard deviation
+   12.4798
+
+    0.0824
+
+Stochastic extended (order=2,hybrid) path mean and standard deviation
+   12.4798
+
+    0.0824
+
+Accuracy error (order 1 perturbation) % deviation
+   -1.4261
+
+    1.4261
+
+    1.4239
+
+    1.4707
+
+Accuracy error (order 2 perturbation) % deviation
+   -0.0192
+
+    0.0193
+
+   5.4777e-06
+
+    0.0527
+
+Accuracy error (order 3 perturbation) % deviation
+   -0.0192
+
+    0.0192
+
+    0.0192
+
+    0.0198
+
+Accuracy error (extended path) % deviation
+   -1.4241
+
+    1.4241
+
+    1.4236
+
+    1.4250
+
+Accuracy error (stochastic extended path, order=2) % deviation
+   -1.2534
+
+    1.2534
+
+    1.2532
+
+    1.2539
+
+Accuracy error (stochastic extended path, order=2, hybrid) % deviation
+   -0.0165
+
+    0.0165
+
+    0.0156
+
+    0.0179
+
+Accuracy error (stochastic extended path, order=5, hybrid) % deviation
+   -0.0155
+
+    0.0155
+
+    0.0144
+
+    0.0172
+
+Accuracy error (stochastic extended path, order=10, hybrid) % deviation
+   -0.0153
+
+    0.0153
+
+    0.0131
+
+    0.0170
+
+Accuracy error (order 1 perturbation)
+   -0.1780
+
+    0.1780
+
+    0.1765
+
+    0.1857
+
+Accuracy error (order 2 perturbation)
+   -0.0024
+
+    0.0024
+
+   6.7443e-07
+
+    0.0067
+
+Accuracy error (order 3 perturbation)
+   -0.0024
+
+    0.0024
+
+    0.0024
+
+    0.0025
+
+Accuracy error (extended path)
+   -0.1777
+
+    0.1777
+
+    0.1725
+
+    0.1820
+
+Accuracy error (stochastic extended path, order=2)
+   -0.1564
+
+    0.1564
+
+    0.1518
+
+    0.1602
+
+Accuracy error (stochastic extended path, order=2, hybrid)
+   -0.0021
+
+    0.0021
+
+    0.0020
+
+    0.0022
+
+Accuracy error (stochastic extended path, order=5, hybrid)
+   -0.0019
+
+    0.0019
+
+    0.0018
+
+    0.0021
+
+Accuracy error (stochastic extended path, order=10, hybrid)
+   -0.0019
+
+    0.0019
+
+    0.0017
+
+    0.0021
+
+Total computing time : 0h32m54s
