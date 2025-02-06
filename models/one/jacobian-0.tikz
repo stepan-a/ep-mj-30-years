@@ -1,0 +1,53 @@
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=5.348in,
+height=5.348in,
+at={(1.854in,0.722in)},
+scale only axis,
+xmin=0,
+xmax=11,
+xtick={1,2,3,4,5,6,7,8,9,10},
+xticklabels={{$y_t$},{$y_{t+1}$},{$y_{t+2}$},{$y_{t+3}$},{$y_{t+4}$},{$y_{t+5}$},{$y_{t+6}$},{$y_{t+7}$},{$y_{t+8}$},{$y_{t+9}$}},
+y dir=reverse,
+ymin=0,
+ymax=11,
+ytick={1,2,3,4,5,6,7,8,9,10},
+yticklabels={{$t$},{$t+1$},{$t+2$},{$t+3$},{$t+4$},{$t+5$},{$t+6$},{$t+7$},{$t+8$},{$t+9$}},
+axis background/.style={fill=white},
+xmajorgrids,
+ymajorgrids
+]
+\addplot [color=blue, only marks, mark size=5.3pt, mark=square*, mark options={solid, blue}, forget plot]
+  table[row sep=crcr]{%
+1	1\\
+1	2\\
+2	1\\
+2	2\\
+2	3\\
+3	2\\
+3	3\\
+3	4\\
+4	3\\
+4	4\\
+4	5\\
+5	4\\
+5	5\\
+5	6\\
+6	5\\
+6	6\\
+6	7\\
+7	6\\
+7	7\\
+7	8\\
+8	7\\
+8	8\\
+8	9\\
+9	8\\
+9	9\\
+9	10\\
+10	9\\
+10	10\\
+};
+\end{axis}
+\end{tikzpicture}%
