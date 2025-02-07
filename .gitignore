@@ -17,3 +17,6 @@ models/burnside/burnside
 
 models/one/+plotjacobian/*
 models/one/plotjacobian/*
+
+tex/slides/sep.pdf
+tex/slides/git.hash

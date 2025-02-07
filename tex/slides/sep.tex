@@ -1,0 +1,166 @@
+\documentclass{beamer}
+
+\usepackage{amsmath,amsfonts}
+\usepackage{bm}
+\usepackage{nicefrac}
+\usepackage{mathrsfs}
+\usepackage{etex}
+\usepackage{ccicons}
+\usepackage{pgfplots,tikz}
+\usepackage{tikz-qtree}
+\usepackage{algorithms/algorithm}
+\usepackage{algorithms/algorithmic}
+\usepackage[T1]{fontenc}
+\usepackage{cancel}
+\usepackage{xcolor}
+
+\newlength\figureheight
+\newlength\figurewidth
+ 
+\definecolor{gray}{gray}{0.4}
+
+\makeatletter
+\@ifclassloaded{beamer}{
+\usefonttheme[onlymath]{serif}
+\uselanguage{French}
+\languagepath{French}
+% Git hash
+\usepackage{xstring}
+\usepackage{catchfile}
+\immediate\write18{git rev-parse HEAD > git.hash}
+\CatchFileDef{\HEAD}{git.hash}{\endlinechar=-1}
+\newcommand{\gitrevision}{\StrLeft{\HEAD}{7}}
+}{}
+\makeatother
+
+\makeatletter
+\@ifclassloaded{beamer}{
+\setbeamertemplate{footline}{
+  {\hfill\vspace*{1pt}\href{http://creativecommons.org/licenses/by-sa/3.0/legalcode}{\ccbysa}\hspace{.1cm}
+    \href{https://mnemosyne.ithaca.fr/stephane/ep-mj-30-years/blob/\HEAD/tex/slides/sep.tex}{\gitrevision}\enspace--\enspace\today\enspace
+  }}}
+\makeatother
+
+
+\setbeamertemplate{navigation symbols}{}
+
+
+\begin{document}
+\title{The stochastic extended path approach}
+\author{St\'ephane Adjemian\footnote{Universit\'e du Maine} and Michel Juillard\footnote{Banque de France}}
+\date{February, 2025}
+
+\begin{frame}
+  \titlepage{}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Motivations}
+
+  \begin{itemize}
+
+  \item Nonlinearities can play an important role in macroeconomics:
+    Irreversible investment, ZLB, Borrowing constraint, \ldots\newline
+
+  \item Standard local approximation techniques fail to produce
+    reliable results in the presence of kinks.\newline
+
+  \item Deterministic, perfect forresight models can be solved with much
+    greater accuracy than stochastic ones.\newline
+
+  \item The extended path approach aims to leverage the accuracy of
+    deterministic methods in capturing (deterministic) nonlinearities.\newline
+
+  \item But it neglects the implications of future uncertainty. Is
+    this a concern? Can we improve the EP approach?
+    
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Model to be solved}
+
+\[
+\mathbb E_t\left[ f\left( y_{t-1},y_t,y_{t+1},\varepsilon_t \right) \right] = 0
+\]
+
+\bigskip
+
+\begin{itemize}
+
+\item $y$ an $n\times 1$ vector of endogenous variables\newline
+
+\item $f: \mathbb R^{3n+q}\rightarrow \mathbb R^n$\newline
+
+\item $\varepsilon_t \sim \mathcal N\left( 0,\Sigma \right) \perp y_{\underline{t-1}}$\newline
+
+\item $ \exists\, y^{\star}$ such that $f\left( y^{\star},y^{\star},y^{\star},0 \right)=0$
+  
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Perfect foresight version}
+
+  \[
+    \begin{cases}
+      f\left( {\color{red}y_{t-1}},y_t,y_{t+1},\varepsilon_t \right) = 0\\
+      f\left( y_{t+h-1},y_{t+h},y_{t+h+1}, 0 \right) = 0\quad \text{ for }h=1,\ldots,H-2\\
+      f\left( y_{t+H-2},y_{t+H-1},{\color{red}y^{\star}}, 0 \right) = 0\\
+    \end{cases}
+  \]
+
+  
+  \begin{itemize}
+  \item Perfect foresight models, after a shock economy returns asymptotically
+    to equilibirum.
+  \item For a long enough simulation, one can consider that for all
+    practical purpose the system is back to equilibrium.
+  \item This suggests to solve a two value boundary problem with
+    initial conditions for some variables (backward looking) and
+    terminal conditions for others (forward looking).
+  \item In practice, one can use a Newton method to the equations of
+    the model stacked over all periods of the simulation.
+  \item The Jacobian matrix of the stacked system is very sparse and
+    this characteristic must be used to write a practical algorithm.  
+  \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Perfect foresight model}
+  \framesubtitle{Stacked jacobian}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/one/jacobian-0.tikz}}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Stochastic perfect foresight model}
+  \framesubtitle{Stacked jacobian, order=1, three nodes}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/one/jacobian-1.tikz}}
+  \end{center}
+  \end{frame}
+
+
+  \begin{frame}
+    \frametitle{Stochastic perfect foresight model}
+    \framesubtitle{Stacked jacobian, order=2, three nodes}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/one/jacobian-2.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\end{document}
