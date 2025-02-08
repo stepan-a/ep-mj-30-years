@@ -1,4 +1,5 @@
 *.log
+*.tmp
 
 models/nk/calvo/*
 models/nk/+calvo/*
@@ -17,6 +18,13 @@ models/burnside/burnside
 
 models/one/+plotjacobian/*
 models/one/plotjacobian/*
+
+models/irf/rbc/*
+models/irf/+rbc/*
+
+models/irf/rbcii/*
+models/irf/+rbcii/*
+
 
 tex/slides/sep.pdf
 tex/slides/git.hash
