@@ -1,3 +1,4 @@
+% rubber: synctex
 \documentclass{beamer}
 
 \usepackage{amsmath,amsfonts}
@@ -165,12 +166,12 @@
   \centering
   \[
     \begin{split}
-      &\sum_{i=1}^n\omega_i f\left( y_{i,t+1}, {\color{red} y_t}, {\color{blue} y_{t-1}}\right) = 0\\
+      &\sum_{i=1}^n\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{i,t+1}\right) = 0\\
       \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} &\begin{sqcases}
-        f\left( y_{i,t+2}, y_{i,t+1}, {\color{red}y_t}, \epsilon_i \right) = 0\\
-        f\left( y_{i,t+3}, y_{i,t+2}, y_{i,t+1}, 0 \right) = 0\\
+        f\left( {\color{red}y_t}, y_{i,t+1}, y_{i,t+2}, \epsilon_i \right) = 0\\
+        f\left( y_{i,t+1}, y_{i,t+2}, y_{i,t+3}, 0 \right) = 0\\
         \vdots\\
-        f\left( {\color{blue}y^{\star}}, y_{i,t+H-1}, y_{i,t+H-2}, 0 \right) = 0\\
+        f\left( y_{i,t+H-2}, y_{i,t+H-1}, {\color{blue}y^{\star}}, 0 \right) = 0\\
       \end{sqcases}
     \end{split}
   \]
@@ -215,14 +216,14 @@
 
   \[
     \begin{split}
-      &\sum_{i=1}^n\omega_i f\left( y_{i,t+1}, {\color{red} y_t}, {\color{blue} y_{t-1}}\right) = 0\\
+      &\sum_{i=1}^n\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{i,t+1}\right) = 0\\
       \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} & \begin{sqcases}
-        \sum_{j=1}^n\omega_jf\left( y_{j,i,t+2}, y_{i,t+1}, {\color{red}y_t}, \epsilon_i \right) = 0\\
+        \sum_{j=1}^n\omega_jf\left( {\color{red}y_t}, y_{i,t+1}, y_{j,i,t+2}, \epsilon_i \right) = 0\\
         \begin{sideways}\hspace{-.6cm}\footnotesize{j=1,\dots,n}\end{sideways} \begin{sqcases}
-          f\left( y_{j,i,t+3}, y_{j,i,t+2}, y_{i,t+1}, \epsilon_j \right) = 0\\
-          f\left( y_{j,i,t+4}, y_{j,i,t+3}, y_{j,i,t+2}, 0 \right) = 0\\
+          f\left( y_{i,t+1}, y_{j,i,t+2}, y_{j,i,t+3}, \epsilon_j \right) = 0\\
+          f\left( y_{j,i,t+2}, y_{j,i,t+3}, y_{j,i,t+4}, 0 \right) = 0\\
           \vdots\\
-          f\left( {\color{blue}y^{\star}}, y_{j,i,t+H-1}, y_{j,i,t+H-2}, 0 \right) = 0
+          f\left(y_{j,i,t+H-2} , y_{j,i,t+H-1}, {\color{blue}y^{\star}}, 0 \right) = 0
         \end{sqcases}
       \end{sqcases}
     \end{split}
