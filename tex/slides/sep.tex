@@ -13,10 +13,12 @@
 \usepackage[T1]{fontenc}
 \usepackage{cancel}
 \usepackage{xcolor}
+\usepackage{rotating}
+
 
 \newlength\figureheight
 \newlength\figurewidth
- 
+
 \definecolor{gray}{gray}{0.4}
 
 \makeatletter
@@ -41,11 +43,26 @@
   }}}
 \makeatother
 
+\makeatletter
+\newenvironment{sqcases}{%
+  \matrix@check\sqcases\env@sqcases
+}{%
+  \endarray\right.%
+}
+\def\env@sqcases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrack
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\quad}l@{}}%
+}
+\makeatother
+
+
+\begin{document}
 
 \setbeamertemplate{navigation symbols}{}
 
 
-\begin{document}
 \title{The stochastic extended path approach}
 \author{St\'ephane Adjemian\footnote{Universit\'e du Mans, Dynare team} and Michel Juillard\footnote{Dynare team}}
 \date{February, 2025}
@@ -74,7 +91,7 @@
 
   \item But it neglects the implications of future uncertainty. Is
     this a concern? Can we improve the EP approach?
-    
+
   \end{itemize}
 \end{frame}
 
@@ -97,7 +114,7 @@
 \item $\varepsilon_t \sim \mathcal N\left( 0,\Sigma \right) \perp y_{\underline{t-1}}$\newline
 
 \item $ \exists\, y^{\star}$ such that $f\left( y^{\star},y^{\star},y^{\star},0 \right)=0$
-  
+
 \end{itemize}
 
 \end{frame}
@@ -114,7 +131,7 @@
     \end{cases}
   \]
 
-  
+
   \begin{itemize}
   \item Perfect foresight models, after a shock economy returns asymptotically
     to equilibirum.
@@ -126,20 +143,59 @@
   \item In practice, one can use a Newton method to the equations of
     the model stacked over all periods of the simulation.
   \item The Jacobian matrix of the stacked system is very sparse and
-    this characteristic must be used to write a practical algorithm.  
+    this characteristic must be used to write a practical algorithm.
   \end{itemize}
 
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Perfect foresight model}
-  \framesubtitle{Stacked jacobian}
-  \begin{center}
-    \scalebox{.5}{
-  \input{../../models/one/jacobian-0.tikz}}
-  \end{center}
+  \frametitle{Solve perfect foresight models}
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{Stochastic perfect foresight models}
+\end{frame}
+
+
+\begin{frame}[c]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order 1}
+  \centering
+  \[
+    \begin{split}
+      &\sum_{i=1}^n\omega_i f\left( y_{i,t+1}, {\color{red} y_t}, {\color{blue} y_{t-1}}\right) = 0\\
+      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} &\begin{sqcases}
+        f\left( y_{i,t+2}, y_{i,t+1}, {\color{red}y_t}, \epsilon_i \right) = 0\\
+        f\left( y_{i,t+3}, y_{i,t+2}, y_{i,t+1}, 0 \right) = 0\\
+        \vdots\\
+        f\left( {\color{blue}y^{\star}}, y_{i,t+H-1}, y_{i,t+H-2}, 0 \right) = 0\\
+      \end{sqcases}
+    \end{split}
+  \]
+
+\end{frame}
+
+
+\begin{frame}[c,fragile]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order 1}
+  \centering
+
+  \begin{tikzpicture}
+\matrix
+  {
+    \node {$y_t$}; & \node{}; & \node {}; & \node {}; \\
+    \node {$y_{1,t+1}$}; & \node{$y_{2,t+1}$}; & \node{$\ldots$};& \node{$y_{n,t+1}$}; \\
+    \node {$y_{1,t+2}$}; & \node{$y_{2,t+2}$}; & \node{$\ldots$};& \node{$y_{n,t+2}$}; \\
+    \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; \\
+    \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; \\
+  };
+\end{tikzpicture}
+
+\end{frame}
+
 
 
 \begin{frame}
@@ -149,7 +205,50 @@
     \scalebox{.5}{
   \input{../../models/one/jacobian-1.tikz}}
   \end{center}
+\end{frame}
+
+
+  \begin{frame}[c]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order 2}
+  \centering
+
+  \[
+    \begin{split}
+      &\sum_{i=1}^n\omega_i f\left( y_{i,t+1}, {\color{red} y_t}, {\color{blue} y_{t-1}}\right) = 0\\
+      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} & \begin{sqcases}
+        \sum_{j=1}^n\omega_jf\left( y_{j,i,t+2}, y_{i,t+1}, {\color{red}y_t}, \epsilon_i \right) = 0\\
+        \begin{sideways}\hspace{-.6cm}\footnotesize{j=1,\dots,n}\end{sideways} \begin{sqcases}
+          f\left( y_{j,i,t+3}, y_{j,i,t+2}, y_{i,t+1}, \epsilon_j \right) = 0\\
+          f\left( y_{j,i,t+4}, y_{j,i,t+3}, y_{j,i,t+2}, 0 \right) = 0\\
+          \vdots\\
+          f\left( {\color{blue}y^{\star}}, y_{j,i,t+H-1}, y_{j,i,t+H-2}, 0 \right) = 0
+        \end{sqcases}
+      \end{sqcases}
+    \end{split}
+  \]
+
   \end{frame}
+
+
+  \begin{frame}[c,fragile]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order 2}
+  \centering
+
+  \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.7}]
+\matrix
+  {
+    \node {$y_t$}; & \node{}; & \node {}; & \node {}; \node {}; & \node{}; & \node {}; & \node {}; & \node{}; & \node{}; & \node {}; & \node {}; & \node{};\\
+    \node {$y_{1,t+1}$}; & \node{}; & \node{}; & \node{}; & \node {$y_{2,t+1}$}; & \node{}; & \node{}; & \node{}; & \node{$\ldots$}; & \node {$y_{n,t+1}$}; & \node{}; & \node{}; & \node{}; \\
+    \node {$y_{1,1,t+2}$}; & \node{$y_{2,1,t+2}$}; & \node{$\ldots$}; & \node{$y_{n,1,t+2}$}; & \node {$y_{1,2,t+2}$}; & \node{$y_{2,2,t+2}$}; & \node{$\ldots$}; & \node{$y_{n,2,t+2}$}; & \node{$\ldots$}; & \node {$y_{1,n,t+2}$}; & \node{$y_{2,n,t+2}$}; & \node{$\ldots$};& \node{$y_{n,n,t+2}$}; \\
+    \node {$y_{1,1,t+3}$}; & \node{$y_{2,1,t+3}$}; & \node{$\ldots$}; & \node{$y_{n,1,t+3}$}; & \node {$y_{1,2,t+3}$}; & \node{$y_{2,2,t+3}$}; & \node{$\ldots$};& \node{$y_{n,2,t+3}$}; & \node{$\ldots$}; & \node {$y_{1,n,t+3}$}; & \node{$y_{2,n,t+3}$}; & \node{$\ldots$};& \node{$y_{n,n,t+3}$};\\
+    \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node{$\ldots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$};\\
+    \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node{$\ldots$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$};\\
+  };
+\end{tikzpicture}
+
+\end{frame}
 
 
   \begin{frame}
