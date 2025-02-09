@@ -269,6 +269,119 @@
 
 
 \begin{frame}
+  \frametitle{Burnside (1998) asset pricing model}
+
+\begin{itemize}
+
+  \item The price/dividend ratio and the growth rate of dividends:
+  \[
+    \begin{split}
+      y_t &= \beta \mathbb E_t\left[e^{\theta x_{t+1}}\left(1+y_{t+1}\right)\right]\\
+      x_t &= (1-\rho)\bar x + \rho x_{t-1}+\epsilon_t
+    \end{split}
+  \]
+
+  \item The exact solution is:
+\[
+    y_t = \sum_{i=1}^\infty \beta^i e^{a_i+b_i\hat x_t}
+\]
+where
+\[
+    a_i = \theta \bar x i +
+\frac{\theta^2\sigma^2}{2(1-\rho)^2}\left(i-2\rho\frac{1-\rho^i}{1-\rho}+\rho^2\frac{1-\rho^{2i}}{1-\rho^2}\right)
+\]
+and
+\[
+b_i = \frac{\theta\rho\left(1-\rho^i\right)}{1-\rho}
+\]
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Numerical simulation}
+   \framesubtitle{Calibration}
+
+\begin{align*}
+  \bar x &= 0.0179\\
+  \rho &=  -0.139\\
+  \theta &= -1.5\\
+  \beta &= 0.95\\
+  \sigma &= 0.0348\\
+\end{align*}
+
+\medskip
+
+\begin{itemize}
+\item The deterministic steady state is equal to 12.3035.\newline
+\item The risky steady state, defined as the fix point in absence of
+  shock this period:
+\[
+\widetilde y = \sum_{i=1}^\infty \beta^i e^{\theta \bar x i +
+\frac{\theta^2\sigma^2}{2(1-\rho)^2}\left(i-2\rho\frac{1-\rho^i}{1-\rho}+\rho^2\frac{1-\rho^{2i}}{1-\rho^2}\right)}\approx 12.4812
+\]
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparing SEP, perturbation and closed-form solution}
+
+Simulate long time series ($T=8000$) and compare with true solution. We use a quadrature with 3 nodes for SEP.\newline
+
+\bigskip
+
+\begin{tabular}{l|cc|cc}
+  \hline
+  & P(1) & P(2) & SEP(0) & SEP(2)\\ \hline
+  $100\times\textrm{mean}(|\hat y_t - y_t|/y_t)$  & 1.4261 &  0.0193 & 1.4241 &  1.2534\\
+  $100\times\textrm{max}(|\hat y_t - y_t|/y_t)$   & 1.4707 &  0.0527 & 1.4250 &  1.2539\\ \hline\hline
+\end{tabular}
+
+\bigskip\bigskip
+
+One can show, using the closed for solution and considering an infinite number of weights and nodes in the quadrature, that we would have to consider an approximation order greater than 60, to be able to recover the theoretical mean of the price-dividend ratio.
+
+
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Hybrid approach}
+
+\begin{itemize}
+
+  \item Consider a Taylor expansion of the original problem only along the scale $\sigma$ of the shocks\newline
+
+  \item Use the second order correction for the constant.\newline
+
+  \item[$\Rightarrow$] For K-order SEP, replace $y_{t+K+1}$ in the equations in period $K$ by $y_{t+K+1}+\frac{1}{2}g_{\sigma\sigma}$.\newline
+
+\end{itemize}
+
+\bigskip
+
+\scalebox{.9}{
+\begin{tabular}{l|c|ccc}
+  \hline
+  & P(2) & SEP(2) & SEP(2+) & SEP(10+)\\ \hline
+  $100\times\textrm{mean}(|\hat y_t - y_t|/y_t)$  & 0.0193 & 1.2534 & 0.0165 & 0.0153\\
+  $100\times\textrm{max}(|\hat y_t - y_t|/y_t)$   & 0.0527 & 1.2539 & 0.0179 & 0.0170\\ \hline\hline
+\end{tabular}}
+
+
+\end{frame}
+
+
+
+
+
+
+\begin{frame}
     \frametitle{Simulation of the RBC model}
     \framesubtitle{SEP with orders=0,\dots,10}
   \begin{center}
