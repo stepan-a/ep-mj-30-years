@@ -236,7 +236,7 @@
   \framesubtitle{order 2}
   \centering
 
-  \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.7}]
+  \begin{tikzpicture}[scale=0.7, every node/.style={scale=0.7}]
 \matrix
   {
     \node {$y_t$}; & \node{}; & \node {}; & \node {}; \node {}; & \node{}; & \node {}; & \node {}; & \node{}; & \node{}; & \node {}; & \node {}; & \node{};\\
@@ -245,18 +245,57 @@
     \node {$y_{1,1,t+3}$}; & \node{$y_{2,1,t+3}$}; & \node{$\ldots$}; & \node{$y_{n,1,t+3}$}; & \node {$y_{1,2,t+3}$}; & \node{$y_{2,2,t+3}$}; & \node{$\ldots$};& \node{$y_{n,2,t+3}$}; & \node{$\ldots$}; & \node {$y_{1,n,t+3}$}; & \node{$y_{2,n,t+3}$}; & \node{$\ldots$};& \node{$y_{n,n,t+3}$};\\
     \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node{$\ldots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$};\\
     \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node{$\ldots$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$};\\
+\node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
+\node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
+\node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_n\end{pmatrix}$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_n\end{pmatrix}$}; & \node{$\ldots$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_n\end{pmatrix}$};\\
+\node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
+\node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
+\node {$\omega_1^2$}; & \node{$\omega_1\omega_2$}; & \node{$\ldots$};& \node{$\omega_1\omega_n$}; & \node {$\omega_2\omega_1$}; & \node{$\omega_2^2$}; & \node{$\ldots$};& \node{$\omega_2\omega_n$}; & \node{$\ldots$}; & \node {$\omega_n\omega_1$}; & \node{$\omega_n\omega_2$}; & \node{$\ldots$};& \node{$\omega_n^2$};\\
   };
 \end{tikzpicture}
 
 \end{frame}
 
 
-  \begin{frame}
+\begin{frame}
     \frametitle{Stochastic perfect foresight model}
     \framesubtitle{Stacked jacobian, order=2, three nodes}
   \begin{center}
     \scalebox{.5}{
   \input{../../models/one/jacobian-2.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Simulation of the RBC model}
+    \framesubtitle{SEP with orders=0,\dots,10}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/rbc/rbc.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Simulation of the RBC model (irreversible investment)}
+    \framesubtitle{SEP with orders=0,\dots,5}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/rbcii/rbcii.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Simulation of the RBC model (irreversible investment)}
+    \framesubtitle{SEP with orders=0,\dots,10}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/rbcii/rbcii_.tikz}}
   \end{center}
 
 \end{frame}
