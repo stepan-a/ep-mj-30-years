@@ -373,12 +373,70 @@ One can show, using the closed for solution and considering an infinite number o
   $100\times\textrm{max}(|\hat y_t - y_t|/y_t)$   & 0.0527 & 1.2539 & 0.0179 & 0.0170\\ \hline\hline
 \end{tabular}}
 
-
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Irreversible investment}
+Consider the following RBC model with irreversible investment:
+\[
+  \begin{split}
+    \max_{\{c_{t+j},l_{t+j},k_{t+j+1}\}_{j=0}^{\infty}} &\quad \mathcal W_t = \sum_{j=0}^{\infty}\beta^ju(c_{t+j},l_{t+j})\\
+           \underline{s.t.}   &  \\
+              \qquad y_t &= c_t + i_t\\
+              \qquad y_t &= A_tf(k_{t},l_t)\\
+              \qquad k_{t+1} &= i_t + (1-\delta)k_{t}\\
+              \qquad A_{t} &= {A^{\star}}e^{a_{t}}\\
+              \qquad a_{t} &= \rho a_{t-1} + \varepsilon_t\\
+              \qquad i_t &\ge 0
+  \end{split}
+\]
+\end{frame}
 
+\begin{frame}
+\frametitle{Further specifications}
+The utility function is
+\[
+  u(c_t,l_t) = \frac{\left(c_t^{\theta}(1-l_t)^{1-\theta}\right)^{\tau}}{1-\tau}
+\]
+and the production function,
+\[
+  f(k_{t},l_t) = \left(\alpha k_{t}^{\psi} + (1-\alpha)l_t^{\psi}\right)^{\frac{1}{\psi}}
+\]
+\end{frame}
 
+\begin{frame}
+\frametitle{First order conditions}
+{\footnotesize\[
+\begin{split}
+  u_c(c_t,l_t) - \mu_t &= \beta \mathbb E_t\Big[
+    u_c(c_{t+1},l_{t+1})\Bigl(A_{t+1}f_k(k_{t+1},l_{t+1}) + 1
+    -\delta\Bigr) - \mu_{t+1}(1-\delta)\Big]\\
+  \frac{u_{l}(c_t,l_t)}{u_c(c_t,l_t)} &= A_tf_l(k_t,l_t)\\
+  c_t + k_{t+1} &= A_tf(k_{t},l_t) + (1-\delta)k_{t}\\
+  0 &= \mu_t \left( k_{t+1} - (1-\delta)k_{t} \right)
+\end{split}
+\]}
+
+\bigskip\bigskip
+
+where $\mu_t$ is the Lagrange multiplier associated with the constraint on investment.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Calibration}
+  \begin{align*}
+    \beta    &=  0.990\\
+    \theta   &=  0.357\\
+    \tau     &=  2.000\\
+    \alpha   &=  0.450\\
+    \psi     &= -0.500\\
+    \delta   &=  0.010\\
+    \rho     &=  0.800\\
+    A^\star &=  1.000\\
+    \sigma   &=  0.100
+  \end{align*}
+\end{frame}
 
 
 \begin{frame}
