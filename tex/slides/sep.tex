@@ -151,12 +151,38 @@
 
 
 \begin{frame}
-  \frametitle{Solve perfect foresight models}
+  \frametitle{Perfect foresight model solver}
+
+\begin{itemize}
+
+    \item The unknowns:\newline
+\[
+    Y_t = (y_t', y_{t+1}',\ldots,y_{t+H-1}')' \quad\text{ a }nH\times 1\text{ vector}
+  \]
+
+   \bigskip
+
+    \item We can rewrite the system of equations as $F(Y)=0$, and solve it recursively:\newline
+
+\[
+    Y_t^{(i+1)} = Y_t^{(i)} - J_F\left(Y_t^{(i)}\right)^{-1} F\left(Y_t^{(i)}\right)
+  \]
+\medskip
+
+    \item The jacobian $J_F$ is potentially very large but \textbf{sparse}.
+
+\end{itemize}
+
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Stochastic perfect foresight models}
+  \frametitle{Stochastic perfect foresight model}
+  \framesubtitle{Stacked jacobian, order=1, three nodes}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../../models/one/jacobian-0.tikz}}
+  \end{center}
 \end{frame}
 
 
