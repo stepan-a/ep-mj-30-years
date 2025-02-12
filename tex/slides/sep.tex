@@ -186,6 +186,85 @@
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Extended path}
+
+\begin{itemize}
+    \item Unexpected shocks in each period\newline
+    \item Loop over perfect foresight models\newline
+\end{itemize}
+
+\medskip
+
+\algsetup{
+linenosize=\small,
+linenodelimiter=.
+}
+\begin{algorithm}[H]
+  \caption{Extended path algorithm}
+  \label{alg:ep}
+  \begin{algorithmic}[1]
+    \STATE $H \leftarrow$ Set the horizon of the perfect foresight (PF) model.
+    \STATE $y^\star \leftarrow$ Compute steady state of the model
+    \STATE $y_{t-1} \leftarrow$ Choose an initial condition for the state variables
+    \FOR{$\tau=t$ to $t+H-1$}
+    \STATE $u_\tau  \leftarrow$ Draw random shocks for the current period
+    \STATE $y_t \leftarrow$ Solve a PF with $y_{t+H}=y^{\star}$
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}
+
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Approximate expectation}
+
+\begin{itemize}
+  \item Use gaussian quadrature
+\[
+\mathbb E \left[\varphi (X)\right] = \int \varphi(x)f(x)\mathrm dx \approx \sum_{i=1}^m \omega_i \varphi(x_i)
+\]
+where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\newline
+
+\item If more than one source of future uncertainty, use tensor product (default in Dynare).\newline
+
+\item[$\Rightarrow$] First curse of dimensionality.\newline
+
+\item Use unscented transform (Julier et at., 2000): number of nodes grows linearly w.r.t the number of shocks.
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[c]
+  \frametitle{Tree of forward histories (second curse)}
+
+\begin{center}
+\begin{tikzpicture}[scale=.8]
+    \tikzset{grow'=right,level distance=80pt}
+    \tikzset{execute at begin node=\strut}
+    \tikzset{every tree node/.style={anchor=base west}}
+    \Tree [.$u_t$ [.$u^1_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_1\omega_1$} ]
+                          [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_1\omega_2$} ]
+                          [.$u^3_{t+2}$  \edge[white];
+                            \color{red}{$\omega_1\omega_3$} ]]
+          [.$u^2_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_2\omega_1$} ]
+                          [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_2\omega_2$} ]
+                          [.$u^3_{t+2}$  \edge[white];
+                            \color{red}{$\omega_2\omega_3$} ]]
+          [.$u^3_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_3\omega_1$} ]
+                          [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_3\omega_2$} ]
+                          [.$u^3_{t+2}$  \edge[white]; \color{red}{$\omega_3\omega_3$} ]]]
+  \end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+
+
 \begin{frame}[c]{}
   \frametitle{Stochastic perfect foresight models}
   \framesubtitle{order 1}
