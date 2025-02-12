@@ -131,20 +131,20 @@
       f\left( y_{t+H-2},y_{t+H-1},{\color{red}y^{\star}}, 0 \right) = 0\\
     \end{cases}
   \]
-
+  \bigskip
 
   \begin{itemize}
-  \item Perfect foresight models, after a shock economy returns asymptotically
-    to equilibirum.
+
   \item For a long enough simulation, one can consider that for all
-    practical purpose the system is back to equilibrium.
-  \item This suggests to solve a two value boundary problem with
-    initial conditions for some variables (backward looking) and
-    terminal conditions for others (forward looking).
-  \item In practice, one can use a Newton method to the equations of
-    the model stacked over all periods of the simulation.
-  \item The Jacobian matrix of the stacked system is very sparse and
-    this characteristic must be used to write a practical algorithm.
+    practical purpose the system is back to equilibrium in period $H$.\newline
+
+  \item[$\Rightarrow$] Two value boundary problem with
+    initial conditions for some variables (states) and
+    terminal conditions for others (jumpings).\newline
+
+  \item In practice, one can use a Newton method to solve the equations of
+    the model stacked over all periods of the simulation.\newline
+
   \end{itemize}
 
 \end{frame}
