@@ -272,8 +272,8 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   \centering
   \[
     \begin{split}
-      &\sum_{i=1}^n\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
-      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} &\begin{sqcases}
+      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
+      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,m}\end{sideways} &\begin{sqcases}
         f\left( {\color{red}y_t}, y_{t+1}^i, y_{t+2}^i, \epsilon_i \right) = 0\\
         f\left( y_{t+1}^i, y_{t+2}^i, y_{t+3}^i, 0 \right) = 0\\
         \vdots\\
@@ -294,8 +294,8 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 \matrix
   {
     \node {$y_t$}; & \node{}; & \node {}; & \node {}; \\
-    \node {$y_{t+1}^1$}; & \node{$y_{t+1}^2$}; & \node{$\ldots$};& \node{$y_{t+1}^n$}; \\
-    \node {$y_{t+2}^1$}; & \node{$y_{t+2}^2$}; & \node{$\ldots$};& \node{$y_{t+2}^n$}; \\
+    \node {$y_{t+1}^1$}; & \node{$y_{t+1}^2$}; & \node{$\ldots$};& \node{$y_{t+1}^m$}; \\
+    \node {$y_{t+2}^1$}; & \node{$y_{t+2}^2$}; & \node{$\ldots$};& \node{$y_{t+2}^m$}; \\
     \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; \\
     \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; \\
   };
@@ -322,10 +322,10 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 
   \[
     \begin{split}
-      &\sum_{i=1}^n\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
-      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,n}\end{sideways} & \begin{sqcases}
-        \sum_{j=1}^n\omega_jf\left( {\color{red}y_t}, y_{t+1}^j, y_{t+2}^{j,i}, \epsilon_i \right) = 0\\
-        \begin{sideways}\hspace{-.6cm}\footnotesize{j=1,\dots,n}\end{sideways} \begin{sqcases}
+      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
+      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,m}\end{sideways} & \begin{sqcases}
+        \sum_{j=1}^m\omega_jf\left( {\color{red}y_t}, y_{t+1}^j, y_{t+2}^{j,i}, \epsilon_i \right) = 0\\
+        \begin{sideways}\hspace{-.6cm}\footnotesize{j=1,\dots,m}\end{sideways} \begin{sqcases}
           f\left( y_{t+1}^i, y_{t+2}^{j,i}, y_{t+3}^{j,i}, \epsilon_j \right) = 0\\
           f\left( y_{t+2}^{j,i}, y_{t+3}^{j,i}, y_{t+4}^{j,i}, 0 \right) = 0\\
           \vdots\\
@@ -347,17 +347,17 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 \matrix
   {
     \node {$y_t$}; & \node{}; & \node {}; & \node {}; \node {}; & \node{}; & \node {}; & \node {}; & \node{}; & \node{}; & \node {}; & \node {}; & \node{};\\
-    \node {$y_{t+1}^1$}; & \node{}; & \node{}; & \node{}; & \node {$y_{t+1}^2$}; & \node{}; & \node{}; & \node{}; & \node{$\ldots$}; & \node {$y_{t+1}^n$}; & \node{}; & \node{}; & \node{}; \\
-    \node {$y_{t+2}^{1,1}$}; & \node{$y_{t+2}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{n,1}$}; & \node {$y_{t+2}^{1,2}$}; & \node{$y_{t+2}^{2,2}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{n,2}$}; & \node{$\ldots$}; & \node {$y_{t+2}^{1,n}$}; & \node{$y_{t+2}^{2,n}$}; & \node{$\ldots$};& \node{$y_{t+2}^{n,n}$}; \\
-    \node {$y_{t+3}^{1,1}$}; & \node{$y_{t+3}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+3}^{n,1}$}; & \node {$y_{t+3}^{1,2}$}; & \node{$y_{t+3}^{2,2}$}; & \node{$\ldots$};& \node{$y_{t+3}^{n,2}$}; & \node{$\ldots$}; & \node {$y_{t+3}^{1,n}$}; & \node{$y_{t+3}^{2,n}$}; & \node{$\ldots$};& \node{$y_{t+3}^{n,n}$};\\
+    \node {$y_{t+1}^1$}; & \node{}; & \node{}; & \node{}; & \node {$y_{t+1}^2$}; & \node{}; & \node{}; & \node{}; & \node{$\ldots$}; & \node {$y_{t+1}^m$}; & \node{}; & \node{}; & \node{}; \\
+    \node {$y_{t+2}^{1,1}$}; & \node{$y_{t+2}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{m,1}$}; & \node {$y_{t+2}^{1,2}$}; & \node{$y_{t+2}^{2,2}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{m,2}$}; & \node{$\ldots$}; & \node {$y_{t+2}^{1,m}$}; & \node{$y_{t+2}^{2,m}$}; & \node{$\ldots$};& \node{$y_{t+2}^{m,m}$}; \\
+    \node {$y_{t+3}^{1,1}$}; & \node{$y_{t+3}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+3}^{m,1}$}; & \node {$y_{t+3}^{1,2}$}; & \node{$y_{t+3}^{2,2}$}; & \node{$\ldots$};& \node{$y_{t+3}^{m,2}$}; & \node{$\ldots$}; & \node {$y_{t+3}^{1,m}$}; & \node{$y_{t+3}^{2,m}$}; & \node{$\ldots$};& \node{$y_{t+3}^{m,m}$};\\
     \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node{$\ldots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$};\\
     \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node{$\ldots$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$};\\
 \node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
 \node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
-\node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_n\end{pmatrix}$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_n\end{pmatrix}$}; & \node{$\ldots$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_n \\ \epsilon_n\end{pmatrix}$};\\
+\node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_1 \\ \epsilon_m\end{pmatrix}$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_2 \\ \epsilon_m\end{pmatrix}$}; & \node{$\ldots$}; & \node {$\begin{pmatrix}\varepsilon_t\\ \epsilon_m \\ \epsilon_1\end{pmatrix}$}; & \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_m \\ \epsilon_2\end{pmatrix}$}; & \node{$\ldots$};& \node{$\begin{pmatrix}\varepsilon_t\\ \epsilon_m \\ \epsilon_m\end{pmatrix}$};\\
 \node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
 \node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
-\node {$\omega_1^2$}; & \node{$\omega_1\omega_2$}; & \node{$\ldots$};& \node{$\omega_1\omega_n$}; & \node {$\omega_2\omega_1$}; & \node{$\omega_2^2$}; & \node{$\ldots$};& \node{$\omega_2\omega_n$}; & \node{$\ldots$}; & \node {$\omega_n\omega_1$}; & \node{$\omega_n\omega_2$}; & \node{$\ldots$};& \node{$\omega_n^2$};\\
+\node {$\omega_1^2$}; & \node{$\omega_1\omega_2$}; & \node{$\ldots$};& \node{$\omega_1\omega_m$}; & \node {$\omega_2\omega_1$}; & \node{$\omega_2^2$}; & \node{$\ldots$};& \node{$\omega_2\omega_m$}; & \node{$\ldots$}; & \node {$\omega_m\omega_1$}; & \node{$\omega_n\omega_2$}; & \node{$\ldots$};& \node{$\omega_m^2$};\\
   };
 \end{tikzpicture}
 
