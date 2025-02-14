@@ -63,6 +63,7 @@
 
 \setbeamertemplate{navigation symbols}{}
 
+\pgfplotsset{every tick label/.append style={font=\tiny}}
 
 \title{The stochastic extended path approach}
 \author{St\'ephane Adjemian\footnote{Universit\'e du Mans, Dynare team} and Michel Juillard\footnote{Dynare team}}
@@ -293,8 +294,8 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 \matrix
   {
     \node {$y_t$}; & \node{}; & \node {}; & \node {}; \\
-    \node {$y_{1,t+1}$}; & \node{$y_{2,t+1}$}; & \node{$\ldots$};& \node{$y_{n,t+1}$}; \\
-    \node {$y_{1,t+2}$}; & \node{$y_{2,t+2}$}; & \node{$\ldots$};& \node{$y_{n,t+2}$}; \\
+    \node {$y_{t+1}^1$}; & \node{$y_{t+1}^2$}; & \node{$\ldots$};& \node{$y_{t+1}^n$}; \\
+    \node {$y_{t+2}^1$}; & \node{$y_{t+2}^2$}; & \node{$\ldots$};& \node{$y_{t+2}^n$}; \\
     \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; \\
     \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; \\
   };
@@ -346,9 +347,9 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 \matrix
   {
     \node {$y_t$}; & \node{}; & \node {}; & \node {}; \node {}; & \node{}; & \node {}; & \node {}; & \node{}; & \node{}; & \node {}; & \node {}; & \node{};\\
-    \node {$y_{1,t+1}$}; & \node{}; & \node{}; & \node{}; & \node {$y_{2,t+1}$}; & \node{}; & \node{}; & \node{}; & \node{$\ldots$}; & \node {$y_{n,t+1}$}; & \node{}; & \node{}; & \node{}; \\
-    \node {$y_{1,1,t+2}$}; & \node{$y_{2,1,t+2}$}; & \node{$\ldots$}; & \node{$y_{n,1,t+2}$}; & \node {$y_{1,2,t+2}$}; & \node{$y_{2,2,t+2}$}; & \node{$\ldots$}; & \node{$y_{n,2,t+2}$}; & \node{$\ldots$}; & \node {$y_{1,n,t+2}$}; & \node{$y_{2,n,t+2}$}; & \node{$\ldots$};& \node{$y_{n,n,t+2}$}; \\
-    \node {$y_{1,1,t+3}$}; & \node{$y_{2,1,t+3}$}; & \node{$\ldots$}; & \node{$y_{n,1,t+3}$}; & \node {$y_{1,2,t+3}$}; & \node{$y_{2,2,t+3}$}; & \node{$\ldots$};& \node{$y_{n,2,t+3}$}; & \node{$\ldots$}; & \node {$y_{1,n,t+3}$}; & \node{$y_{2,n,t+3}$}; & \node{$\ldots$};& \node{$y_{n,n,t+3}$};\\
+    \node {$y_{t+1}^1$}; & \node{}; & \node{}; & \node{}; & \node {$y_{t+1}^2$}; & \node{}; & \node{}; & \node{}; & \node{$\ldots$}; & \node {$y_{t+1}^n$}; & \node{}; & \node{}; & \node{}; \\
+    \node {$y_{t+2}^{1,1}$}; & \node{$y_{t+2}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{n,1}$}; & \node {$y_{t+2}^{1,2}$}; & \node{$y_{t+2}^{2,2}$}; & \node{$\ldots$}; & \node{$y_{t+2}^{n,2}$}; & \node{$\ldots$}; & \node {$y_{t+2}^{1,n}$}; & \node{$y_{t+2}^{2,n}$}; & \node{$\ldots$};& \node{$y_{t+2}^{n,n}$}; \\
+    \node {$y_{t+3}^{1,1}$}; & \node{$y_{t+3}^{2,1}$}; & \node{$\ldots$}; & \node{$y_{t+3}^{n,1}$}; & \node {$y_{t+3}^{1,2}$}; & \node{$y_{t+3}^{2,2}$}; & \node{$\ldots$};& \node{$y_{t+3}^{n,2}$}; & \node{$\ldots$}; & \node {$y_{t+3}^{1,n}$}; & \node{$y_{t+3}^{2,n}$}; & \node{$\ldots$};& \node{$y_{t+3}^{n,n}$};\\
     \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$}; & \node{$\ldots$}; & \node {$\vdots$}; & \node{$\vdots$}; & \node{};& \node{$\vdots$};\\
     \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$}; & \node{$\ldots$}; & \node {$y^\star$}; & \node{$y^\star$}; & \node{$\ldots$};& \node{$y^\star$};\\
 \node {}; & \node{}; & \node{};& \node{}; & \node {}; & \node{}; & \node{};& \node{}; & \node{}; & \node {}; & \node{}; & \node{};& \node{};\\
@@ -369,6 +370,17 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   \begin{center}
     \scalebox{.5}{
   \input{../../models/one/jacobian-2.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Stochastic perfect foresight model}
+    \framesubtitle{Stacked jacobian, sparse tree, order=2, three nodes}
+  \begin{center}
+    \scalebox{.6}{
+  \input{../../models/one/jacobian-sparse-tree-2.tikz}}
   \end{center}
 
 \end{frame}

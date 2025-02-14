@@ -3,6 +3,11 @@
 
 .DS_Store
 
+*~
+
+notes.org
+.ltx/*
+
 models/nk/calvo/*
 models/nk/+calvo/*
 
@@ -18,8 +23,11 @@ models/rbcii/+rbcii_/*
 models/burnside/+burnside
 models/burnside/burnside
 
-models/one/+plotjacobian/*
-models/one/plotjacobian/*
+models/one/+plotjacobian0/*
+models/one/plotjacobian0/*
+
+models/one/+plotjacobian1/*
+models/one/plotjacobian1/*
 
 models/irf/rbc/*
 models/irf/+rbc/*
