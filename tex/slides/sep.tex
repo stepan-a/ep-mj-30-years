@@ -239,30 +239,31 @@
 \end{frame}
 
 
-\begin{frame}[c]
+\begin{frame}[c]{}
    \frametitle{Tree of forward histories (second curse)}
 
    \begin{center}
-      \begin{tikzpicture}[scale=.8]
-         \tikzset{grow'=right,level distance=80pt}
+      \begin{tikzpicture}[scale=.4]
+         \tikzset{grow'=right,level distance=120pt}
          \tikzset{execute at begin node=\strut}
          \tikzset{every tree node/.style={anchor=base west}}
-         \Tree [.$u_t$ [.$u^1_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_1\omega_1$} ]
-         [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_1\omega_2$} ]
-         [.$u^3_{t+2}$  \edge[white];
-         \color{red}{$\omega_1\omega_3$} ]]
-         [.$u^2_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_2\omega_1$} ]
-         [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_2\omega_2$} ]
-         [.$u^3_{t+2}$  \edge[white];
-         \color{red}{$\omega_2\omega_3$} ]]
-         [.$u^3_{t+1}$ [.$u^1_{t+2}$  \edge[white]; \color{red}{$\omega_3\omega_1$} ]
-         [.$u^2_{t+2}$   \edge[white]; \color{red}{$\omega_3\omega_2$} ]
-         [.$u^3_{t+2}$  \edge[white]; \color{red}{$\omega_3\omega_3$} ]]]
+         \Tree [.$\varepsilon_t$
+         [.$\epsilon_2$ [.$\epsilon_2$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_1$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_3$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         ]
+         [.$\epsilon_1$ [.$\epsilon_2$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_1$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_3$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         ]
+         [.$\epsilon_3$ [.$\epsilon_2$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_1$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_3$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         ]
+         ]
       \end{tikzpicture}
    \end{center}
 \end{frame}
-
-
 
 
 
