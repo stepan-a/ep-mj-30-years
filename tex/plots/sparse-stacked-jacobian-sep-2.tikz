@@ -1,0 +1,139 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=2.469in,
+height=1.969in,
+at={(1.011in,3.427in)},
+scale only axis,
+xmin=3,
+xmax=43,
+xlabel style={font=\color{white!15!black}},
+xlabel={Number of nodes},
+ymin=0.000819343796654361,
+ymax=0.167910424365696,
+ylabel style={font=\color{white!15!black}},
+ylabel={\% of \textrm{nnz}},
+axis background/.style={fill=white}
+]
+\addplot [color=blue, line width=2.0pt, mark=+, mark options={solid, blue}, forget plot]
+  table[row sep=crcr]{%
+3	0.167910424365696\\
+5	0.0605245449707222\\
+7	0.0308938622737026\\
+9	0.0186931416617545\\
+11	0.0125152964637865\\
+13	0.00896146569394665\\
+15	0.00673148840537474\\
+17	0.00524102910447069\\
+19	0.0041958824403334\\
+21	0.00343482608310586\\
+23	0.00286350620414749\\
+25	0.00242372014104406\\
+27	0.00207798444739654\\
+29	0.0018012753028856\\
+31	0.0015763698653937\\
+33	0.00139110005099371\\
+35	0.00123667143013247\\
+37	0.00110660000835429\\
+39	0.000996020345370709\\
+41	0.000901223862000988\\
+43	0.000819343796654361\\
+};
+\end{axis}
+
+\begin{axis}[%
+width=2.469in,
+height=1.969in,
+at={(4.569in,3.427in)},
+scale only axis,
+xmin=3,
+xmax=51,
+xlabel style={font=\color{white!15!black}},
+xlabel={Number of nodes},
+ymin=6.50376290910506,
+ymax=11.4236987830146,
+ylabel style={font=\color{white!15!black}},
+ylabel={$\log_{10} \#(J)$},
+axis background/.style={fill=white}
+]
+\addplot [color=blue, line width=2.0pt, mark=+, mark options={solid, blue}, forget plot]
+  table[row sep=crcr]{%
+3	6.50376290910506\\
+5	7.39026259540805\\
+7	7.97443845981601\\
+9	8.41084183135269\\
+11	8.75933606806731\\
+13	9.04946711837303\\
+15	9.29800731188404\\
+17	9.51539925017548\\
+19	9.70858778706756\\
+21	9.88242637517064\\
+23	10.0404407254452\\
+25	10.1852728874617\\
+27	10.3189539129485\\
+29	10.4430788436229\\
+31	10.5589232185153\\
+33	10.6675230912579\\
+35	10.7697314669425\\
+37	10.866259035161\\
+39	10.9577041675152\\
+41	11.0445754055698\\
+43	11.1273085880072\\
+45	11.2062800809681\\
+47	11.2818171293633\\
+49	11.3542060497057\\
+51	11.4236987830146\\
+};
+\end{axis}
+
+\begin{axis}[%
+width=6.028in,
+height=1.969in,
+at={(1.011in,0.642in)},
+scale only axis,
+xmin=3,
+xmax=51,
+xlabel style={font=\color{white!15!black}},
+xlabel={Number of nodes},
+ymin=3.72884056833997,
+ymax=6.18897008408768,
+ylabel style={font=\color{white!15!black}},
+ylabel={$\log_{10} \mathrm{nnz}(J)$},
+axis background/.style={fill=white}
+]
+\addplot [color=blue, line width=2.0pt, mark=+, mark options={solid, blue}, forget plot]
+  table[row sep=crcr]{%
+3	3.72884056833997\\
+5	4.17219412846693\\
+7	4.46431066592589\\
+9	4.68252412854228\\
+11	4.85677720975119\\
+13	5.00184616494759\\
+15	5.1261184139642\\
+17	5.23481582160788\\
+19	5.33141109875549\\
+21	5.41833112732033\\
+23	5.49733885384933\\
+25	5.56975535930212\\
+27	5.63659620571961\\
+29	5.69865893811197\\
+31	5.7565813426166\\
+33	5.81088145779331\\
+35	5.86198579467581\\
+37	5.91024970431781\\
+39	5.95597237721597\\
+41	5.99940808773183\\
+43	6.04077475797337\\
+45	6.08026057317681\\
+47	6.11802915751285\\
+49	6.15422367061031\\
+51	6.18897008408768\\
+};
+\end{axis}
+\end{tikzpicture}%

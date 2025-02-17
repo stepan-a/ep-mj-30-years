@@ -272,7 +272,7 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   \centering
   \[
     \begin{split}
-      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
+      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i, \varepsilon_t\right) = 0\\
       \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,m}\end{sideways} &\begin{sqcases}
         f\left( {\color{red}y_t}, y_{t+1}^i, y_{t+2}^i, \epsilon_i \right) = 0\\
         f\left( y_{t+1}^i, y_{t+2}^i, y_{t+3}^i, 0 \right) = 0\\
@@ -301,6 +301,10 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   };
 \end{tikzpicture}
 
+\bigskip\bigskip
+
+$\rightarrow\quad 1+m(H-1)$ unknown vectors ($n\times 1$).
+
 \end{frame}
 
 
@@ -322,7 +326,7 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
 
   \[
     \begin{split}
-      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i\right) = 0\\
+      &\sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i, \varepsilon_t\right) = 0\\
       \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,m}\end{sideways} & \begin{sqcases}
         \sum_{j=1}^m\omega_jf\left( {\color{red}y_t}, y_{t+1}^j, y_{t+2}^{j,i}, \epsilon_i \right) = 0\\
         \begin{sideways}\hspace{-.6cm}\footnotesize{j=1,\dots,m}\end{sideways} \begin{sqcases}
@@ -361,6 +365,10 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   };
 \end{tikzpicture}
 
+\bigskip\bigskip
+
+$\rightarrow\quad 1 + m + m^2(H-2)$ unknown vectors  ($n\times 1$).
+
 \end{frame}
 
 
@@ -370,6 +378,127 @@ where $(\omega_i,x_i)_{i=1}^m$ are the gaussian quadrature weight and nodes.\new
   \begin{center}
     \scalebox{.5}{
   \input{../../models/one/jacobian-2.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+  \begin{frame}%[c]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order p}
+
+
+  \[
+\scalebox{0.7}{$%
+    \begin{split}
+      \sum_{i_1=1}^m \omega_{i_1}&f\left({\color{blue}y_{t-1}}, {\color{red}y_t}, y_{t+1}^{i_1}, \varepsilon_t \right) = 0\\
+      \sum_{i_2=1}^m \omega_{i_2}&f\left({\color{red}y_{t}}, y_{t+1}^{i_1}, y_{t+1}^{i_2,i_1}, \epsilon_{i_1} \right) = 0\,\, \forall\, i_1\in \{1,\dots,m\}\\
+      \sum_{i_3=1}^m \omega_{i_3}&f\left(y_{t+1}^{i_1}, y_{t+2}^{i_2, i_1}, y_{t+3}^{i_3,i_2,i_1}, \epsilon_{i_2} \right) = 0\,\,  \forall\, (i_1,i_2)\in \{1,\dots,m\}^2\\
+    \sum_{i_4=1}^m \omega_{i_4}&f\left(y_{t+2}^{i_2,i_1}, y_{t+3}^{i_3,i_2,i_1}, y_{t+3}^{i_4,\ldots,i_1}, \epsilon_{i_3} \right) = 0\,\,  \forall\, (i_1,i_2,i_3)\in \{1,\dots,m\}^3\\
+      &\vdots \\
+      \sum_{i_p=1}^m \omega_{i_p}&f\left(y_{t+p-2}^{i_{p-2},\ldots,i_1}, y_{t+p-1}^{i_{p-1},\ldots,i_1}, y_{t+p}^{i_p,\ldots,i_1}, \epsilon_{i_{p-1}} \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p-1})\in \{1,\dots,m\}^{p-1}\\
+                                 &f\left(y_{t+p-1}^{i_{p-1},\ldots,i_1}, y_{t+p}^{i_{p},\ldots,i_1}, y_{t+p+1}^{i_p,\ldots,i_1}, \epsilon_{i_{p}} \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p}\\
+                                 &f\left(y_{t+p}^{i_{p},\ldots,i_1}, y_{t+p+1}^{i_{p},\ldots,i_1}, y_{t+p+2}^{i_p,\ldots,i_1}, 0 \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p}\\
+                                 &\vdots \\
+      &f\left(y_{t+H-2}^{i_{p},\ldots,i_1}, y_{t+H-1}^{i_{p},\ldots,i_1}, {\color{blue}y^{\star}}, 0 \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p}
+    \end{split}$%
+  }
+  \]
+
+  \end{frame}
+
+
+\begin{frame}%[c]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order p}
+
+\begin{itemize}
+
+  \item Perfect $m$-ary tree of height $p$.\newline
+
+  \item The root, at height 0, is $\sum_{i_1=1}^m \omega_{i_1}f\left(y_{t-1}, y_t, y_{t+1}^{i_1}, \varepsilon_t \right)$.\newline
+
+  \item All the nodes from height 1 to $p-1$ are approximate integrals.\newline
+
+  \item The $m^p$ terminal nodes at height $p$ are deterministic problems.\newline
+
+  \item The $m^p$ leafs are deterministic paths to the steady state.\newline
+
+  \item The size of the tree increases exponentially with the approximation order ($p$) and polynomially with the number of quadrature points ($m$).
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}%[c]{}
+  \frametitle{Stochastic perfect foresight models}
+  \framesubtitle{order p}
+
+\begin{itemize}
+
+  \item The number of unknown vectors is:
+\[
+  \begin{split}
+    \mathcal C(m,p,H) &= 1+m+m^2+\ldots+m^{p-1} + m^p(H-p)\\
+                  &= \frac{m^p-1}{m-1} + m^p(H-p)
+  \end{split}
+\]
+
+\item[$\Rightarrow$] The jacobian square matrix has $n\mathcal C(m,p,H)$ columns.\newline
+
+\item Number of non zero $n\times n$ blocks is:
+\[
+    \mathrm{nnz}(m,p,H) = 1+m+(2+m)\frac{m^p-m}{m-1}+3m^p(H-p)-m^p
+  \]
+
+\item The size of the Jacobian increases exponentially with the order
+ of the SEP, while the sparsity improves (the proportion of non-zero blocks tends to zero as either $m$ or $p$ approaches infinity).
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Stochastic perfect foresight models}
+    \framesubtitle{Stacked jacobian sparsity (3 quadrature nodes)}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../plots/sparse-stacked-jacobian-3-nodes.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Stochastic perfect foresight models}
+    \framesubtitle{Stacked jacobian sparsity (11 quadrature nodes)}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../plots/sparse-stacked-jacobian-11-nodes.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Stochastic perfect foresight models}
+    \framesubtitle{Stacked jacobian sparsity (order 2)}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../plots/sparse-stacked-jacobian-sep-2.tikz}}
+  \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Stochastic perfect foresight models}
+    \framesubtitle{Stacked jacobian sparsity (order 10)}
+  \begin{center}
+    \scalebox{.5}{
+  \input{../plots/sparse-stacked-jacobian-sep-10.tikz}}
   \end{center}
 
 \end{frame}
