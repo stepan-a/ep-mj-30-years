@@ -9,7 +9,7 @@ sep.pdf: sep.tex ../../models/one/jacobian-0.tikz ../../models/one/jacobian-1.ti
 
 clean:
 	@rm -f *.aux *.log *.out *.nav *.rel *.toc *.snm *.synctex.gz *.vrb *.rubbercache
-	@rm sep.bak*
+	@rm -f sep.bak*
 	@rm -rf auto
 
 clean-all:
