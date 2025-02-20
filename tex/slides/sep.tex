@@ -262,6 +262,8 @@
          ]
          ]
       \end{tikzpicture}
+
+
    \end{center}
 \end{frame}
 
@@ -503,6 +505,263 @@
    \end{center}
 
 \end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree}
+
+   \begin{itemize}
+
+      \item Employing the complete $m$-ary tree presented above is
+            infeasible for large values of $p$ or $m$.\newline
+
+      \item Trimming the tree by eliminating branches with low
+            probabilities (as determined by the products of quadrature
+            weights) offers limited benefits, as the pruned tree would still
+            expand exponentially with respect to $p$.\newline
+
+      \item The trunk of the $m$-ary tree is defined by traversing the
+            central nodes from one period to the next.\newline
+
+      \item All branches that do not directly stem from the trunk are
+            removed.\newline
+
+      \item Fishbone tree $\Leftrightarrow$ Monomial rule, where
+            innovations in different periods are treated as distinct
+            shocks.
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[c]{}
+   \frametitle{Tree of forward histories}
+   \framesubtitle{Sparse tree}
+   \begin{center}
+      \begin{tikzpicture}[scale=.7]
+         \tikzset{grow'=right,level distance=80pt}
+         \tikzset{execute at begin node=\strut}
+         \tikzset{every tree node/.style={anchor=base west}}
+         \Tree [.$\varepsilon_t$
+         [.$\epsilon_2$ ]
+         [.$\epsilon_1$
+         [.$\epsilon_2$ ]
+         [.$\epsilon_1$
+         [.$\epsilon_2$ ]
+         [.$\epsilon_1$
+         [.$\epsilon_2$ ]
+         [.$\epsilon_1$ \edge[dashed]; {} \edge[dashed]; {} \edge[dashed]; {} ]
+         [.$\epsilon_3$ ]
+         ]
+         [.$\epsilon_3$ ]
+         ]
+         [.$\epsilon_3$  ]
+         ]
+         [.$\epsilon_3$ ]
+         ]
+      \end{tikzpicture}
+
+   \end{center}
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree}
+
+   \begin{itemize}
+
+      \item The leaf on each terminal node is a deterministic path to the steady state.\newline
+
+      \item The number of terminal nodes, $mp$, expands linearly with the SEP approximation order.\newline
+
+      \item The number of unknown $n\times 1$ vectors to be solved for is:
+            \[
+               \begin{split}
+                  \bar{\mathcal C}(m,p,H) & =  H+\sum_{i=1}^p(m-1)(H-i)                     \\
+                                          & = \left( 1 + (m-1)p \right)H - \frac{p(p+1)}{2}
+               \end{split}
+            \]
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree}
+
+   \begin{itemize}
+
+      \item The number of non zero $n\times n$ blocks in the stacked Jacobian is:
+            {\small
+            \[
+               \overline{\mathrm{nnz}}(m,p,H) = \underbrace{\overbrace{3H-2}^{\mathrm{EP}} + \overbrace{(m-1)p}^{\text{Approximate} \atop \text{integrals} }}_{\text{Along the trunk}} + (m-1)\sum_{i=1}^{p-1} \left( 3(H-1-i)+2  \right)
+            \]}
+
+            \medskip
+
+      \item The Jacobian is smaller in size, with its growth occurring linearly in relation to \( p \) or \( m \); however, it is denser.
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight models}
+   \framesubtitle{Stacked jacobian sparsity with sparse tree (3 quadrature nodes)}
+   \begin{center}
+      \scalebox{.5}{
+         \input{../plots/sparse-stacked-jacobian-3-nodes-sparse-tree.tikz}}
+   \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight models}
+   \framesubtitle{Stacked jacobian sparsity with sparse tree (11 quadrature nodes)}
+   \begin{center}
+      \scalebox{.5}{
+         \input{../plots/sparse-stacked-jacobian-11-nodes-sparse-tree.tikz}}
+   \end{center}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree, equations for SEP($p$)}
+
+   \begin{itemize}
+
+      \item Let $y_{t,s}^i$ represent the vector of endogenous variables
+            at time $s>t$ along a branch that diverges from the trunk at
+            time $t$ due to the anticipated shock (integration
+            node) $\epsilon_i$.\newline
+
+      \item The sequence $y_t$ (the
+            root), $y_{t,t+1}^1$, $y_{t+1,t+2}^1$,
+            \dots, $y_{t+p-1,t+p}^1$ represents the path of the
+            endogenous variables along the trunk.\newline
+
+      \item Approximate integrals are located along the trunk.\newline
+
+      \item In period $t$ we have:
+            \[
+               \sum_{i=1}^m\omega_i f\left( y_{t-1}, y_t, y_{t, t+1}^i, \varepsilon_t \right) = 0
+            \]
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree, equations for SEP($p$)}
+
+   \begin{itemize}
+
+      \item In period $t+1$ we have:
+            \[
+               \begin{split}
+                   & \sum_{i=1}^m\omega_i f\left( y_t, y_{t,t+1}^1, y_{t+1, t+2}^i, \epsilon_i \right) = 0 \\
+                   & f\left(y_t, y_{t,t+1}^i, y_{t,t+2}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}
+               \end{split}
+            \]
+
+            \medskip
+
+      \item In period $t+2$ we have:
+            \[
+               \begin{split}
+                   & \sum_{i=1}^m\omega_i f\left( y_{t,t+1}^1, y_{t+1,t+1}^1, y_{t+2, t+3}^i, \epsilon_i \right) = 0   \\
+                   & f\left(y_{t,t+1}^i, y_{t,t+2}^i, y_{t,t+3}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}      \\
+                   & f\left(y_{t,t+1}^1, y_{t+1,t+2}^i, y_{t+1, t+3}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\} \\
+               \end{split}
+            \]
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree, equations for SEP($p$)}
+
+   \begin{itemize}
+
+      \item In period $t+h$, with $h<p$, we have:
+            \[
+               \begin{split}
+                   & \sum_{i=1}^m\omega_i f\left( y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^1, y_{t+h, t+h+1}^i, \epsilon_i \right) = 0      \\
+                   & f\left(y_{t,t+h-1}^i, y_{t,t+h}^i, y_{t,t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}               \\
+                   & f\left(y_{t+1,t+h-1}^i, y_{t+1,t+h}^i, y_{t+1, t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}        \\
+                   & \,\vdots                                                                                                       \\
+                   & f\left(y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^i, y_{t+h-1,t+h+1}^i, 0 \right) = 0 \quad \forall\, i\in\{2,\ldots,m\}
+               \end{split}
+            \]
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree, equations for SEP($p$)}
+
+   \begin{itemize}
+
+      \item In period $t+p$ we have:
+            \[
+               \begin{split}
+                   & f\left(y_{t+p-2,t+p-1}^1, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, \omega_i\right) = 0 \quad \forall\, i\in\{1,\ldots,m\} \\
+                   & f\left(y_{t,t+p-1}^i, y_{t,t+p}^i, y_{t,t+p+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}                    \\
+                   & f\left(y_{t+1,t+p-1}^i, y_{t+1,t+p}^i, y_{t+1, t+p+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}              \\
+                   & \,\vdots                                                                                                             \\
+                   & f\left(y_{t+p-2,t+p-1}^i, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, 0 \right) = 0 \quad \forall\, i\in\{2,\ldots,m\}
+               \end{split}
+            \]
+
+   \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+   \frametitle{Stochastic perfect foresight model}
+   \framesubtitle{Sparse tree, equations for SEP($p$)}
+
+   \begin{itemize}
+
+      \item In period $t+h$, with $h>p$, we have:
+            \[
+               \begin{split}
+                   & f\left(y_{t,t+h-1}^i, y_{t,t+h}^i, y_{t,t+h+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}              \\
+                   & f\left(y_{t+1,t+h-1}^i, y_{t+1,t+h}^i, y_{t+1, t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}        \\
+                   & \,\vdots                                                                                                       \\
+                   & f\left(y_{t+h-2,t+h-1}^i, y_{t+h-1,t+h}^i, y_{t+h-1,t+h+1}^i, 0 \right) = 0 \quad \forall\, i\in\{2,\ldots,m\} \\
+                   & f\left(y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^1, y_{t+h-1,t+h+1}^1, 0 \right) = 0
+               \end{split}
+            \]
+
+            \medskip
+
+            With $y_{s,t+H}^i = y^{\star}$ for all $i$ and $t<s<t+H$.
+
+   \end{itemize}
+
+
+
+\end{frame}
+
 
 
 \begin{frame}
