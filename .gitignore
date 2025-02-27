@@ -1,5 +1,13 @@
 *.log
 *.tmp
+*.bbl
+*.blg
+*.fls
+*.out
+*.run.xml
+*.aux
+*.bcf
+*.synctex.gz
 
 .DS_Store
 
@@ -38,3 +46,7 @@ models/irf/+rbcii/*
 
 tex/slides/sep.pdf
 tex/slides/git.hash
+tex/slides/auto/*
+
+tex/wp/sep.pdf
+tex/wp/auto/*
