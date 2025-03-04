@@ -66,6 +66,19 @@ y_perturbation_3_pruning = transpose(oo_.endo_simul(1,:));
 x_perturbation_3_pruning = transpose(oo_.endo_simul(2,:));
 e_3_ = oo_.exo_simul;
 
+set_dynare_seed(seed);
+stoch_simul(order=4,irf=0,periods=8001);
+y_perturbation_4 = transpose(oo_.endo_simul(1,:));
+x_perturbation_4 = transpose(oo_.endo_simul(2,:));
+e_4 = oo_.exo_simul;
+
+set_dynare_seed(seed);
+stoch_simul(order=4,pruning,irf=0,periods=8001);
+y_perturbation_4_pruning = transpose(oo_.endo_simul(1,:));
+x_perturbation_4_pruning = transpose(oo_.endo_simul(2,:));
+e_4_ = oo_.exo_simul;
+
+
 options_.simul.maxit = 100;
 
 set_dynare_seed(seed);
@@ -79,22 +92,6 @@ disp('Order 1 perturbation mean and standard deviation')
 disp(mean(y_perturbation_1(101:end)))
 disp(sqrt(var(y_perturbation_1(101:end))))
 
-disp('Order 2 perturbation mean and standard deviation')
-disp(mean(y_perturbation_2(101:end)))
-disp(sqrt(var(y_perturbation_2(101:end))))
-
-disp('Order 2 (with pruning) perturbation mean and standard deviation')
-disp(mean(y_perturbation_2_pruning(101:end)))
-disp(sqrt(var(y_perturbation_2_pruning(101:end))))
-
-disp('Order 3 perturbation mean and standard deviation')
-disp(mean(y_perturbation_3(101:end)))
-disp(sqrt(var(y_perturbation_3(101:end))))
-
-disp('Order 3 (with pruning) perturbation mean and standard deviation')
-disp(mean(y_perturbation_3_pruning(101:end)))
-disp(sqrt(var(y_perturbation_3_pruning(101:end))))
-
 disp('Accuracy error (order 1 perturbation) % deviation')
 disp(mean(100*(y_perturbation_1-transpose(ytrue))./transpose(ytrue)));
 disp(mean(100*abs((y_perturbation_1-transpose(ytrue))./transpose(ytrue))));
@@ -106,6 +103,14 @@ disp(mean(y_perturbation_1-transpose(ytrue)));
 disp(mean(abs((y_perturbation_1-transpose(ytrue)))));
 disp(min(abs((y_perturbation_1-transpose(ytrue)))));
 disp(max(abs((y_perturbation_1-transpose(ytrue)))));
+
+disp('Order 2 perturbation mean and standard deviation')
+disp(mean(y_perturbation_2(101:end)))
+disp(sqrt(var(y_perturbation_2(101:end))))
+
+disp('Order 2 (with pruning) perturbation mean and standard deviation')
+disp(mean(y_perturbation_2_pruning(101:end)))
+disp(sqrt(var(y_perturbation_2_pruning(101:end))))
 
 disp('Accuracy error (order 2 perturbation) % deviation')
 disp(mean(100*(y_perturbation_2-transpose(ytrue))./transpose(ytrue)));
@@ -119,6 +124,14 @@ disp(mean(abs((y_perturbation_2-transpose(ytrue)))));
 disp(min(abs((y_perturbation_2-transpose(ytrue)))));
 disp(max(abs((y_perturbation_2-transpose(ytrue)))));
 
+disp('Order 3 perturbation mean and standard deviation')
+disp(mean(y_perturbation_3(101:end)))
+disp(sqrt(var(y_perturbation_3(101:end))))
+
+disp('Order 3 (with pruning) perturbation mean and standard deviation')
+disp(mean(y_perturbation_3_pruning(101:end)))
+disp(sqrt(var(y_perturbation_3_pruning(101:end))))
+
 disp('Accuracy error (order 3 perturbation) % deviation')
 disp(mean(100*(y_perturbation_3-transpose(ytrue))./transpose(ytrue)));
 disp(mean(100*abs((y_perturbation_3-transpose(ytrue))./transpose(ytrue))));
@@ -131,7 +144,33 @@ disp(mean(abs((y_perturbation_3-transpose(ytrue)))));
 disp(min(abs((y_perturbation_3-transpose(ytrue)))));
 disp(max(abs((y_perturbation_3-transpose(ytrue)))));
 
+disp('Order 4 perturbation mean and standard deviation')
+disp(mean(y_perturbation_4(101:end)))
+disp(sqrt(var(y_perturbation_4(101:end))))
+
+disp('Order 4 (with pruning) perturbation mean and standard deviation')
+disp(mean(y_perturbation_4_pruning(101:end)))
+disp(sqrt(var(y_perturbation_4_pruning(101:end))))
+
+disp('Accuracy error (order 4 perturbation) % deviation')
+disp(mean(100*(y_perturbation_4-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((y_perturbation_4-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((y_perturbation_4-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((y_perturbation_4-transpose(ytrue))./transpose(ytrue))));
+
+disp('Accuracy error (order 4 perturbation)')
+disp(mean(y_perturbation_4-transpose(ytrue)));
+disp(mean(abs((y_perturbation_4-transpose(ytrue)))));
+disp(min(abs((y_perturbation_4-transpose(ytrue)))));
+disp(max(abs((y_perturbation_4-transpose(ytrue)))));
+
+
+
+
 options_.ep.stochastic.algo=1;
+
+
+
 
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 0;
@@ -153,33 +192,39 @@ disp(mean(abs((ts0.data(2:end,1)-transpose(ytrue)))));
 disp(min(abs((ts0.data(2:end,1)-transpose(ytrue)))));
 disp(max(abs((ts0.data(2:end,1)-transpose(ytrue)))));
 
+
+
+
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 2;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
 ts2 = extended_path([], 8001, e_1, options_, M_, oo_);
 
-disp('Stochastic extended (order=2) path mean and standard deviation')
+disp('Stochastic extended (order=2, sparse tree) path mean and standard deviation')
 disp(mean(ts2.data(101:end,1)))
 disp(sqrt(var(ts2.data(101:end,1))))
 
-disp('Accuracy error (stochastic extended path, order=2) % deviation')
+disp('Accuracy error (stochastic extended path, order=2, sparse tree) % deviation')
 disp(mean(100*(ts2.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
 disp(mean(100*abs((ts2.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 disp(min(100*abs((ts2.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 disp(max(100*abs((ts2.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 
-disp('Accuracy error (stochastic extended path, order=2)')
+disp('Accuracy error (stochastic extended path, order=2, sparse tree)')
 disp(mean(ts2.data(2:end,1)-transpose(ytrue)));
 disp(mean(abs((ts2.data(2:end,1)-transpose(ytrue)))));
 disp(min(abs((ts2.data(2:end,1)-transpose(ytrue)))));
 disp(max(abs((ts2.data(2:end,1)-transpose(ytrue)))));
 
+
+
+
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 2;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
-options_.ep.stochastic.algo=0;
+options_.ep.stochastic.algo=0; // Full tree of future innovations
 ts2__ = extended_path([], 8001, e_1, options_, M_, oo_);
 options_.ep.stochastic.algo=1;
 
@@ -199,51 +244,113 @@ disp(mean(abs((ts2__.data(2:end,1)-transpose(ytrue)))));
 disp(min(abs((ts2__.data(2:end,1)-transpose(ytrue)))));
 disp(max(abs((ts2__.data(2:end,1)-transpose(ytrue)))));
 
+
+
+
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 2;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
 options_.ep.stochastic.hybrid_order = 2;
-ts2_ = extended_path([], 8001, e_1, options_, M_, oo_);
+ts2h = extended_path([], 8001, e_1, options_, M_, oo_);
 
-disp('Stochastic extended (order=2,hybrid) path mean and standard deviation')
-disp(mean(ts2_.data(101:end,1)))
-disp(sqrt(var(ts2_.data(101:end,1))))
+disp('Stochastic extended (order=2,hybrid, sparse tree) path mean and standard deviation')
+disp(mean(ts2h.data(101:end,1)))
+disp(sqrt(var(ts2h.data(101:end,1))))
 
-disp('Accuracy error (stochastic extended path, order=2, hybrid) % deviation')
-disp(mean(100*(ts2_.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
-disp(mean(100*abs((ts2_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(min(100*abs((ts2_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(max(100*abs((ts2_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp('Accuracy error (stochastic extended path, order=2, hybrid, sparse tree) % deviation')
+disp(mean(100*(ts2h.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts2h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts2h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts2h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 
-disp('Accuracy error (stochastic extended path, order=2, hybrid)')
-disp(mean(ts2_.data(2:end,1)-transpose(ytrue)));
-disp(mean(abs((ts2_.data(2:end,1)-transpose(ytrue)))));
-disp(min(abs((ts2_.data(2:end,1)-transpose(ytrue)))));
-disp(max(abs((ts2_.data(2:end,1)-transpose(ytrue)))));
+disp('Accuracy error (stochastic extended path, order=2, hybrid, sparse tree)')
+disp(mean(ts2h.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts2h.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts2h.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts2h.data(2:end,1)-transpose(ytrue)))));
+
+
+
+
+set_dynare_seed(seed);
+options_.ep.stochastic.order = 2;
+options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
+options_.ep.stochastic.quadrature.nodes = 3;
+options_.ep.stochastic.hybrid_order = 2;
+options_.ep.stochastic.algo = 0;
+ts2h__ = extended_path([], 8001, e_1, options_, M_, oo_);
+options_.ep.stochastic.algo = 1;
+
+disp('Stochastic extended (order=2,hybrid, full tree) path mean and standard deviation')
+disp(mean(ts2h__.data(101:end,1)))
+disp(sqrt(var(ts2h__.data(101:end,1))))
+
+disp('Accuracy error (stochastic extended path, order=2, hybrid, full tree) % deviation')
+disp(mean(100*(ts2h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts2h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts2h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts2h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+
+disp('Accuracy error (stochastic extended path, order=2, hybrid, full tree)')
+disp(mean(ts2h__.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts2h__.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts2h__.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts2h__.data(2:end,1)-transpose(ytrue)))));
+
+
+
+set_dynare_seed(seed);
+options_.ep.stochastic.order = 5;
+options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
+options_.ep.stochastic.quadrature.nodes = 3;
+options_.ep.stochastic.hybrid_order = 0;
+ts5 = extended_path([], 8001, e_1, options_, M_, oo_);
+
+disp('Stochastic extended (order=5, sparse tree) path mean and standard deviation')
+disp(mean(ts5.data(101:end,1)))
+disp(sqrt(var(ts5.data(101:end,1))))
+
+disp('Accuracy error (stochastic extended path, order=5, sparse tree) % deviation')
+disp(mean(100*(ts5.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts5.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts5.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts5.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+
+disp('Accuracy error (stochastic extended path, order=5, sparse tree)')
+disp(mean(ts5.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts5.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts5.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts5.data(2:end,1)-transpose(ytrue)))));
+
+
+
 
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 5;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
 options_.ep.stochastic.hybrid_order = 2;
-ts5_ = extended_path([], 8001, e_1, options_, M_, oo_);
+ts5h = extended_path([], 8001, e_1, options_, M_, oo_);
 
-disp('Stochastic extended (order=5,hybrid) path mean and standard deviation')
-disp(mean(ts5_.data(101:end,1)))
-disp(sqrt(var(ts5_.data(101:end,1))))
+disp('Stochastic extended (order=5,hybrid, sparse tree) path mean and standard deviation')
+disp(mean(ts5h.data(101:end,1)))
+disp(sqrt(var(ts5h.data(101:end,1))))
 
-disp('Accuracy error (stochastic extended path, order=5, hybrid) % deviation')
-disp(mean(100*(ts5_.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
-disp(mean(100*abs((ts5_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(min(100*abs((ts5_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(max(100*abs((ts5_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp('Accuracy error (stochastic extended path, order=5, hybrid, sparse tree) % deviation')
+disp(mean(100*(ts5h.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts5h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts5h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts5h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 
-disp('Accuracy error (stochastic extended path, order=5, hybrid)')
-disp(mean(ts5_.data(2:end,1)-transpose(ytrue)));
-disp(mean(abs((ts5_.data(2:end,1)-transpose(ytrue)))));
-disp(min(abs((ts5_.data(2:end,1)-transpose(ytrue)))));
-disp(max(abs((ts5_.data(2:end,1)-transpose(ytrue)))));
+disp('Accuracy error (stochastic extended path, order=5, hybrid, sparse tree)')
+disp(mean(ts5h.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts5h.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts5h.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts5h.data(2:end,1)-transpose(ytrue)))));
+
+
+
 
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 5;
@@ -257,61 +364,92 @@ disp('Stochastic extended (order=5, full tree) path mean and standard deviation'
 disp(mean(ts5__.data(101:end,1)))
 disp(sqrt(var(ts5__.data(101:end,1))))
 
-disp('Accuracy error (stochastic extended path, full tree, order=5) % deviation')
+disp('Accuracy error (stochastic extended path, order=5, full tree) % deviation')
 disp(mean(100*(ts5__.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
 disp(mean(100*abs((ts5__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 disp(min(100*abs((ts5__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 disp(max(100*abs((ts5__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 
-disp('Accuracy error (stochastic extended path, full tree, order=5)')
+disp('Accuracy error (stochastic extended path, order=5, full tree)')
 disp(mean(ts5__.data(2:end,1)-transpose(ytrue)));
 disp(mean(abs((ts5__.data(2:end,1)-transpose(ytrue)))));
 disp(min(abs((ts5__.data(2:end,1)-transpose(ytrue)))));
 disp(max(abs((ts5__.data(2:end,1)-transpose(ytrue)))));
+
+
+
+
+set_dynare_seed(seed);
+options_.ep.stochastic.order = 5;
+options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
+options_.ep.stochastic.quadrature.nodes = 3;
+options_.ep.stochastic.hybrid_ordre=2;
+options_.ep.stochastic.algo=0;
+ts5h__ = extended_path([], 8001, e_1, options_, M_, oo_);
+options_.ep.stochastic.algo=1;
+
+disp('Stochastic extended (order=5, hybrid, full tree) path mean and standard deviation')
+disp(mean(ts5h__.data(101:end,1)))
+disp(sqrt(var(ts5h__.data(101:end,1))))
+
+disp('Accuracy error (stochastic extended path, order=5, hybrid, full tree) % deviation')
+disp(mean(100*(ts5h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts5h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts5h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts5h__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+
+disp('Accuracy error (stochastic extended path, order=5, hybrid, full tree)')
+disp(mean(ts5h__.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts5h__.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts5h__.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts5h__.data(2:end,1)-transpose(ytrue)))));
+
+
+
+set_dynare_seed(seed);
+options_.ep.stochastic.order = 10;
+options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
+options_.ep.stochastic.quadrature.nodes = 3;
+options_.ep.stochastic.hybrid_order = 0;
+ts10 = extended_path([], 8001, e_1, options_, M_, oo_);
+
+disp('Stochastic extended (order=10, sparse tree) path mean and standard deviation')
+disp(mean(ts10.data(101:end,1)))
+disp(sqrt(var(ts10.data(101:end,1))))
+
+disp('Accuracy error (stochastic extended path, order=10, sparse tree) % deviation')
+disp(mean(100*(ts10.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts10.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts10.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts10.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+
+disp('Accuracy error (stochastic extended path, order=10, sparse tree)')
+disp(mean(ts10.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts10.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts10.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts10.data(2:end,1)-transpose(ytrue)))));
+
+
 
 set_dynare_seed(seed);
 options_.ep.stochastic.order = 10;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
 options_.ep.stochastic.hybrid_order = 2;
-ts10_ = extended_path([], 8001, e_1, options_, M_, oo_);
+ts10h = extended_path([], 8001, e_1, options_, M_, oo_);
 
-disp('Stochastic extended (order=2,hybrid) path mean and standard deviation')
-disp(mean(ts10_.data(101:end,1)))
-disp(sqrt(var(ts10_.data(101:end,1))))
+disp('Stochastic extended (order=10,hybrid, sparse tree) path mean and standard deviation')
+disp(mean(ts10h.data(101:end,1)))
+disp(sqrt(var(ts10h.data(101:end,1))))
 
-disp('Accuracy error (stochastic extended path, order=10, hybrid) % deviation')
-disp(mean(100*(ts10_.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
-disp(mean(100*abs((ts10_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(min(100*abs((ts10_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(max(100*abs((ts10_.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp('Accuracy error (stochastic extended path, order=10, hybrid, sparse tree) % deviation')
+disp(mean(100*(ts10h.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
+disp(mean(100*abs((ts10h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(min(100*abs((ts10h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
+disp(max(100*abs((ts10h.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
 
-disp('Accuracy error (stochastic extended path, order=10, hybrid)')
-disp(mean(ts10_.data(2:end,1)-transpose(ytrue)));
-disp(mean(abs((ts10_.data(2:end,1)-transpose(ytrue)))));
-disp(min(abs((ts10_.data(2:end,1)-transpose(ytrue)))));
-disp(max(abs((ts10_.data(2:end,1)-transpose(ytrue)))));
-
-set_dynare_seed(seed);
-options_.ep.stochastic.order = 10;
-options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
-options_.ep.stochastic.quadrature.nodes = 3;
-options_.ep.stochastic.algo=0;
-ts10__ = extended_path([], 8001, e_1, options_, M_, oo_);
-options_.ep.stochastic.algo=1;
-
-disp('Stochastic extended (order=10, full tree) path mean and standard deviation')
-disp(mean(ts10__.data(101:end,1)))
-disp(sqrt(var(ts10__.data(101:end,1))))
-
-disp('Accuracy error (stochastic extended path, full tree, order=10) % deviation')
-disp(mean(100*(ts10__.data(2:end,1)-transpose(ytrue))./transpose(ytrue)));
-disp(mean(100*abs((ts10__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(min(100*abs((ts10__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-disp(max(100*abs((ts10__.data(2:end,1)-transpose(ytrue))./transpose(ytrue))));
-
-disp('Accuracy error (stochastic extended path, full tree, order=10)')
-disp(mean(ts10__.data(2:end,1)-transpose(ytrue)));
-disp(mean(abs((ts10__.data(2:end,1)-transpose(ytrue)))));
-disp(min(abs((ts10__.data(2:end,1)-transpose(ytrue)))));
-disp(max(abs((ts10__.data(2:end,1)-transpose(ytrue)))));
+disp('Accuracy error (stochastic extended path, order=10, hybrid, sparse tree)')
+disp(mean(ts10h.data(2:end,1)-transpose(ytrue)));
+disp(mean(abs((ts10h.data(2:end,1)-transpose(ytrue)))));
+disp(min(abs((ts10h.data(2:end,1)-transpose(ytrue)))));
+disp(max(abs((ts10h.data(2:end,1)-transpose(ytrue)))));
