@@ -332,14 +332,14 @@ function. The expectation can be expressed as follows, utilizing the
 Gaussian probability density function:
 
 \[
-\mathbb{E}[\varphi(X)] = \frac{1}{\sigma_x \sqrt{2\pi}} \int_{-\infty}^{\infty} \varphi(x) e^{-\frac{x^2}{2\sigma^2_x}} \mathrm{d}x.
+   \mathbb{E}[\varphi(X)] = \frac{1}{\sigma_x \sqrt{2\pi}} \int_{-\infty}^{\infty} \varphi(x) e^{-\frac{x^2}{2\sigma^2_x}} \mathrm{d}x.
 \]
 
 This integral can be approximated using a well-established result (see
 \cite{JuddBook1998}):
 
 \[
-\int_{-\infty}^{\infty} \phi(x) e^{-x^2} \mathrm{d}x = \sum_{i=1}^m \omega_i \phi(x_i) + \frac{m! \sqrt{m}}{2^m} \frac{\phi^{(2m)}(\xi)}{(2m)!}
+   \int_{-\infty}^{\infty} \phi(x) e^{-x^2} \mathrm{d}x = \sum_{i=1}^m \omega_i \phi(x_i) + \frac{m! \sqrt{m}}{2^m} \frac{\phi^{(2m)}(\xi)}{(2m)!}
 \]
 
 for any $\xi \in \mathbb{R}$. Here, the last term on the right-hand
@@ -358,7 +358,7 @@ variables is required to evaluate $\mathbb{E}[\varphi(X)]$. We
 set $z = \frac{x}{\sigma_x \sqrt{2}}$ and use the following approximation for the expectation:
 
 \[
-\mathbb{E}[\varphi(X)] \approx \frac{1}{\sqrt{\pi}} \sum_{i=1}^m \omega_i \varphi(z_i).
+   \mathbb{E}[\varphi(X)] \approx \frac{1}{\sqrt{\pi}} \sum_{i=1}^m \omega_i \varphi(z_i).
 \]
 
 In our models, we often encounter multiple sources of uncertainty,
@@ -371,10 +371,10 @@ mapping $\mathbb{R}^{n_s}$ to $\mathbb{R}^n$, we utilize the following
 approximation:
 
 \[
-\begin{split}
-\mathbb{E}[\psi(X)] &=(2\pi)^{-\frac{m}{2}} \Sigma^{-\frac{1}{2}} \int_{\mathbb{R}^m} \psi(\mathbf{x}) e^{-\frac{1}{2} \mathbf{x}' \Sigma^{-1} \mathbf{x}} \mathrm{d}\mathbf{x} \\
-& \approx \pi^{-\frac{m}{2}} \sum_{i_1=1}^{n_s} \sum_{i_2=1}^{n_s} \cdots \sum_{i_m=1}^{n_s} \omega_{i_1} \omega_{i_2} \cdots \omega_{i_m} \psi(z_{i_1}^1, z_{i_2}^2, \ldots, z_{i_m}^m)
-\end{split}
+   \begin{split}
+      \mathbb{E}[\psi(X)] & =(2\pi)^{-\frac{m}{2}} \Sigma^{-\frac{1}{2}} \int_{\mathbb{R}^m} \psi(\mathbf{x}) e^{-\frac{1}{2} \mathbf{x}' \Sigma^{-1} \mathbf{x}} \mathrm{d}\mathbf{x}                             \\
+                          & \approx \pi^{-\frac{m}{2}} \sum_{i_1=1}^{n_s} \sum_{i_2=1}^{n_s} \cdots \sum_{i_m=1}^{n_s} \omega_{i_1} \omega_{i_2} \cdots \omega_{i_m} \psi(z_{i_1}^1, z_{i_2}^2, \ldots, z_{i_m}^m)
+   \end{split}
 \]
 
 where we define the change of variables
@@ -399,18 +399,18 @@ discussed in \textcite{Julier2000} and \textcite{Julier2002}.\newline
 integrate in $\mathbb R^{n_s}$ is to use a formula with \(2n_s + 1\)
 nodes. Defining matrix $P$ as \(P'P=\Sigma\), the nodes are given by:
 \[
-  \begin{cases}
-    x_1 = 0\\
-    x_{i} = \sqrt{n_s+\kappa P_i}\quad\text{for }i=1,\dots,n_s\\
-    x_{i} = -\sqrt{n_s+\kappa P_i}\quad\text{for }i=n_s+1,\dots,2n_s+1\\
-  \end{cases}
+   \begin{cases}
+      x_1 = 0                                                            \\
+      x_{i} = \sqrt{n_s+\kappa P_i}\quad\text{for }i=1,\dots,n_s         \\
+      x_{i} = -\sqrt{n_s+\kappa P_i}\quad\text{for }i=n_s+1,\dots,2n_s+1 \\
+   \end{cases}
 \]
 where $\kappa$ is a real positive scaling parameter, and the corresponding weights are defined by:
 \[
-  \begin{cases}
-    \omega_1 = \frac{\kappa}{m+\kappa}\\
-    \omega_i = \frac{1}{2(m+\kappa)}\quad\text{for all } i>0
-  \end{cases}
+   \begin{cases}
+      \omega_1 = \frac{\kappa}{m+\kappa} \\
+      \omega_i = \frac{1}{2(m+\kappa)}\quad\text{for all } i>0
+   \end{cases}
 \]
 The unscented transformation let us recover the mean and the
 covariance matrix exactly for any third order polynomial function
@@ -421,6 +421,144 @@ moment or characteristic of the distribution of $\varphi(X)$.\newline
 
 \subsection{Accuracy of the Stochastic extended path approach}
 
+To assess the accuracy of the stochastic extended path approach, we
+follow the methodology proposed by \textcite{CollardJuillard2001} and
+examine the asset pricing model introduced by
+\textcite{Burnside1998}. This model is particularly relevant here as
+it generates a significant difference between the deterministic steady
+state and the expectation, in this sense future uncertainty
+matters. It also has the advantage, as shown by
+\textcite{Burnside1998}, of having a closed-form solution. We can
+therefore assess approximation errors by comparing simulations with
+the stochastic extended path approach and simulations based on the
+exact solution. We do not claim that this model should be simulated
+using our approach, as perturbation is significantly more
+efficient. We consider this model solely to assess our approach's
+capability to address future uncertainty\footnote{Utilizing the
+   stochastic extended path approach is reasonable only when the model
+   exhibits significant nonlinearities, features occasionally binding
+   constraints, or deviates substantially from its steady
+   state.}.\newline
+
+\textcite{Burnside1998} shows, considering an endowment economy with a growth rate of dividends modelled as a gaussian AR(1), that the price-dividend ratio, $v_t$, obeys the following equations:
+\[
+   \begin{cases}
+      v_t = \beta \mathbb E_t\left[ e^{(1-\gamma)x_{t+1}}\left(1+v_{t+1}\right) \right] \\
+      x_t = (1-\rho)\mu + \rho x_{t-1} + \varepsilon_t
+   \end{cases}
+\]
+where $x_t$ is the growth rate of dividends, $\varepsilon_t$ is a
+gaussian white noise, $\beta$ a discount factor
+and $\nicefrac{1}{\gamma}$ the elasticity of intertemporal
+substitution.  Iterating forward on $v_t$ we find that $v_t$ is a
+discounted sum of conditional expectations of log-normal random
+variables. \textcite{Burnside1998} shows that the exact solution
+for $v_t$ is:
+\[
+   v_t = \sum_{i=1}^\infty \beta^i e^{a_i + b_i (x_t-\mu)}
+\]
+where:
+\[
+   a_i = (1-\gamma)\mu i + \frac{(1-\gamma)^2\sigma^2}{2(1-\rho)^2}\left( i - 2\rho\frac{1-\rho^i}{1-\rho} + \rho^2\frac{1-\rho^{2i}}{1-\rho^2} \right)
+\]
+and
+\[
+   b_i = \frac{(1-\gamma)\rho\left( 1-\rho \right)^i}{1-\rho}
+\]
+The deterministic steady state is obtained by setting $x_t=\mu$ and $\sigma^2=0$:
+\[
+   v^{\star} = \sum_{i=1}^\infty e^{(1-\gamma)\mu i}
+\]
+and one can easily show that the unconditional expectation of the price-dividend ratio is:
+\[
+   \mathbb E\left[v_t\right] = \sum_{i=1}^\infty \beta^ie^{a_i + \frac{1}{2}\frac{b_i^2\sigma^2}{1-\rho^2}} > v^{\star}
+\]
+Considering the benchmark calibration utilized in
+\textcite{CollardJuillard2001} and \textcite{Burnside1998}, we
+obtain $y^{\star} \approx 12.3035$
+and $\mathbb{E}\left[v_t \right] = 12.4815$. By incorporating future
+uncertainty, we determine that the unconditional expectation exceeds
+the deterministic steady state by $1.4466\%$\footnote{Alternatively,
+   we can compare the deterministic steady state with the risky steady
+   state, which assumes the absence of current shocks while
+   acknowledging the possibility of future shocks:
+   \[
+      \tilde v = \sum_{i=1}^\infty \beta^i e^{a_i}
+   \]
+   This value would be approximately equal to 12.4812 based on our
+   calibration.}. Is it possible to account for this gap using the
+stochastic extended path approach?\newline
+
+
+\begin{table}[H]
+   \centering
+   \begin{tabular}{l l l l l l }
+      \hline
+                               & P1     & P2                     & EP     & SEP$^{\star}$(2) & SEP(2) \\
+      \hline\hline
+      \\[-1em]
+      Average abs. diff. in \% & 1.4261 & 0.0193                 & 1.4241 & 1.2205           & 1.2531 \\
+      Min. abs. diff.  in \%   & 1.4239 & 5.4777$\times 10^{-6}$ & 1.4236 & 0.8874           & 0.9201 \\
+      Max. abs. diff.  in \%   & 1.4707 & 0.0527                 & 1.4250 & 1.6366           & 1.6690 \\ [1ex]
+      \hline
+      \\ [.25em]
+   \end{tabular}
+   \caption{\textbf{Comparison with the true solution.} Columns P1 and
+      P2 present the deviations from the true solution for first and
+      second order perturbations. EP denotes the extended path (which
+      assumes no future uncertainty), while the SEP$^{\star}$ and SEP
+      columns correspond to the second order stochastic extended path,
+      using a complete tree and a sparse tree, respectively.}
+   \label{table:1}
+\end{table}
+
+
+We build table \ref{table:1} by simulating the model with the true
+solution, truncating the infinite sum after 800 periods, and comparing
+these ``true data'' with the simulations obtained with the
+perturbation or stochastic extended path approaches. As expected, the
+extended path simulations resemble those generated with a first order
+approximation around the steady state. The accuracy errors are
+slightly smaller with the extended path approach; however, both
+methods operate under the principle of certainty equivalence. The
+second-order stochastic extended path, whether utilizing a complete
+tree or a sparse tree, shows improvement over the extended path
+method. Nevertheless, we are still significantly distant from the
+accuracy achieved with a local second-order approximation around the
+deterministic steady state. We observe that the accuracy errors
+decrease as the approximation order of the stochastic extended path
+increases, although the improvement in accuracy is rather slow as the
+approximation order increases.\newline
+
+How large should the approximation order be to beat the second order
+perturbation? To obtain a lower bound we can compute analytically the
+unconditional expectation of $v$ when the model is solved with
+stochastic extended path, under the assumption that there
+are no accuracy errors in the quadratures used in each node of the tree
+of future histories. For the extended path we have:
+\[
+   v_t^{(0)} = \sum_{i=1}^\infty \beta^i e^{a_i^{(0)} + b_i (x_t-\mu)}
+\]
+with
+\[
+   a_i^{(0)} = (1-\gamma)\mu i
+\]
+so that the unconditional expectation is:
+\[
+   \mathbb E\left[v_t^{(0)}\right] = \sum_{i=1}^\infty \beta^ie^{a_i^{(0)} + \frac{1}{2}\frac{b_i^2\sigma^2}{1-\rho^2}} < \mathbb E\left[v_t\right]
+\]
+More generally, with an approximation of order $p$, we have:
+\[
+   v_t^{(p)} = \sum_{i=1}^\infty \beta^i e^{a_i^{(p)} + b_i (x_t-\mu)}
+\]
+with
+\[
+   a_i^{(p)} =
+   \begin{cases}
+      (1-\gamma)\mu i \\
+      (1-\gamma)\mu i
+   \end{cases}
+\]
 \section{Numerical illustration}\label{sec:3}
 
 We consider a Real Business Cycle model with irreversible investment. The social planner problem is:
