@@ -27,7 +27,8 @@ function y=exact_solution(M,oo,n)
     end
 
     skipline()
-    dprintf('deterministic stead state: %.9f', sum(beta.^i.*exp(theta*xbar*i)))
-    dprintf('stochastic steady state:   %.9f', sum(beta.^i.*exp(a)))
-    dprintf('unconditional expectation: %.9f', sum(beta.^i.*exp(a).*exp(.5*b.^2*sigma2/(1-rho^2))))
+    dprintf('deterministic stead state:          %.9f', sum(beta.^i.*exp(theta*xbar*i)))
+    dprintf('stochastic steady state:            %.9f', sum(beta.^i.*exp(a)))
+    dprintf('unconditional expectation:          %.9f', sum(beta.^i.*exp(a).*exp(.5*b.^2*sigma2/(1-rho^2))))
+    dprintf('unconditional expectation (SEP(0)): %.9f', sum(beta.^i.*exp(theta*xbar*i).*exp(.5*b.^2*sigma2/(1-rho^2))))
     skipline()
