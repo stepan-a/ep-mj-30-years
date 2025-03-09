@@ -553,12 +553,105 @@ More generally, with an approximation of order $p$, we have:
 \]
 with
 \[
-   a_i^{(p)} =
+   a_i^{(p)} = (1-\gamma)\mu i +
    \begin{cases}
-      (1-\gamma)\mu i \\
-      (1-\gamma)\mu i
+      \frac{(1-\gamma)^2\sigma^2}{2(1-\rho)^2}\left( i - 2\rho\frac{1-\rho^i}{1-\rho} + \rho^2\frac{1-\rho^{2i}}{1-\rho^2} \right)\quad\text{if }i\leq p \\
+      \frac{(1-\gamma)^2\sigma^2}{2(1-\rho)^2}\left( p - 2\rho\frac{\rho^{i-p}-\rho^i}{1-\rho} + \rho^2\frac{\rho^{2(i-p)}-\rho^{2i}}{1-\rho^2} \right)\quad\text{otherwise.}
    \end{cases}
 \]
+so that the unconditional expectation is:
+\[
+   \mathbb E\left[v_t^{(p)}\right] = \sum_{i=1}^\infty \beta^ie^{a_i^{(p)} + \frac{1}{2}\frac{b_i^2\sigma^2}{1-\rho^2}} < \mathbb E\left[v_t\right]
+\]
+Table \ref{table:2} presents the relative difference, expressed as a
+percentage, between the true unconditional expectation of \(v\) and
+the exact unconditional expectation of \(v^{(p)}\) — that is, the
+price-dividends ratio calculated by removing the shocks after
+period \(t+p\). To effectively capture the impacts of future
+uncertainty in our calibration, a large value of \(p\) is
+essential. In this context, the perturbation approach proves to be
+considerably more efficient.\newline
+
+\subsection{An hybrid approach}
+
+Capturing the full effect of future volatility would, in principle,
+require a high-order stochastic extended path. On the other hand, the
+perturbation approach provides an alternative and more accurate
+approximation of the effects of future volatility. The idea behind the
+hybrid stochastic extended path is to combine the treatment of
+important nonlinearities in the model (via the stochastic extended
+path method) with a broader treatment of future volatility effects
+(via a perturbation approach).\newline
+
+Let us introduce $\sigma$, called the \emph{stochastic scale} of the model, such that
+\[
+   \varepsilon_{t+1} = \sigma \eta_{t+1}
+\]
+where $\eta_t$ is a $n_s\times 1$ gaussian random vector with zero mean
+and covariance matrix $\Sigma_{\eta}$. It follows that the covariance of $\varepsilon_{t}$
+is then $\Sigma = \sigma^2 \,\Sigma_{\eta}$. Consider the (unknown) solution function $g$:
+\[
+   y_t = g\left(y_{t-1}, \varepsilon_t, \sigma\right)
+\]
+so that the original model \ref{eq:model} is satisfied. Plugging $g$ into this model, we obtain:
+\[
+   \mathbb E_t\mathcal F\left( y_{t-1}, \varepsilon_t, \eta_{t+1}, \sigma\right)
+   =
+   \mathbb E_t f\left(
+   y_{t-1},
+   g\left(y_{t-1},\varepsilon_t,\sigma\right),
+   g\left(g\left(y_{t-1}, \varepsilon_t,\sigma\right), \sigma, \eta_{t+1}, \sigma\right),
+   \varepsilon_t\right) = 0
+\]
+From the perspective of the expectation operator $\mathbb E_t$, $\eta_{t+1}$ is the relevant source of uncertainty.\newline
+
+The \emph{hybrid stochastic extended path} approach considers a Taylor expansion
+of $\mathcal F$ in the single direction of $\sigma$. That is, we expand
+$\mathbb E_t f(\cdot)$ in powers of $\sigma$:
+\[
+   \begin{split}
+      \mathbb E_t\mathcal F\left( y_{t-1}, \varepsilon_t, \eta_{t+1}, \sigma\right) =
+       & f\left(y_{t-1}, g\left(y_{t-1},\varepsilon_t,0\right),
+      g\left(g\left(y_{t-1}, \varepsilon_t,0\right), 0, 0, 0\right),
+      \varepsilon_t\right)                                                                                             \\
+       & +\mathbb E_t\left[\sum_{i=1}^{\infty}\frac{1}{i!}\frac{\partial^i\mathcal F}{\partial\sigma^i}\sigma^i\right]
+   \end{split}
+\]
+If we consider a full tree of future histories, in the first $p$
+periods of the stochastic extended path, the quadrature method
+includes both deterministic effects and future volatility. After these
+first $p$ periods, starting in period $t+p-1$, the deterministic
+solution (with zero shocks) corresponds to the leading term of the
+above expansion.  A perturbation expansion in the direction
+of $\sigma$ can correct for longer-run volatility effects after
+period $t+p-1$.\newline
+
+Concretely, the values in period $t+p$, which appear in the quadrature for period $t+p-1$, can be corrected
+as follows:
+\[
+   \widetilde{y}_{t+p+1}
+   = y_{t+p+1}
+   +
+   \frac{1}{2}g_{\sigma^2}
+\]
+where $y_{t+p+1}$ is the (deterministic) value obtained by setting shocks to zero
+beyond period $t+p$, and $g_{\sigma^2}$ is the second derivative of the solution
+function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
+
+Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:\newline
+\begin{enumerate}
+   \item A stochastic extended path method of order $p$ to handle large short-run
+         nonlinearities and occasionally binding constraints (such as a zero lower bound).
+   \item A perturbation-based correction, capturing how uncertainty well beyond
+         $p$ periods contributes to the current state via higher-moment (e.g.\ second-order)
+         terms.
+\end{enumerate}
+
+In doing so, we retain the key advantages of extended path for addressing strong
+nonlinearities in the near term, while perturbation handles the average impact
+of random fluctuations in the longer run without exploding the size of the
+underlying system of equations.
+
 \section{Numerical illustration}\label{sec:3}
 
 We consider a Real Business Cycle model with irreversible investment. The social planner problem is:
