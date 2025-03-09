@@ -40,6 +40,21 @@
 \newcommand{\textfrc}[1]{{\frcseries#1}}
 \newcommand{\mathfrc}[1]{\textit{\textfrc{#1}}}
 
+\usepackage{rotating}
+
+\makeatletter
+\newenvironment{sqcases}{%
+  \matrix@check\sqcases\env@sqcases
+}{%
+  \endarray\right.%
+}
+\def\env@sqcases{%
+  \let\@ifnextchar\new@ifnextchar
+  \left\lbrack
+  \def\arraystretch{1.2}%
+  \array{@{}l@{\quad}l@{}}%
+}
+\makeatother
 
 \newcolumntype{.}{D{.}{.}{-1}}
 \newcolumntype{a}{D{.}{.}{-20}}
@@ -194,7 +209,7 @@ condition for the endogenous variables. As long as we know where the
 economy goes in the long run (for instance, along a balanced growth
 path), the method described below can be accommodated.
 
-\subsection{Perfect foresight model}
+\subsection{Perfect foresight model}\label{sec:pf}
 
 Perfect foresight models are commonly employed to generate impulse
 response functions. Starting with an initial condition \(y_{t-1}\) and
@@ -204,13 +219,13 @@ assumptions that \emph{(i)} subsequent shocks are set to their
 expected values, \emph{(ii)} the model reaches the steady
 state \(y^*\) in period \(t+H\).
 
-\[
+\begin{equation}\label{eq:pf}
    \begin{cases}
       f\left(y_{t-1},y_t,y_{t+1},\varepsilon_t\right) = 0                            \\
       f\left(y_{t-1+h}, y_{t+h}, y_{t+h+1}, 0\right) =0 \quad\forall\, h=0,\dots,H-2 \\
       f\left(y_{t+H-2}, y_{t+H-1}, y^{\star}, 0\right) =0
    \end{cases}
-\]
+\end{equation}
 
 \smallskip\smallskip
 
@@ -387,7 +402,7 @@ the number of shocks. Computationally more efficient
 alternatives exist.\newline
 
 
-\subsubsection{Unscented transformations}
+\subsubsection{Unscented transforms}
 
 As the number of shocks increases, the Gauss-Hermite formula and
 tensor products become impractical. An alternative approach is to
@@ -419,14 +434,57 @@ moment or characteristic of the distribution of $\varphi(X)$.\newline
 
 \subsection{Trees of possible futures}
 
+Given a set of weights and
+nodes \((\omega_i, \epsilon_i)_{i=1}^m\), a stochastic extended path
+simulation of order 1 is constructed by replacing the auxiliary
+perfect foresight model, as presented in equation \ref{eq:pf}, with:
+
+\begin{equation}\label{eq:spf:1}
+   \begin{split}
+                                                                             & \sum_{i=1}^m\omega_i f\left( {\color{blue} y_{t-1}}, {\color{red} y_t}, y_{t+1}^i, \varepsilon_t\right) = 0                  \\
+      \begin{sideways}\hspace{-.6cm}\footnotesize{i=1,\dots,m}\end{sideways} & \begin{sqcases}
+                                                                                  f\left( {\color{red}y_t}, y_{t+1}^i, y_{t+2}^i, \epsilon_i \right) = 0\\
+                                                                                  f\left( y_{t+1}^i, y_{t+2}^i, y_{t+3}^i, 0 \right) = 0\\
+                                                                                  \vdots\\
+                                                                                  f\left( y_{t+H-2}^i, y_{t+H-1}^i, {\color{blue}y^{\star}}, 0 \right) = 0\\
+                                                                               \end{sqcases}
+   \end{split}
+\end{equation}
+
+in the main loop of the extended path algorithm \ref{alg:ep}.  The
+initial block of \(n\) rows serves to approximate the conditional
+expectation for period \( t \). Following this block, there
+are \( m \) deterministic trajectories leading to the steady
+state. For each shock state \( \epsilon \) in period \( t+1 \), we
+must solve a perfect foresight problem over \( H-2 \) periods, akin to
+the formulation presented in equation \ref{eq:pf}.It is important to
+recognize that these problems cannot be treated in isolation due to
+their shared initial condition, \( y_t \), which remains to be
+determined. The current system of equations is larger than the one
+addressed in section \ref{sec:pf}, comprising \( n + nm(H-1) \)
+equations compared to the \( nH \) equations of the perfect foresight
+model. Nevertheless, we can still apply a similar Newton-based
+approach to tackle the auxiliary model. It is important to note,
+however, that the Jacobian matrix of the stacked equations is no
+longer block tridiagonal.\newline
+
+Obviously, we would like to go further by approximating the
+conditional expectations over the first p periods.\newline
+
+\subsubsection{Future as a perfect m-ary tree} The most obvious way to
+account for future uncertainty between $t$ and $t+p$ is to consider all the possible
+sequences of discretized shocks on $p$ periods. This correspond to a perfect $m$-ary tree. Figure
+represent
+
+
 \subsection{Accuracy of the Stochastic extended path approach}
 
 To assess the accuracy of the stochastic extended path approach, we
-follow the methodology proposed by \textcite{CollardJuillard2001} and
+follow \textcite{CollardJuillard2001} and
 examine the asset pricing model introduced by
 \textcite{Burnside1998}. This model is particularly relevant here as
 it generates a significant difference between the deterministic steady
-state and the expectation, in this sense future uncertainty
+state and the unconditional expectation, in this sense future uncertainty
 matters. It also has the advantage, as shown by
 \textcite{Burnside1998}, of having a closed-form solution. We can
 therefore assess approximation errors by comparing simulations with
@@ -440,7 +498,9 @@ capability to address future uncertainty\footnote{Utilizing the
    constraints, or deviates substantially from its steady
    state.}.\newline
 
-\textcite{Burnside1998} shows, considering an endowment economy with a growth rate of dividends modelled as a gaussian AR(1), that the price-dividend ratio, $v_t$, obeys the following equations:
+\textcite{Burnside1998} shows, considering an endowment economy with
+a growth rate of dividends modelled as a gaussian AR(1), that the
+price-dividend ratio, $v_t$, obeys the following equations:
 \[
    \begin{cases}
       v_t = \beta \mathbb E_t\left[ e^{(1-\gamma)x_{t+1}}\left(1+v_{t+1}\right) \right] \\
@@ -513,22 +573,22 @@ stochastic extended path approach?\newline
 \end{table}
 
 
-We build table \ref{table:1} by simulating the model with the true
-solution, truncating the infinite sum after 800 periods, and comparing
-these ``true data'' with the simulations obtained with the
-perturbation or stochastic extended path approaches. As expected, the
-extended path simulations resemble those generated with a first order
-approximation around the steady state. The accuracy errors are
-slightly smaller with the extended path approach; however, both
-methods operate under the principle of certainty equivalence. The
-second-order stochastic extended path, whether utilizing a complete
-tree or a sparse tree, shows improvement over the extended path
-method. Nevertheless, we are still significantly distant from the
-accuracy achieved with a local second-order approximation around the
-deterministic steady state. We observe that the accuracy errors
-decrease as the approximation order of the stochastic extended path
-increases, although the improvement in accuracy is rather slow as the
-approximation order increases.\newline
+We constructed Table \ref{table:1} by simulating the model using the
+true solution, terminating the infinite sum after 800 periods, and
+comparing these "true data" with simulations generated via
+perturbation and stochastic extended path methods. As anticipated, the
+extended path simulations closely resemble those produced by a
+first-order approximation around the steady state. While the accuracy
+errors are marginally lower with the extended path approach, both
+methodologies operate under certainty equivalence. The second-order
+stochastic extended path, whether implemented through a complete tree
+or a sparse tree, demonstrates notable improvements compared to the
+extended path method. However, we still observe a significant gap in
+accuracy compared to the local second-order approximation around the
+deterministic steady state. Our analysis indicates that accuracy
+errors diminish as the order of approximation in the stochastic
+extended path increases; however, the improvement tends to be rather
+slow as the approximation order increases.\newline
 
 How large should the approximation order be to beat the second order
 perturbation? To obtain a lower bound we can compute analytically the
@@ -742,49 +802,46 @@ into account the stochastic dimension of the non linearity.
          \tikzset{grow'=right,level distance=80pt}
          \tikzset{execute at begin node=\strut}
          \tikzset{every tree node/.style={anchor=base west}}
-         \Tree [.$u_t$ [.$u^1_{t+1}$ [.$u^1_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_1\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_1\omega_2$} ]
-         [.$u^3_{t+3}$  \edge[white]; \color{red}{$\omega_1\omega_1\omega_3$} ]]
-         [.$u^2_{t+2}$ [.$u^1_{t+3}$  \edge[white]; \color{red}{$\omega_1\omega_2\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_2\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_2\omega_3$} ]]
-         [.$u^3_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_3\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_3\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_1\omega_3\omega_1$} ]]]
-         [.$u^2_{t+1}$ [.$u^1_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_1\omega_1$} ]
-         [.$u^2_{t+3}$  \edge[white]; \color{red}{$\omega_2\omega_1\omega_2$} ]
-         [.$u^3_{t+3}$  \edge[white]; \color{red}{$\omega_2\omega_1\omega_3$} ]]
-         [.$u^2_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_2\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_2\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_2\omega_3$} ]]
-         [.$u^3_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_3\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_3\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_2\omega_3\omega_3$} ]]]
-         [.$u^3_{t+1}$ [.$u^1_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_1\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_1\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_1\omega_2$} ]]
-         [.$u^2_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_2\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_2\omega_2$} ]
-         [.$u^3_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_2\omega_3$} ]]
-         [.$u^3_{t+2}$ [.$u^1_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_3\omega_1$} ]
-         [.$u^2_{t+3}$ \edge[white]; \color{red}{$\omega_3\omega_3\omega_2$} ]
-         [.$u^3_{t+3}$  \edge[white]; \color{red}{$\omega_3\omega_3\omega_3$} ]]] ]
+         \Tree [.$\varepsilon_t$ [.$\epsilon^2_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+         [.$\epsilon^1_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+         [.$\epsilon^3_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]]
       \end{tikzpicture}}
    \bigskip\bigskip
-   \caption{\textbf{Paths of  future innovations.} Illustration  with a
-   scalar  innovation,   $u$,  $S=3$,  and   $p=3$  Hermite  Gaussian
-   quadrature      nodes      $x^1=-\frac{\sqrt{6}}{2}$,     $x^2=0$,
-   $x^3=\frac{\sqrt{6}}{2}$,  and the  associated  quadrature weights
-   $\omega_1      =      \frac{\sqrt{\pi}}{6}$,      $\omega_2      =
-      \frac{2\sqrt{\pi}}{3}$,  $\omega_3  =  \frac{\sqrt{\pi}}{6}$.   By
-   construction       we       have      that       $\sum_{i,j,k=1}^{p=3}
-      \omega_i\omega_j\omega_k = \pi^{\frac{3}{2}}$.  Up to the constant
-   of   integration   $\pi^{\frac{3}{2}}$,   the   cumulated   weight
-   $\omega_i\omega_j\omega_k$   has   to   be  interpreted   as   the
-   probability of  a particular  sequence of future  innovations. The
-   central  path, \textit{ie} the sequence $\{u^2_{t+1},u^2_{t+1},u^2_{t+3}\}$,
-   is      the     most      likely,      its     probability      is
-   $\omega_2\omega_2\omega_2\pi^{-\frac{3}{2}}=\nicefrac{8}{27}$.}
+   \caption{\textbf{Paths of  future innovations as a perfect tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Perfect ternary tree of length 3, followed by sequences of zeros (the leafs). Conditional expectations are estimated at the root of the tree and at three non-terminal nodes (integration nodes in $t+1$). The leafs, after the terminal nodes of the perfect tree (integration nodes in $t+2$), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
+ \end{figure}
+
+ \begin{figure}[H]
+   \label{sep:sparse-tree}
+   \centering
+   {\tiny
+      \begin{tikzpicture}
+         \tikzset{grow'=right,level distance=80pt}
+         \tikzset{execute at begin node=\strut}
+         \tikzset{every tree node/.style={anchor=base west}}
+         \Tree [.$\varepsilon_t$ [.$\epsilon^2_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+         [.$\epsilon^1_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+         [.$\epsilon^3_{t+1}$
+         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]]
+      \end{tikzpicture}}
+   \bigskip\bigskip
+   \caption{\textbf{Paths of  future innovations as a sparse tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Perfect ternary tree of length 3, followed by sequences of zeros (the leafs). Conditional expectations are estimated at the root of the tree and at three non-terminal nodes (integration nodes in $t+1$). The leafs, after the terminal nodes of the perfect tree (integration nodes in $t+2$), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
 \end{figure}
 
 \newpage
