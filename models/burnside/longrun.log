@@ -83,6 +83,7 @@ x           -0.1105   0.0458  -0.2605   0.1268  -0.1384
 deterministic stead state:        12.303514628
 stochastic steady state:          12.481236582
 unconditional expectation:        12.481499921
+unconditional expectation (EP):   12.303774284
 
 Share of accounted for unconditional expectation:
 
@@ -393,4 +394,4 @@ ans =
 
    12.4834
 
-Total computing time : 0h00m01s
+Total computing time : 0h00m00s
