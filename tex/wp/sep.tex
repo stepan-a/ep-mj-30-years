@@ -1,6 +1,6 @@
 % Compiled with TeXLive 2011.
 \synctex=1
-\documentclass[a4paper,12pt]{amsart}
+\documentclass[a4paper,11pt]{amsart}
 
 \usepackage[a4paper]{geometry}
 \usepackage[backend=biber,citestyle=authoryear]{biblatex}
@@ -12,7 +12,8 @@
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{psfrag}
-\usepackage{dcolumn}
+\usepackage{siunitx}
+\usepackage{caption}
 \usepackage{multirow}
 \usepackage{hyperref}
 \usepackage{subfigure}
@@ -56,8 +57,16 @@
 }
 \makeatother
 
-\newcolumntype{.}{D{.}{.}{-1}}
-\newcolumntype{a}{D{.}{.}{-20}}
+\newcommand\xput[2][0.5]{%
+    \rule{#1\linewidth}{0pt}\makebox[0pt][c]{#2}\hfill}
+
+
+\sisetup{table-format=3.2, % Adjust for needed decimal places
+    table-number-alignment=center % Centers the numbers
+}
+
+\captionsetup{skip=10pt}
+
 \setlength{\parindent}{0pt}
 
 \makeatletter
@@ -75,8 +84,7 @@
 
 \pdfcompresslevel=9
 
-\hypersetup{
-    bookmarks=false,
+\hypersetup{bookmarks=false,
     unicode=true,
     pdftoolbar=false,
     pdfmenubar=false,
@@ -163,12 +171,12 @@ periods, with subsequent shocks set to their expected
 values.  Agents then expect that the
 economy goes back to the deterministic steady state.\newline
 
-Section \ref{sec:1} introduces the class of models being examined and
-the Extended Path approach. Section \ref{sec:2} addresses
+Section~\ref{sec:1} introduces the class of models being examined and
+the Extended Path approach. Section~\ref{sec:2} addresses
 modifications to the Extended Path approach to incorporate the impact
 of future uncertainty. Additionally, we conduct accuracy checks using
 a model where future uncertainty is significant and for which a
-closed-form solution is available. Section \ref{sec:3} presents a
+closed-form solution is available. Section~\ref{sec:3} presents a
 numerical illustration considering a Real Business Cycle (RBC) model
 with irreversible investment.
 
@@ -186,8 +194,7 @@ is a continuous function. The innovations are assumed to be
 independent and identically distributed and follow a Gaussian
 distribution: \( \mathcal N(0,\Sigma) \). The assumption regarding the
 distribution of innovations can be relaxed; however, this would
-necessitate the use of different quadrature rules in section
-\ref{sec:2}. The conditional expectation is presented above the
+necessitate the use of different quadrature rules in section~\ref{sec:2}. The conditional expectation is presented above the
 function $f$, but we could readily extend this to consider conditional
 expectations under a nonlinear function by incorporating additional
 auxiliary variables. Similarly, we could address an arbitrary number
@@ -229,7 +236,7 @@ state \(y^*\) in period \(t+H\).
 
 \smallskip\smallskip
 
-Comparing this system of equations to equation \ref{eq:model},
+Comparing this system of equations to equation \eqref{eq:model},
 assumption \emph{(i)} suggests that it is legitimate to pass the
 expectation operator inside the function \(f\). This is obviously a
 crude approximation, since \(f\) is a priori a non-linear
@@ -279,8 +286,7 @@ use the values of the endogenous variables from the first period of
 this auxiliary model as the values of the endogenous variables in
 period \(t\) of the stochastic simulation. Below is a sketch of the algorithm:\newline
 
-\algsetup{
-   linenosize=\small,
+\algsetup{linenosize=\small,
    linenodelimiter=.
 }
 \begin{algorithm}[H]
@@ -437,7 +443,7 @@ moment or characteristic of the distribution of $\varphi(X)$.\newline
 Given a set of weights and
 nodes \((\omega_i, \epsilon_i)_{i=1}^m\), a stochastic extended path
 simulation of order 1 is constructed by replacing the auxiliary
-perfect foresight model, as presented in equation \ref{eq:pf}, with:
+perfect foresight model, as presented in equation \eqref{eq:pf}, with:
 
 \begin{equation}\label{eq:spf:1}
    \begin{split}
@@ -451,17 +457,17 @@ perfect foresight model, as presented in equation \ref{eq:pf}, with:
    \end{split}
 \end{equation}
 
-in the main loop of the extended path algorithm \ref{alg:ep}.  The
+in the main loop of the extended path algorithm~\ref{alg:ep}.  The
 initial block of \(n\) rows serves to approximate the conditional
 expectation for period \( t \). Following this block, there
 are \( m \) deterministic trajectories leading to the steady
 state. For each shock state \( \epsilon \) in period \( t+1 \), we
 must solve a perfect foresight problem over \( H-2 \) periods, akin to
-the formulation presented in equation \ref{eq:pf}.It is important to
+the formulation presented in equation \eqref{eq:pf}. It is important to
 recognize that these problems cannot be treated in isolation due to
-their shared initial condition, \( y_t \), which remains to be
+their shared initial condition, \(y_t\), which remains to be
 determined. The current system of equations is larger than the one
-addressed in section \ref{sec:pf}, comprising \( n + nm(H-1) \)
+addressed in section \eqref{sec:pf}, comprising \( n + nm(H-1) \)
 equations compared to the \( nH \) equations of the perfect foresight
 model. Nevertheless, we can still apply a similar Newton-based
 approach to tackle the auxiliary model. It is important to note,
@@ -471,10 +477,209 @@ longer block tridiagonal.\newline
 Obviously, we would like to go further by approximating the
 conditional expectations over the first p periods.\newline
 
-\subsubsection{Future as a perfect m-ary tree} The most obvious way to
-account for future uncertainty between $t$ and $t+p$ is to consider all the possible
-sequences of discretized shocks on $p$ periods. This correspond to a perfect $m$-ary tree. Figure
-represent
+\subsubsection{Future as a perfect m-ary tree}\label{sec:perfect-m-ary-tree} The most obvious way to
+account for future uncertainty between $t$ and $t+p$ is to consider
+all the possible sequences of discretized shocks on $p$ periods. This
+correspond to a perfect $m$-ary tree. Figure~\ref{fig:sep:tree}
+represent such a tree for the second order stochastic extended
+path. The $m$-ary tree's leaves are zero shock trajectories between
+periods $t+p+1$ and $t+H-1$ of the auxiliary model. Integral
+approximations for conditional expectations are calculated at each
+node of the tree, except for the terminal nodes where we revert to a
+standard perfect foresight model.\newline
+
+At the base of the tree, corresponding to period \( t \) of the auxiliary model, we must have:
+
+\begin{equation}\label{sep:perfect:0}\tag{4.a}
+   \sum_{i_1=1}^m \omega_{i_1} f\left({\color{blue}y_{t-1}}, {\color{red}y_t}, y_{t+1}^{i_1}, \varepsilon_t \right) = 0
+\end{equation}
+
+Moving to the first level of the tree, representing period \( t+1 \) of the auxiliary model, we must satisfy the following \( m \) equations, one for each node:
+
+\begin{equation}\label{sep:perfect:1}\tag{4.b}
+   \sum_{i_2=1}^m \omega_{i_2} f\left({\color{red}y_{t}}, y_{t+1}^{i_1}, y_{t+1}^{i_2,i_1}, \epsilon_{i_1} \right) = 0\,\, \forall\, i_1\in \{1,\dots,m\}
+\end{equation}
+
+In the second level of the tree, we encounter \( m^2 \) equations that must be fulfilled:
+
+\begin{equation}\label{sep:perfect:2}\tag{4.c}
+   \sum_{i_3=1}^m \omega_{i_3} f\left(y_{t+1}^{i_1}, y_{t+2}^{i_2, i_1}, y_{t+3}^{i_3,i_2,i_1}, \epsilon_{i_2} \right) = 0\,\,  \forall\, (i_1,i_2)\in \{1,\dots,m\}^2
+\end{equation}
+
+This process continues up to level \(p-1\) of the tree, where \(m^{p-1}\) equations must similarly be satisfied:
+
+\begin{equation}\label{sep:perfect:p}\tag{4.d}
+   \sum_{i_p=1}^m \omega_{i_p} f\left(y_{t+p-2}^{i_{p-2},\ldots,i_1}, y_{t+p-1}^{i_{p-1},\ldots,i_1}, y_{t+p}^{i_p,\ldots,i_1}, \epsilon_{i_{p-1}} \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p-1})\in \{1,\dots,m\}^{p-1}
+\end{equation}
+
+Subsequently, starting from the terminal nodes of the \(m\)-ary tree of height \( p \), we must resolve \(m^p\) perfect foresight problems over \(H-p-1\) periods:
+
+\begin{equation}\label{sep:perfect:leafs}\tag{4.e}
+   \begin{split}
+       & f\left(y_{t+p-1}^{i_{p-1},\ldots,i_1}, y_{t+p}^{i_{p},\ldots,i_1}, y_{t+p+1}^{i_p,\ldots,i_1}, \epsilon_{i_{p}} \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p} \\
+       & f\left(y_{t+p}^{i_{p},\ldots,i_1}, y_{t+p+1}^{i_{p},\ldots,i_1}, y_{t+p+2}^{i_p,\ldots,i_1}, 0 \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p}                  \\
+       & \vdots                                                                                                                                                                             \\
+       & f\left(y_{t+H-2}^{i_{p},\ldots,i_1}, y_{t+H-1}^{i_{p},\ldots,i_1}, {\color{blue}y^{\star}}, 0 \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p})\in \{1,\dots,m\}^{p}
+   \end{split}
+\end{equation}
+
+The system of equations
+\eqref{sep:perfect:0}--\eqref{sep:perfect:leafs}, similar to the
+first-order stochastic extended path auxiliary model \eqref{eq:spf:1},
+is inherently non-separable. However, it can still be solved, in
+principle, through the application of a Newton-based
+algorithm. However, the number of unknown vectors $y$ grows
+exponentially with $p$ and polynomially with $m$. The total number of
+unknown vectors of size $n \times 1$ can be expressed as follows:
+\[
+   \begin{split}
+      \mathcal C^{\star}(m,p,H) & = 1 + m + m^2 + \cdots + m^{p-1} + m^p(H-p) \\
+                                & = \frac{m^p - 1}{m - 1} + m^p(H - p)
+   \end{split}
+\]
+This indicates that the size of the linear system to be resolved in
+each iteration of the Newton algorithm is given
+by $n \mathcal C^{\star}(m,p,H)$. Moreover, the Jacobian matrix is
+sparse, and the total number of non-zero $n \times n$ blocks can be
+computed as:
+\[
+   \mathrm{nnz}^{\star}(m,p,H) = 1 + m + (2 + m) \frac{m^p - m}{m - 1} + 3m^p(H - p) - m^p
+\]
+As a result, the ratio of non-zero blocks to the overall number of
+blocks, indicated by $\left.\mathcal C^{\star}\right.^2$, tends to
+diminish towards zero as either $m$ or $p$
+increases. Figure~\ref{fig:jacobian:perfect-tree} illustrates the
+distribution of the non-zero $n \times n$ blocks within the stacked
+Jacobian matrix for the scenario where \( p = 2 \) and \( m = 3 \). In
+practical applications involving this tree structure, we can only
+consider moderate orders of the stochastic extended path algorithm.\newline
+
+\subsubsection{Sparse tree of future innovations}\label{sec:fishbone-tree} Employing the
+complete $m$-ary tree presented above is infeasible for large values
+of $p$ or $m$. Trimming the tree by eliminating branches with low
+probabilities (as determined by the products of quadrature weights)
+offers limited benefits, as the pruned tree would still expand
+exponentially with respect to $p$.\newline
+
+The trunk of the $m$-ary tree is defined by traversing the central
+nodes from one period to the next, which happen to be the nodes
+evaluating to zero\footnote{In the case of Gaussian quadrature we
+   consider an odd number of nodes.}. We develop a sparse tree
+structure by eliminating branches that do not directly emerge from the
+trunk. This fishbone-shaped sparse tree features a linear growth in
+the number of nodes with respect to $p$ or $m$. This framework is
+analogous to a monomial rule, where innovations occurring in various
+periods are regarded as separate
+shocks. Figure~\ref{fig:sep:sparse-tree} illustrates this sparse tree
+in the context of the second-order stochastic extended path.\newline
+
+Let Let $y_{t,s}^i$ represent the vector of endogenous variables at
+time $s>t$ along a branch that diverges from the trunk at time $t$ due
+to the anticipated shock (integration node) $\epsilon_i$. The
+sequence $y_t$ (at the base of the tree), $y_{t,t+1}^1$, $y_{t+1,t+2}^1$,
+\dots, $y_{t+p-1,t+p}^1$ represents the path of the endogenous
+variables along the trunk. All the approximate integrals are located along the trunk.\newline
+
+At the base of the tree, corresponding to period \(t\) of the auxiliary model, we have the following condition:
+
+\begin{equation}
+   \label{sep:sparse:0}\tag{5.a}
+   \sum_{i=1}^m\omega_i f\left( {\color{blue}y_{t-1}}, {\color{red}y_t}, y_{t, t+1}^i, \varepsilon_t \right) = 0
+\end{equation}
+
+This equation mirrors the one found at the base of a perfect \(m\)-ary
+tree. Advancing to the first level of the tree, which represents
+period \( t+1 \) of the auxiliary model, we encounter the
+following system of \( m \) equations that must be satisfied:
+
+\begin{equation}
+   \label{sep:sparse:1}\tag{5.b}
+   \begin{cases}
+      \sum_{i=1}^m\omega_i f\left( {\color{red}y_t}, y_{t,t+1}^1, y_{t+1, t+2}^i, \epsilon_1 \right) = 0 \\
+      f\left({\color{red}y_t}, y_{t,t+1}^i, y_{t,t+2}^i, \epsilon_i\right) = 0\quad \forall\, i\in\{2,\ldots,m\}
+   \end{cases}
+\end{equation}
+
+Here, \(\epsilon_1\), the central integration node, is equal to
+zero. Moving to the second level of the tree, we now have \(2(m-1)+1\)
+equations to solve:
+
+\begin{equation}
+   \label{sep:sparse:2}\tag{5.c}
+   \begin{cases}
+      \sum_{i=1}^m\omega_i f\left( y_{t,t+1}^1, y_{t+1,t+1}^1, y_{t+2, t+3}^i, \epsilon_1 \right) = 0 \\
+      f\left(y_{t,t+1}^i, y_{t,t+2}^i, y_{t,t+3}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}    \\
+      f\left(y_{t,t+1}^1, y_{t+1,t+2}^i, y_{t+1, t+3}^i, \epsilon_i\right) = 0\quad \forall\, i\in\{2,\ldots,m\}
+   \end{cases}
+\end{equation}
+
+At level \(h < p\), corresponding to period \( t+h \) of the auxiliary
+model, we have system of \( h(m-1)+1 \) equations:
+
+\begin{equation}
+   \label{sep:sparse:3}\tag{5.d}
+   \begin{cases}
+      \sum_{i=1}^m\omega_i f\left( y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^1, y_{t+h, t+h+1}^i, \epsilon_1 \right) = 0 \\
+      f\left(y_{t,t+h-1}^i, y_{t,t+h}^i, y_{t,t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}          \\
+      f\left(y_{t+1,t+h-1}^i, y_{t+1,t+h}^i, y_{t+1, t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}   \\
+      \vdots                                                                                                    \\
+      f\left(y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^i, y_{t+h-1,t+h+1}^i, \epsilon_i \right) = 0 \quad \forall\, i\in\{2,\ldots,m\}
+   \end{cases}
+\end{equation}
+
+In level \(p\), we do not compute approximate integrals and are only
+addressing deterministic problems, which results in a system
+comprising \( p(m-1)+m \) equations:
+
+\begin{equation}
+   \label{sep:sparse:4}\tag{5.e}
+   \begin{cases}
+      f\left(y_{t+p-2,t+p-1}^1, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, \epsilon_i\right) = 0 \quad \forall\, i\in\{1,\ldots,m\} \\
+      f\left(y_{t,t+p-1}^i, y_{t,t+p}^i, y_{t,t+p+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}                      \\
+      f\left(y_{t+1,t+p-1}^i, y_{t+1,t+p}^i, y_{t+1, t+p+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}               \\
+      \vdots                                                                                                                 \\
+      f\left(y_{t+p-2,t+p-1}^i, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, 0 \right) = 0 \quad \forall\, i\in\{2,\ldots,m\}
+   \end{cases}
+\end{equation}
+
+Finally, for all subsequent periods of the auxiliary model up to
+period \(t+H-1\), we establish the following conditions
+for \(h=p+1,\dots,H\):
+
+\begin{equation}
+   \label{sep:sparse:5}\tag{5.f}
+   \begin{cases}
+      f\left(y_{t,t+h-1}^i, y_{t,t+h}^i, y_{t,t+h+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}        \\
+      f\left(y_{t+1,t+h-1}^i, y_{t+1,t+h}^i, y_{t+1, t+h+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\} \\
+      \vdots                                                                                                   \\
+      f\left(y_{t+h-2,t+h-1}^i, y_{t+h-1,t+h}^i, y_{t+h-1,t+h+1}^i, 0 \right) = 0 \quad \forall\, i\in\{1,\ldots,m\}
+   \end{cases}
+\end{equation}
+
+In the last block of equations, \(y_{t+H} = y^{\star}\) in the
+period \( t+H-1 \) of the auxiliary model. As in section
+\ref{sec:perfect-m-ary-tree} this system of nonlinear equations can be
+solved with a Newton-based algorithm. The number of
+unknown $n\times 1$ vectors to be solved for is:
+\[
+   \begin{split}
+      {\mathcal C}(m,p,H) & =  H+\sum_{i=1}^p(m-1)(H-i)                     \\
+                          & = \left( 1 + (m-1)p \right)H - \frac{p(p+1)}{2}
+   \end{split}
+\]
+The number of non zero $n\times n$ blocks in the stacked Jacobian is:
+\[
+   \mathrm{nnz}(m,p,H) = \underbrace{\overbrace{3H-2}^{\mathrm{EP}} + \overbrace{(m-1)p}^{\text{Approximate} \atop \text{integrals} }}_{\text{Along the trunk}} + (m-1)\sum_{i=1}^{p-1} \left( 3(H-1-i)+2  \right)
+\]
+
+Compared to section \ref{sec:perfect-m-ary-tree} with a
+perfect $m$-ary tree, the Jacobian matrix is smaller in size, with its
+growth occurring linearly with respect to \( p \) or \( m \); however,
+it also is denser. As in section \ref{sec:perfect-m-ary-tree}, the
+proportion of non zero blocks in the Jacobian matrix converges to zero
+as $p$ tends to infinity. Figure~\ref{fig:jacobian:sparse-tree} illustrates the
+distribution of the non-zero $n \times n$ blocks within the stacked
+Jacobian matrix for the scenario where \( p = 2 \) and \( m = 3 \).
 
 
 \subsection{Accuracy of the Stochastic extended path approach}
@@ -536,7 +741,7 @@ and one can easily show that the unconditional expectation of the price-dividend
 Considering the benchmark calibration utilized in
 \textcite{CollardJuillard2001} and \textcite{Burnside1998}, we
 obtain $y^{\star} \approx 12.3035$
-and $\mathbb{E}\left[v_t \right] = 12.4815$. By incorporating future
+and $\mathbb{E}\left[v_t \right] \approx 12.4815$. By incorporating future
 uncertainty, we determine that the unconditional expectation exceeds
 the deterministic steady state by $1.4466\%$\footnote{Alternatively,
    we can compare the deterministic steady state with the risky steady
@@ -552,16 +757,14 @@ stochastic extended path approach?\newline
 
 \begin{table}[H]
    \centering
-   \begin{tabular}{l l l l l l }
+   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  | S[table-format=1.4] S[table-format=1.4]}
       \hline
-                               & P1     & P2                     & EP     & SEP$^{\star}$(2) & SEP(2) \\
+                                                     & {P1}   & {P2}   & {EP}   & {SEP$^{\star}$(2)} & {SEP(2)} \\
       \hline\hline
-      \\[-1em]
-      Average abs. diff. in \% & 1.4261 & 0.0193                 & 1.4241 & 1.2205           & 1.2531 \\
-      Min. abs. diff.  in \%   & 1.4239 & 5.4777$\times 10^{-6}$ & 1.4236 & 0.8874           & 0.9201 \\
-      Max. abs. diff.  in \%   & 1.4707 & 0.0527                 & 1.4250 & 1.6366           & 1.6690 \\ [1ex]
+      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.4261 & 0.0193 & 1.4241 & 1.2205             & 1.2531   \\
+      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.4239 & 0.0000 & 1.4236 & 0.8874             & 0.9201   \\
+      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.4707 & 0.0527 & 1.4250 & 1.6366             & 1.6690   \\
       \hline
-      \\ [.25em]
    \end{tabular}
    \caption{\textbf{Comparison with the true solution.} Columns P1 and
       P2 present the deviations from the true solution for first and
@@ -573,7 +776,9 @@ stochastic extended path approach?\newline
 \end{table}
 
 
-We constructed Table \ref{table:1} by simulating the model using the
+
+
+We constructed Table~\ref{table:1} by simulating the model using the
 true solution, terminating the infinite sum after 800 periods, and
 comparing these "true data" with simulations generated via
 perturbation and stochastic extended path methods. As anticipated, the
@@ -607,7 +812,7 @@ so that the unconditional expectation is:
 \[
    \mathbb E\left[v_t^{(0)}\right] = \sum_{i=1}^\infty \beta^ie^{a_i^{(0)} + \frac{1}{2}\frac{b_i^2\sigma^2}{1-\rho^2}} < \mathbb E\left[v_t\right]
 \]
-More generally, with an approximation of order $p$, we have:
+With our calibration, we calculate that $\mathbb{E}\left[v_t^{(0)}\right] \approx 12.3038$, which represents a reduction of approximately $1.4239\%$ compared to the true unconditional expectation. More generally, for an approximation of order $p$, we have:
 \[
    v_t^{(p)} = \sum_{i=1}^\infty \beta^i e^{a_i^{(p)} + b_i (x_t-\mu)}
 \]
@@ -623,14 +828,38 @@ so that the unconditional expectation is:
 \[
    \mathbb E\left[v_t^{(p)}\right] = \sum_{i=1}^\infty \beta^ie^{a_i^{(p)} + \frac{1}{2}\frac{b_i^2\sigma^2}{1-\rho^2}} < \mathbb E\left[v_t\right]
 \]
-Table \ref{table:2} presents the relative difference, expressed as a
-percentage, between the true unconditional expectation of \(v\) and
-the exact unconditional expectation of \(v^{(p)}\) — that is, the
-price-dividends ratio calculated by removing the shocks after
-period \(t+p\). To effectively capture the impacts of future
-uncertainty in our calibration, a large value of \(p\) is
-essential. In this context, the perturbation approach proves to be
-considerably more efficient.\newline
+
+Table~\ref{table:2} illustrates the extent to which the gap between
+the exact unconditional expectation, $\mathbb E\left[ v_t \right]$,
+and the unconditional expectation derived from extended path
+simulation, $\mathbb E\left[ v_t^{(0)}\right]$, is narrowed as we
+incorporate various orders of the stochastic extended path. To
+effectively capture the impacts of future uncertainty in our
+calibration, a large value of \(p\) is essential. In this context, the
+perturbation approach proves to be considerably more
+efficient.\newline
+
+\begin{table}[H]
+   \centering
+   \begin{tabular}{r|S[table-format=3.2]}
+      \hline
+      $p$ & \multicolumn{1}{c}{Contribution in $\%$} \\
+      \hline\hline
+      \\[-1em]
+      1   & 7.55                                     \\
+      10  & 53.81                                    \\
+      20  & 78.63                                    \\
+      40  & 95.43                                    \\
+      60  & 99.02                                    \\
+      80  & 99.79                                    \\
+      100 & 99.95                                    \\
+      120 & 99.99                                    \\
+      140 & 100.00                                   \\
+      \hline
+   \end{tabular}
+   \caption{\textbf{Future uncertainty accounting.} The second column presents the proportion of the gap between $\mathbb E\left[ v_t \right]$ and $\mathbb E\left[ v_t^{(0)}\right]$, as attributable to different orders of the stochastic path. }
+   \label{table:2}
+\end{table}
 
 \subsection{An hybrid approach}
 
@@ -653,7 +882,7 @@ is then $\Sigma = \sigma^2 \,\Sigma_{\eta}$. Consider the (unknown) solution fun
 \[
    y_t = g\left(y_{t-1}, \varepsilon_t, \sigma\right)
 \]
-so that the original model \ref{eq:model} is satisfied. Plugging $g$ into this model, we obtain:
+so that the original model \eqref{eq:model} is satisfied. Plugging $g$ into this model, we obtain:
 \[
    \mathbb E_t\mathcal F\left( y_{t-1}, \varepsilon_t, \eta_{t+1}, \sigma\right)
    =
@@ -771,8 +1000,7 @@ the economy hits the lower bound on investment: $\beta=0.990$,
 $\theta=0.357$, $\tau=2.000$, $\alpha=0.450$, $\psi=-0.500$,
 $\delta=0.020$, $\rho=0.995$, $A^\star=1$ and $\sigma=0.100$. With
 this calibration the elasticity of production with respect to physical
-capital is 2/3. Figures \ref{example:1:invest:1} and
-\ref{example:1:invest:2} show the solution paths for investment
+capital is 2/3. Figures~\ref{example:1:invest:1} and~\ref{example:1:invest:2} show the solution paths for investment
 considering different approximation orders ($S=0,1,2,3$). A striking
 feature is that all the paths are perfectly ordered with respect to
 the approximation order $S$. The more we take into account future
@@ -795,7 +1023,6 @@ into account the stochastic dimension of the non linearity.
 \appendix
 
 \begin{figure}[H]
-   \label{sep:tree}
    \centering
    {\tiny
       \begin{tikzpicture}
@@ -817,32 +1044,47 @@ into account the stochastic dimension of the non linearity.
       \end{tikzpicture}}
    \bigskip\bigskip
    \caption{\textbf{Paths of  future innovations as a perfect tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Perfect ternary tree of length 3, followed by sequences of zeros (the leafs). Conditional expectations are estimated at the root of the tree and at three non-terminal nodes (integration nodes in $t+1$). The leafs, after the terminal nodes of the perfect tree (integration nodes in $t+2$), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
- \end{figure}
+   \label{fig:sep:tree}
+\end{figure}
 
- \begin{figure}[H]
-   \label{sep:sparse-tree}
+
+\begin{figure}[H]
    \centering
    {\tiny
       \begin{tikzpicture}
          \tikzset{grow'=right,level distance=80pt}
          \tikzset{execute at begin node=\strut}
          \tikzset{every tree node/.style={anchor=base west}}
-         \Tree [.$\varepsilon_t$ [.$\epsilon^2_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+         \Tree [.$\varepsilon_t$
+         [.$\epsilon^2_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]
          [.$\epsilon^1_{t+1}$
          [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
          [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
          [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
-         [.$\epsilon^3_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]]
+         [.$\epsilon^3_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]]
       \end{tikzpicture}}
    \bigskip\bigskip
-   \caption{\textbf{Paths of  future innovations as a sparse tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Perfect ternary tree of length 3, followed by sequences of zeros (the leafs). Conditional expectations are estimated at the root of the tree and at three non-terminal nodes (integration nodes in $t+1$). The leafs, after the terminal nodes of the perfect tree (integration nodes in $t+2$), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
+   \caption{\textbf{Paths of  future innovations as a sparse tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Sparse tree of length 2, followed by sequences of zeros (the leafs). Conditional expectations are estimated along the trunk (here in periods $t$ and $t+1$). The leafs, after the terminal nodes of the sparse tree ($\epsilon_{t+1}^2$, $\epsilon_{t+1}^3$, $\epsilon_{t+2}^2$, $\epsilon_{t+2}^1$ and $\epsilon_{t+2}^3$)), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
+   \label{fig:sep:sparse-tree}
 \end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \hspace*{-0.8cm}\scalebox{.85}{\input{../../models/one/jacobian-2.tikz}}
+   \caption{\textbf{Partial view of the stacked jacobian with a perfect tree.} Stochastic extended path of order $p=2$ with $m=3$. We present only the top-left portion of the Jacobian matrix. Each blue square represents a non zero $n\times n$ block of derivatives. The labels on the horizontal axis illustrate the manner in which the unknown vectors are concatenated to construct the stacked system of equations.}
+   \label{fig:jacobian:perfect-tree}
+\end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \hspace*{-0.4cm}\scalebox{.85}{\input{../../models/one/jacobian-sparse-tree-2.tikz}}
+   \caption{\textbf{Partial view of the stacked jacobian with a sparse tree.} Stochastic extended path of order $p=2$ with $m=3$. We present only the top-left portion of the Jacobian matrix. Each blue square represents a non zero $n\times n$ block of derivatives. The labels on the horizontal axis illustrate the manner in which the unknown vectors are concatenated to construct the stacked system of equations.}
+   \label{fig:jacobian:sparse-tree}
+\end{figure}
+
+
 
 \newpage
 
