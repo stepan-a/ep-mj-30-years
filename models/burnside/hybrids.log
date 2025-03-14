@@ -1,0 +1,537 @@
+Starting Dynare (version 7-unstable).
+Calling Dynare with arguments: none
+Using build directory: /Users/stepan/works/Dynare/dynare/matlab/../build-matlab
+Starting preprocessing of the model file ...
+Spawning 8 threads for compiling MEX files.
+Found 2 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+2 block(s) found:
+  2 recursive block(s) and 0 simultaneous block(s).
+  the largest simultaneous block has 0 equation(s)
+                                 and 0 feedback variable(s).
+Computing dynamic model derivatives (order 4).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+2 block(s) found:
+  2 recursive block(s) and 0 simultaneous block(s).
+  the largest simultaneous block has 0 equation(s)
+                                 and 0 feedback variable(s).
+Compiling hybrids/model/src/sparse/static_resid_tt.o
+Compiling hybrids/model/src/sparse/static_resid.o
+Compiling +hybrids/+sparse/static_resid.mexmaca64
+Compiling hybrids/model/src/sparse/static_g1_tt.o
+Compiling hybrids/model/src/sparse/static_g1.o
+Compiling +hybrids/+sparse/static_g1.mexmaca64
+Compiling +hybrids/+sparse/+block/static_1.mexmaca64
+Compiling +hybrids/+sparse/+block/static_2.mexmaca64
+Compiling hybrids/model/src/dynamic_resid_tt.o
+Compiling hybrids/model/src/dynamic_resid.o
+Compiling hybrids/model/src/dynamic_g1_tt.o
+Compiling hybrids/model/src/dynamic_g1.o
+Compiling hybrids/model/src/dynamic_g2_tt.o
+Compiling hybrids/model/src/dynamic_g2.o
+Compiling hybrids/model/src/dynamic_g3_tt.o
+Compiling hybrids/model/src/dynamic_g3.o
+Compiling hybrids/model/src/dynamic_g4_tt.o
+Compiling hybrids/model/src/dynamic_g4.o
+Compiling +hybrids/dynamic.mexmaca64
+Compiling hybrids/model/src/sparse/dynamic_resid_tt.o
+Compiling hybrids/model/src/sparse/dynamic_resid.o
+Compiling +hybrids/+sparse/dynamic_resid.mexmaca64
+Compiling hybrids/model/src/sparse/dynamic_g1_tt.o
+Compiling hybrids/model/src/sparse/dynamic_g1.o
+Compiling +hybrids/+sparse/dynamic_g1.mexmaca64
+Compiling hybrids/model/src/sparse/dynamic_g2_tt.o
+Compiling hybrids/model/src/sparse/dynamic_g2.o
+Compiling +hybrids/+sparse/dynamic_g2.mexmaca64
+Compiling hybrids/model/src/sparse/dynamic_g3_tt.o
+Compiling hybrids/model/src/sparse/dynamic_g3.o
+Compiling +hybrids/+sparse/dynamic_g3.mexmaca64
+Compiling hybrids/model/src/sparse/dynamic_g4_tt.o
+Compiling hybrids/model/src/sparse/dynamic_g4.o
+Compiling +hybrids/+sparse/dynamic_g4.mexmaca64
+Compiling +hybrids/+sparse/+block/dynamic_1.mexmaca64
+Compiling +hybrids/+sparse/+block/dynamic_2.mexmaca64
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+ld: warning: -undefined error is deprecated
+Preprocessing completed.
+Preprocessing time: 0h00m03s.
+
+
+Residuals of the static equations:
+Equation number 1: 1 :       0.000000
+Equation number 2: x :       0.000000
+
+
+
+STEADY-STATE RESULTS:
+
+y 		 12.3035
+x 		 0.0179
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+           0.139           -0.139                0
+           1.081            1.081                0
+       1.851e+17        1.851e+17                0
+
+There are 2 eigenvalue(s) larger than 1 in modulus for 2 forward-looking variable(s)
+The rank condition is verified.
+
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               x
+Constant                   12.303515        0.017900
+x(-1)                      -0.315957       -0.139000
+e                           2.273075        1.000000
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.303173        0.081155        0.006586       -0.008713       -0.013486
+x                 0.017750        0.035703        0.001275       -0.008713       -0.013486
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1239   0.0088   0.0007  -0.0120  -0.0012
+x           -0.1239   0.0088   0.0007  -0.0120  -0.0012
+
+deterministic stead state:        12.303514628
+stochastic steady state:          12.481236582
+unconditional expectation:        12.481499921
+
+Share of accounted for unconditional expectation:
+
+Gap between SEP(0) and exact solution (for the unconditional expectation, in percentage) 1.425992826
+Share of the gap closed by SEP(1) in percentage		 7.5547
+Share of the gap closed by SEP(2) in percentage		 14.4138
+Share of the gap closed by SEP(3) in percentage		 20.7640
+Share of the gap closed by SEP(4) in percentage		 26.6430
+Share of the gap closed by SEP(5) in percentage		 32.0858
+Share of the gap closed by SEP(6) in percentage		 37.1248
+Share of the gap closed by SEP(7) in percentage		 41.7899
+Share of the gap closed by SEP(8) in percentage		 46.1089
+Share of the gap closed by SEP(9) in percentage		 50.1074
+Share of the gap closed by SEP(10) in percentage		 53.8093
+Share of the gap closed by SEP(11) in percentage		 57.2365
+Share of the gap closed by SEP(12) in percentage		 60.4094
+Share of the gap closed by SEP(13) in percentage		 63.3468
+Share of the gap closed by SEP(14) in percentage		 66.0664
+Share of the gap closed by SEP(15) in percentage		 68.5841
+Share of the gap closed by SEP(16) in percentage		 70.9151
+Share of the gap closed by SEP(17) in percentage		 73.0731
+Share of the gap closed by SEP(18) in percentage		 75.0709
+Share of the gap closed by SEP(19) in percentage		 76.9206
+Share of the gap closed by SEP(20) in percentage		 78.6330
+Share of the gap closed by SEP(21) in percentage		 80.2184
+Share of the gap closed by SEP(22) in percentage		 81.6861
+Share of the gap closed by SEP(23) in percentage		 83.0449
+Share of the gap closed by SEP(24) in percentage		 84.3029
+Share of the gap closed by SEP(25) in percentage		 85.4676
+Share of the gap closed by SEP(26) in percentage		 86.5458
+Share of the gap closed by SEP(27) in percentage		 87.5441
+Share of the gap closed by SEP(28) in percentage		 88.4683
+Share of the gap closed by SEP(29) in percentage		 89.3239
+Share of the gap closed by SEP(30) in percentage		 90.1160
+Share of the gap closed by SEP(31) in percentage		 90.8494
+Share of the gap closed by SEP(32) in percentage		 91.5283
+Share of the gap closed by SEP(33) in percentage		 92.1569
+Share of the gap closed by SEP(34) in percentage		 92.7388
+Share of the gap closed by SEP(35) in percentage		 93.2776
+Share of the gap closed by SEP(36) in percentage		 93.7763
+Share of the gap closed by SEP(37) in percentage		 94.2381
+Share of the gap closed by SEP(38) in percentage		 94.6656
+Share of the gap closed by SEP(39) in percentage		 95.0614
+Share of the gap closed by SEP(40) in percentage		 95.4278
+Share of the gap closed by SEP(41) in percentage		 95.7671
+Share of the gap closed by SEP(42) in percentage		 96.0811
+Share of the gap closed by SEP(43) in percentage		 96.3719
+Share of the gap closed by SEP(44) in percentage		 96.6411
+Share of the gap closed by SEP(45) in percentage		 96.8903
+Share of the gap closed by SEP(46) in percentage		 97.1210
+Share of the gap closed by SEP(47) in percentage		 97.3347
+Share of the gap closed by SEP(48) in percentage		 97.5324
+Share of the gap closed by SEP(49) in percentage		 97.7155
+Share of the gap closed by SEP(50) in percentage		 97.8850
+Share of the gap closed by SEP(51) in percentage		 98.0419
+Share of the gap closed by SEP(52) in percentage		 98.1872
+Share of the gap closed by SEP(53) in percentage		 98.3217
+Share of the gap closed by SEP(54) in percentage		 98.4462
+Share of the gap closed by SEP(55) in percentage		 98.5615
+Share of the gap closed by SEP(56) in percentage		 98.6682
+Share of the gap closed by SEP(57) in percentage		 98.7671
+Share of the gap closed by SEP(58) in percentage		 98.8585
+Share of the gap closed by SEP(59) in percentage		 98.9432
+Share of the gap closed by SEP(60) in percentage		 99.0216
+Share of the gap closed by SEP(61) in percentage		 99.0942
+Share of the gap closed by SEP(62) in percentage		 99.1614
+Share of the gap closed by SEP(63) in percentage		 99.2237
+Share of the gap closed by SEP(64) in percentage		 99.2813
+Share of the gap closed by SEP(65) in percentage		 99.3346
+Share of the gap closed by SEP(66) in percentage		 99.3840
+Share of the gap closed by SEP(67) in percentage		 99.4297
+Share of the gap closed by SEP(68) in percentage		 99.4720
+Share of the gap closed by SEP(69) in percentage		 99.5112
+Share of the gap closed by SEP(70) in percentage		 99.5474
+Share of the gap closed by SEP(71) in percentage		 99.5810
+Share of the gap closed by SEP(72) in percentage		 99.6121
+Share of the gap closed by SEP(73) in percentage		 99.6409
+Share of the gap closed by SEP(74) in percentage		 99.6675
+Share of the gap closed by SEP(75) in percentage		 99.6922
+Share of the gap closed by SEP(76) in percentage		 99.7150
+Share of the gap closed by SEP(77) in percentage		 99.7362
+Share of the gap closed by SEP(78) in percentage		 99.7557
+Share of the gap closed by SEP(79) in percentage		 99.7739
+Share of the gap closed by SEP(80) in percentage		 99.7906
+Share of the gap closed by SEP(81) in percentage		 99.8062
+Share of the gap closed by SEP(82) in percentage		 99.8206
+Share of the gap closed by SEP(83) in percentage		 99.8339
+Share of the gap closed by SEP(84) in percentage		 99.8462
+Share of the gap closed by SEP(85) in percentage		 99.8576
+Share of the gap closed by SEP(86) in percentage		 99.8682
+Share of the gap closed by SEP(87) in percentage		 99.8780
+Share of the gap closed by SEP(88) in percentage		 99.8870
+Share of the gap closed by SEP(89) in percentage		 99.8954
+Share of the gap closed by SEP(90) in percentage		 99.9032
+Share of the gap closed by SEP(91) in percentage		 99.9103
+Share of the gap closed by SEP(92) in percentage		 99.9170
+Share of the gap closed by SEP(93) in percentage		 99.9232
+Share of the gap closed by SEP(94) in percentage		 99.9289
+Share of the gap closed by SEP(95) in percentage		 99.9341
+Share of the gap closed by SEP(96) in percentage		 99.9390
+Share of the gap closed by SEP(97) in percentage		 99.9435
+Share of the gap closed by SEP(98) in percentage		 99.9477
+Share of the gap closed by SEP(99) in percentage		 99.9516
+Share of the gap closed by SEP(100) in percentage		 99.9552
+Share of the gap closed by SEP(101) in percentage		 99.9585
+Share of the gap closed by SEP(102) in percentage		 99.9616
+Share of the gap closed by SEP(103) in percentage		 99.9645
+Share of the gap closed by SEP(104) in percentage		 99.9671
+Share of the gap closed by SEP(105) in percentage		 99.9695
+Share of the gap closed by SEP(106) in percentage		 99.9718
+Share of the gap closed by SEP(107) in percentage		 99.9739
+Share of the gap closed by SEP(108) in percentage		 99.9758
+Share of the gap closed by SEP(109) in percentage		 99.9776
+Share of the gap closed by SEP(110) in percentage		 99.9793
+Share of the gap closed by SEP(111) in percentage		 99.9808
+Share of the gap closed by SEP(112) in percentage		 99.9822
+Share of the gap closed by SEP(113) in percentage		 99.9836
+Share of the gap closed by SEP(114) in percentage		 99.9848
+Share of the gap closed by SEP(115) in percentage		 99.9859
+Share of the gap closed by SEP(116) in percentage		 99.9870
+Share of the gap closed by SEP(117) in percentage		 99.9879
+Share of the gap closed by SEP(118) in percentage		 99.9888
+Share of the gap closed by SEP(119) in percentage		 99.9896
+Share of the gap closed by SEP(120) in percentage		 99.9904
+Share of the gap closed by SEP(121) in percentage		 99.9911
+Share of the gap closed by SEP(122) in percentage		 99.9918
+Share of the gap closed by SEP(123) in percentage		 99.9924
+Share of the gap closed by SEP(124) in percentage		 99.9930
+Share of the gap closed by SEP(125) in percentage		 99.9935
+Share of the gap closed by SEP(126) in percentage		 99.9940
+Share of the gap closed by SEP(127) in percentage		 99.9944
+Share of the gap closed by SEP(128) in percentage		 99.9948
+Share of the gap closed by SEP(129) in percentage		 99.9952
+Share of the gap closed by SEP(130) in percentage		 99.9956
+Share of the gap closed by SEP(131) in percentage		 99.9959
+Share of the gap closed by SEP(132) in percentage		 99.9962
+Share of the gap closed by SEP(133) in percentage		 99.9965
+Share of the gap closed by SEP(134) in percentage		 99.9967
+Share of the gap closed by SEP(135) in percentage		 99.9970
+Share of the gap closed by SEP(136) in percentage		 99.9972
+Share of the gap closed by SEP(137) in percentage		 99.9974
+Share of the gap closed by SEP(138) in percentage		 99.9976
+Share of the gap closed by SEP(139) in percentage		 99.9978
+Share of the gap closed by SEP(140) in percentage		 99.9979
+Share of the gap closed by SEP(141) in percentage		 99.9981
+Share of the gap closed by SEP(142) in percentage		 99.9982
+Share of the gap closed by SEP(143) in percentage		 99.9984
+Share of the gap closed by SEP(144) in percentage		 99.9985
+Share of the gap closed by SEP(145) in percentage		 99.9986
+Share of the gap closed by SEP(146) in percentage		 99.9987
+Share of the gap closed by SEP(147) in percentage		 99.9988
+Share of the gap closed by SEP(148) in percentage		 99.9989
+Share of the gap closed by SEP(149) in percentage		 99.9990
+Share of the gap closed by SEP(150) in percentage		 99.9991
+Share of the gap closed by SEP(151) in percentage		 99.9991
+Share of the gap closed by SEP(152) in percentage		 99.9992
+Share of the gap closed by SEP(153) in percentage		 99.9992
+Share of the gap closed by SEP(154) in percentage		 99.9993
+Share of the gap closed by SEP(155) in percentage		 99.9994
+Share of the gap closed by SEP(156) in percentage		 99.9994
+Share of the gap closed by SEP(157) in percentage		 99.9994
+Share of the gap closed by SEP(158) in percentage		 99.9995
+Share of the gap closed by SEP(159) in percentage		 99.9995
+Share of the gap closed by SEP(160) in percentage		 99.9996
+Share of the gap closed by SEP(161) in percentage		 99.9996
+Share of the gap closed by SEP(162) in percentage		 99.9996
+Share of the gap closed by SEP(163) in percentage		 99.9997
+Share of the gap closed by SEP(164) in percentage		 99.9997
+Share of the gap closed by SEP(165) in percentage		 99.9997
+Share of the gap closed by SEP(166) in percentage		 99.9997
+Share of the gap closed by SEP(167) in percentage		 99.9997
+Share of the gap closed by SEP(168) in percentage		 99.9998
+Share of the gap closed by SEP(169) in percentage		 99.9998
+Share of the gap closed by SEP(170) in percentage		 99.9998
+Share of the gap closed by SEP(171) in percentage		 99.9998
+Share of the gap closed by SEP(172) in percentage		 99.9998
+Share of the gap closed by SEP(173) in percentage		 99.9998
+Share of the gap closed by SEP(174) in percentage		 99.9999
+Share of the gap closed by SEP(175) in percentage		 99.9999
+Share of the gap closed by SEP(176) in percentage		 99.9999
+Share of the gap closed by SEP(177) in percentage		 99.9999
+Share of the gap closed by SEP(178) in percentage		 99.9999
+Share of the gap closed by SEP(179) in percentage		 99.9999
+Share of the gap closed by SEP(180) in percentage		 99.9999
+Share of the gap closed by SEP(181) in percentage		 99.9999
+Share of the gap closed by SEP(182) in percentage		 99.9999
+Share of the gap closed by SEP(183) in percentage		 99.9999
+Share of the gap closed by SEP(184) in percentage		 99.9999
+Share of the gap closed by SEP(185) in percentage		 99.9999
+Share of the gap closed by SEP(186) in percentage		 99.9999
+Share of the gap closed by SEP(187) in percentage		 99.9999
+Share of the gap closed by SEP(188) in percentage		 99.9999
+Share of the gap closed by SEP(189) in percentage		 100.0000
+Share of the gap closed by SEP(190) in percentage		 100.0000
+Share of the gap closed by SEP(191) in percentage		 100.0000
+Share of the gap closed by SEP(192) in percentage		 100.0000
+Share of the gap closed by SEP(193) in percentage		 100.0000
+Share of the gap closed by SEP(194) in percentage		 100.0000
+Share of the gap closed by SEP(195) in percentage		 100.0000
+Share of the gap closed by SEP(196) in percentage		 100.0000
+Share of the gap closed by SEP(197) in percentage		 100.0000
+Share of the gap closed by SEP(198) in percentage		 100.0000
+Share of the gap closed by SEP(199) in percentage		 100.0000
+Share of the gap closed by SEP(200) in percentage		 100.0000
+Share of the gap closed by SEP(201) in percentage		 100.0000
+Share of the gap closed by SEP(202) in percentage		 100.0000
+Share of the gap closed by SEP(203) in percentage		 100.0000
+Share of the gap closed by SEP(204) in percentage		 100.0000
+Share of the gap closed by SEP(205) in percentage		 100.0000
+Share of the gap closed by SEP(206) in percentage		 100.0000
+Share of the gap closed by SEP(207) in percentage		 100.0000
+Share of the gap closed by SEP(208) in percentage		 100.0000
+Share of the gap closed by SEP(209) in percentage		 100.0000
+Share of the gap closed by SEP(210) in percentage		 100.0000
+Share of the gap closed by SEP(211) in percentage		 100.0000
+Share of the gap closed by SEP(212) in percentage		 100.0000
+Share of the gap closed by SEP(213) in percentage		 100.0000
+Share of the gap closed by SEP(214) in percentage		 100.0000
+Share of the gap closed by SEP(215) in percentage		 100.0000
+Share of the gap closed by SEP(216) in percentage		 100.0000
+Share of the gap closed by SEP(217) in percentage		 100.0000
+Share of the gap closed by SEP(218) in percentage		 100.0000
+Share of the gap closed by SEP(219) in percentage		 100.0000
+Share of the gap closed by SEP(220) in percentage		 100.0000
+Share of the gap closed by SEP(221) in percentage		 100.0000
+Share of the gap closed by SEP(222) in percentage		 100.0000
+Share of the gap closed by SEP(223) in percentage		 100.0000
+Share of the gap closed by SEP(224) in percentage		 100.0000
+Share of the gap closed by SEP(225) in percentage		 100.0000
+Share of the gap closed by SEP(226) in percentage		 100.0000
+Share of the gap closed by SEP(227) in percentage		 100.0000
+Share of the gap closed by SEP(228) in percentage		 100.0000
+Share of the gap closed by SEP(229) in percentage		 100.0000
+Share of the gap closed by SEP(230) in percentage		 100.0000
+Share of the gap closed by SEP(231) in percentage		 100.0000
+Share of the gap closed by SEP(232) in percentage		 100.0000
+Share of the gap closed by SEP(233) in percentage		 100.0000
+Share of the gap closed by SEP(234) in percentage		 100.0000
+Share of the gap closed by SEP(235) in percentage		 100.0000
+Share of the gap closed by SEP(236) in percentage		 100.0000
+Share of the gap closed by SEP(237) in percentage		 100.0000
+Share of the gap closed by SEP(238) in percentage		 100.0000
+Share of the gap closed by SEP(239) in percentage		 100.0000
+Share of the gap closed by SEP(240) in percentage		 100.0000
+Share of the gap closed by SEP(241) in percentage		 100.0000
+Share of the gap closed by SEP(242) in percentage		 100.0000
+Share of the gap closed by SEP(243) in percentage		 100.0000
+Share of the gap closed by SEP(244) in percentage		 100.0000
+Share of the gap closed by SEP(245) in percentage		 100.0000
+Share of the gap closed by SEP(246) in percentage		 100.0000
+Share of the gap closed by SEP(247) in percentage		 100.0000
+Share of the gap closed by SEP(248) in percentage		 100.0000
+Share of the gap closed by SEP(249) in percentage		 100.0000
+Share of the gap closed by SEP(250) in percentage		 100.0000
+Share of the gap closed by SEP(251) in percentage		 100.0000
+Share of the gap closed by SEP(252) in percentage		 100.0000
+Share of the gap closed by SEP(253) in percentage		 100.0000
+Share of the gap closed by SEP(254) in percentage		 100.0000
+Share of the gap closed by SEP(255) in percentage		 100.0000
+Share of the gap closed by SEP(256) in percentage		 100.0000
+Share of the gap closed by SEP(257) in percentage		 100.0000
+Share of the gap closed by SEP(258) in percentage		 100.0000
+Share of the gap closed by SEP(259) in percentage		 100.0000
+Share of the gap closed by SEP(260) in percentage		 100.0000
+Share of the gap closed by SEP(261) in percentage		 100.0000
+Share of the gap closed by SEP(262) in percentage		 100.0000
+Share of the gap closed by SEP(263) in percentage		 100.0000
+Share of the gap closed by SEP(264) in percentage		 100.0000
+Share of the gap closed by SEP(265) in percentage		 100.0000
+Share of the gap closed by SEP(266) in percentage		 100.0000
+Share of the gap closed by SEP(267) in percentage		 100.0000
+Share of the gap closed by SEP(268) in percentage		 100.0000
+Share of the gap closed by SEP(269) in percentage		 100.0000
+Share of the gap closed by SEP(270) in percentage		 100.0000
+Share of the gap closed by SEP(271) in percentage		 100.0000
+Share of the gap closed by SEP(272) in percentage		 100.0000
+Share of the gap closed by SEP(273) in percentage		 100.0000
+Share of the gap closed by SEP(274) in percentage		 100.0000
+Share of the gap closed by SEP(275) in percentage		 100.0000
+Share of the gap closed by SEP(276) in percentage		 100.0000
+Share of the gap closed by SEP(277) in percentage		 100.0000
+Share of the gap closed by SEP(278) in percentage		 100.0000
+Share of the gap closed by SEP(279) in percentage		 100.0000
+Share of the gap closed by SEP(280) in percentage		 100.0000
+Share of the gap closed by SEP(281) in percentage		 100.0000
+Share of the gap closed by SEP(282) in percentage		 100.0000
+Share of the gap closed by SEP(283) in percentage		 100.0000
+Share of the gap closed by SEP(284) in percentage		 100.0000
+Share of the gap closed by SEP(285) in percentage		 100.0000
+Share of the gap closed by SEP(286) in percentage		 100.0000
+Share of the gap closed by SEP(287) in percentage		 100.0000
+Share of the gap closed by SEP(288) in percentage		 100.0000
+Share of the gap closed by SEP(289) in percentage		 100.0000
+Share of the gap closed by SEP(290) in percentage		 100.0000
+Share of the gap closed by SEP(291) in percentage		 100.0000
+Share of the gap closed by SEP(292) in percentage		 100.0000
+Share of the gap closed by SEP(293) in percentage		 100.0000
+Share of the gap closed by SEP(294) in percentage		 100.0000
+Share of the gap closed by SEP(295) in percentage		 100.0000
+Share of the gap closed by SEP(296) in percentage		 100.0000
+Share of the gap closed by SEP(297) in percentage		 100.0000
+Share of the gap closed by SEP(298) in percentage		 100.0000
+Share of the gap closed by SEP(299) in percentage		 100.0000
+Share of the gap closed by SEP(300) in percentage		 100.0000
+
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+POLICY AND TRANSITION FUNCTIONS
+                                   y               x
+Constant                   12.478845        0.017900
+(correction)                0.175330               0
+x(-1)                      -0.315957       -0.139000
+e                           2.273075        1.000000
+x(-1),x(-1)                 0.004062               0
+e,e                         0.210263               0
+x(-1),e                    -0.058453               0
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.478771        0.081152        0.006586        0.010961       -0.016512
+x                 0.017750        0.035703        0.001275       -0.008713       -0.013486
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1238   0.0088   0.0005  -0.0118  -0.0012
+x           -0.1239   0.0088   0.0007  -0.0120  -0.0012
+
+MODEL SUMMARY
+
+  Number of variables:         2
+  Number of stochastic shocks: 1
+  Number of state variables:   1
+  Number of jumpers:           2
+  Number of static variables:  0
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables           e
+e            0.001211
+
+
+
+MOMENTS OF SIMULATED VARIABLES
+VARIABLE              MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+y                12.481826        0.081877        0.006704       -0.009601        0.014200
+x                 0.018053        0.035520        0.001262       -0.029460        0.016692
+
+
+CORRELATION OF SIMULATED VARIABLES
+VARIABLE         y       x
+y           1.0000  1.0000
+x           1.0000  1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES
+VARIABLE          1        2        3        4        5
+y           -0.1301   0.0036   0.0061  -0.0084  -0.0237
+x           -0.1302   0.0037   0.0061  -0.0084  -0.0235
+
+Stochastic extended path (order=2, sparse tree)
+MEAN: 12.324892
+STD.: 0.081144
+mean(abs(diff)) %: 1.253242
+.min(abs(diff)) %: 1.252890
+.max(abs(diff)) %: 1.254223
+
+
+Stochastic extended path (order=2, hybrid, sparse tree)
+MEAN: 12.479276
+STD.: 0.082188
+mean(abs(diff)) %: 0.016325
+.min(abs(diff)) %: 0.015265
+.max(abs(diff)) %: 0.017741
+
+
+Stochastic extended path (order=2, hybrid, sparse tree)
+MEAN: 12.481353
+STD.: 0.082202
+mean(abs(diff)) %: 0.000411
+.min(abs(diff)) %: 0.000000
+.max(abs(diff)) %: 0.001390
+
+Total computing time : 0h03m59s

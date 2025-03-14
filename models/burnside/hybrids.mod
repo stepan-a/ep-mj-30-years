@@ -37,7 +37,6 @@ end
 
 seed = 31415;
 
-
 set_dynare_seed(seed);
 stoch_simul(order=1,irf=0,periods=5001);
 y_perturbation_1 = transpose(oo_.endo_simul(1,:));
@@ -47,15 +46,14 @@ e_1 = oo_.exo_simul;
 set_dynare_seed(seed);
 ytrue=exact_solution(M_,oo_, 800);
 
+stoch_simul(order=2,irf=0,periods=5001);
+stoch_simul(order=4,irf=0,periods=5001);
+//stoch_simul(order=6,irf=0,periods=5001);
+//stoch_simul(order=8,irf=0,periods=5001);
+
 T = 5001;
 
 options_.ep.stochastic.algo=1; // Default is to use a sparse tree
-
-
-options_.ep.stochastic.order = 0;
-ts0 = extended_path([], T, e_1, options_, M_, oo_);
-burndisp(ts0, ytrue);
-
 
 options_.ep.stochastic.order = 2;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
@@ -71,12 +69,15 @@ burndisp(ts2_2, ytrue, 2, true, true, false)
 
 options_.ep.stochastic.hybrid_order = 4;
 ts2_4 = extended_path([], T, e_1, options_, M_, oo_);
-burndisp(ts2_2, ytrue, 2, true, true, false)
+burndisp(ts2_4, ytrue, 2, true, true, false)
 
+/*
 options_.ep.stochastic.hybrid_order = 6;
 ts2_6 = extended_path([], T, e_1, options_, M_, oo_);
-burndisp(ts2_2, ytrue, 2, true, true, false)
-
+burndisp(ts2_6, ytrue, 2, true, true, false)
+*/
+/*
 options_.ep.stochastic.hybrid_order = 8;
 ts2_8 = extended_path([], T, e_1, options_, M_, oo_);
-burndisp(ts2_2, ytrue, 2, true, true, false)
+burndisp(ts2_8, ytrue, 2, true, true, false)
+*/
