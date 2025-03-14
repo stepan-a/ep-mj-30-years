@@ -927,6 +927,34 @@ where $y_{t+p+1}$ is the (deterministic) value obtained by setting shocks to zer
 beyond period $t+p$, and $g_{\sigma^2}$ is the second derivative of the solution
 function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
 
+\begin{table}[H]
+   \centering
+   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  | S[table-format=1.4] S[table-format=1.4]}
+      \hline
+                                                     &  {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} \\
+      \hline\hline
+      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ &  1.2206             & 1.2532   & 0.0162              & 0.0163    \\
+      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  &  1.2202             & 1.2529   & 0.0155              & 0.0153    \\
+      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  &  1.2215             & 1.2542   & 0.0173              & 0.0177    \\
+      \hline
+   \end{tabular}
+   \caption{\textbf{Comparison with the true solution.} The columns
+     SEP$^{\star}(2)$ and SEP$(2)$ represent the second order
+     stochastic extended paths, utilizing both a complete tree and a
+     sparse tree. In contrast, the columns SEP$^{\star}(2+)$ and
+     SEP$(2+)$ correspond to their hybrid versions.}
+   \label{table:3}
+\end{table}
+
+Table \ref{table:3} illustrates that the hybrid version markedly
+diminishes accuracy errors. In fact, the accuracy errors are even
+lower than those found in the second-order perturbation case. The
+maximum error with a hybrid second-order stochastic extended path is
+less than half the maximum error obtained with second-order
+perturbation. Furthermore, additional unreported figures show a
+gradual decrease in accuracy errors as the order of the stochastic
+extended path increases.
+
 Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:\newline
 \begin{enumerate}
    \item A stochastic extended path method of order $p$ to handle large short-run
