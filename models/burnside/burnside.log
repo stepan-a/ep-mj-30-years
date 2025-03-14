@@ -736,20 +736,20 @@ mean(abs(diff)) %: 0.016214
 
 
 Stochastic extended path (order=5, sparse tree)
-MEAN: 12.479449
-STD.: 0.082197
-mean(abs(diff)) %: 0.014938
-.min(abs(diff)) %: 0.013650
-.max(abs(diff)) %: 0.016600
+MEAN: 12.334901
+STD.: 0.081209
+mean(abs(diff)) %: 1.173052
+.min(abs(diff)) %: 1.172714
+.max(abs(diff)) %: 1.174026
 
 
 
 Stochastic extended path (order=5, perfect tree)
-MEAN: 12.479705
-STD.: 0.082154
-mean(abs(diff)) %: 0.012886
-.min(abs(diff)) %: 0.012764
-.max(abs(diff)) %: 0.013784
+MEAN: 12.360423
+STD.: 0.081376
+mean(abs(diff)) %: 0.968569
+.min(abs(diff)) %: 0.968271
+.max(abs(diff)) %: 0.969526
 
 
 
@@ -787,4 +787,4 @@ mean(abs(diff)) %: 0.014551
 .min(abs(diff)) %: 0.013263
 .max(abs(diff)) %: 0.016213
 
-Total computing time : 4h38m05s
+Total computing time : 4h39m33s
