@@ -173,6 +173,7 @@ burndisp(ts2h__, ytrue, 2, true, false, true)
 options_.ep.stochastic.order = 5;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
+options_.ep.stochastic.hybrid_order = 0;
 ts5 = extended_path([], T, e_1, options_, M_, oo_);
 burndisp(ts5, ytrue, 5, false, true, false)
 
@@ -181,6 +182,7 @@ options_.ep.stochastic.order = 5;
 options_.ep.stochastic.IntegrationAlgorithm='Tensor-Gaussian-Quadrature';//'Unscented'; //'Tensor-Gaussian-Quadrature';
 options_.ep.stochastic.quadrature.nodes = 3;
 options_.ep.stochastic.algo=0; // Full tree of future innovations
+options_.ep.stochastic.hybrid_order = 0;
 ts5__ = extended_path([], T, e_1, options_, M_, oo_);
 options_.ep.stochastic.algo=1;
 burndisp(ts5__, ytrue, 5, false, false, true)
