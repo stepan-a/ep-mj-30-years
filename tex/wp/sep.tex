@@ -915,34 +915,39 @@ above expansion.  A perturbation expansion in the direction
 of $\sigma$ can correct for longer-run volatility effects after
 period $t+p-1$.\newline
 
-Concretely, the values in period $t+p$, which appear in the quadrature for period $t+p-1$, can be corrected
-as follows:
+Specifically, in the deterministic problems at the terminal
+nodes\footnote{In the case of a perfect m-ary tree, there are $m^p$
+   such problems at period $t+p$ of the auxiliary model. In a sparse
+   tree, there are $(m-1)$ problems in each of the
+   periods $t+1,\ldots,p-1$ and $m$ problems in period $t+p$ of the
+   auxiliary model.}, we adjust the expected values for period $t+h+1$,
+which are incorporated into the problem for period $t+h$, as
+follows:
 \[
-   \widetilde{y}_{t+p+1}
-   = y_{t+p+1}
+   \widetilde{y}_{t+h+1}
+   = y_{t+h+1}
    +
    \frac{1}{2}g_{\sigma^2}
 \]
-where $y_{t+p+1}$ is the (deterministic) value obtained by setting shocks to zero
-beyond period $t+p$, and $g_{\sigma^2}$ is the second derivative of the solution
+where $g_{\sigma^2}$ is the second derivative of the solution
 function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
 
 \begin{table}[H]
    \centering
    \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  | S[table-format=1.4] S[table-format=1.4]}
       \hline
-                                                     &  {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} \\
+                                                     & {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} \\
       \hline\hline
-      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ &  1.2206             & 1.2532   & 0.0162              & 0.0163    \\
-      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  &  1.2202             & 1.2529   & 0.0155              & 0.0153    \\
-      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  &  1.2215             & 1.2542   & 0.0173              & 0.0177    \\
+      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.2206             & 1.2532   & 0.0162              & 0.0163    \\
+      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.2202             & 1.2529   & 0.0155              & 0.0153    \\
+      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.2215             & 1.2542   & 0.0173              & 0.0177    \\
       \hline
    \end{tabular}
    \caption{\textbf{Comparison with the true solution.} The columns
-     SEP$^{\star}(2)$ and SEP$(2)$ represent the second order
-     stochastic extended paths, utilizing both a complete tree and a
-     sparse tree. In contrast, the columns SEP$^{\star}(2+)$ and
-     SEP$(2+)$ correspond to their hybrid versions.}
+      SEP$^{\star}(2)$ and SEP$(2)$ represent the second order
+      stochastic extended paths, utilizing both a complete tree and a
+      sparse tree. In contrast, the columns SEP$^{\star}(2+)$ and
+      SEP$(2+)$ correspond to their hybrid versions.}
    \label{table:3}
 \end{table}
 
@@ -953,7 +958,9 @@ maximum error with a hybrid second-order stochastic extended path is
 less than half the maximum error obtained with second-order
 perturbation. Furthermore, additional unreported figures show a
 gradual decrease in accuracy errors as the order of the stochastic
-extended path increases.
+extended path increases.\newline
+
+
 
 Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:\newline
 \begin{enumerate}
