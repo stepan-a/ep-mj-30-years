@@ -78,7 +78,7 @@ end;
 
 
 options_.ep.stochastic.IntegrationAlgorithm = 'Tensor-Gaussian-Quadrature';
-options_.ep.stochastic.quadrature.nodes = 5;
+options_.ep.stochastic.quadrature.nodes = 3;
 
 options_.ep.stack_solve_algo = 7;
 options_.ep.solve_algo = 11; // Use PATH nonlinear mixed complementarity problem solver (must be installed by the user, see https://pages.cs.wisc.edu/~ferris/path.html),
@@ -88,27 +88,8 @@ options_.ep.stochastic.algo = 1;
 innovations = zeros(80,1);
 innovations(1) = -2;
 
-maxorder=5;
+options_.ep.stochastic.order=2;
 
-tt = extended_path(oo_.steady_state, 80, innovations, options_, M_, oo_);
+Y = stochastic_perfect_foresight_model_irf([], 80, innovations, options_, M_, oo_)
 
-ds = transpose(oo_.steady_state);
-
-for order=maxorder:-1:0
-options_.ep.stochastic.order = order;
-switch order
-case maxorder
-ts = extended_path(transpose(ds(end,:)), 1, innovations(1), options_, M_, oo_);
-ds = [ds; ts.data(2,:)];
-case 0
-ts = extended_path(transpose(ds(end,:)), 80, zeros(80,1), options_, M_, oo_);
-ds = [ds; ts.data(2:end,:)];
-otherwise
-ts = extended_path(transpose(ds(end,:)), 1, 0, options_, M_, oo_);
-ds = [ds; ts.data(2,:)];
-end
-end
-
-ts = dseries(ds, '1Y', M_.endo_names);
-
-spfirf(tt, ts, 1)
+ts = dseries(transpose(Y), 0, M_.endo_names);
