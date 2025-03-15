@@ -30,11 +30,74 @@
 \usepackage{rotating}
 \usepackage{enumerate}
 \usepackage{pgfplots,tikz}
-\usepackage{listings}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[sc]{mathpazo}
+
+\usepackage{listings}
+
+% Define Language
+\lstdefinelanguage{Dynare}
+{
+  % list of keywords
+  morekeywords={
+    var_model,
+    trend_component_model,
+    var_expectation_model,
+    var_expectation,
+    pac_model,
+    pac_expectation,
+    model,
+    diff,
+    end,
+    varexo,
+    var,
+    parameters,
+    steady_state_model,
+    steady,
+    shocks,
+    perfect_foresight_setup,
+    perfect_foresight_solver,
+    initval,
+    endval,
+  },
+  sensitive=false, % keywords are not case-sensitive
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]'          % defines that strings are enclosed in double quotes
+}
+
+\definecolor{eclipseBlue}{RGB}{42,0.0,255}
+\definecolor{eclipseGreen}{RGB}{63,127,95}
+\definecolor{eclipsePurple}{RGB}{127,0,85}
+\definecolor{eclipseEmph}{RGB}{0,0,0}
+
+% Set Language
+\lstset{
+  language={Dynare},
+  inputencoding = utf8,
+  basicstyle=\footnotesize\ttfamily, % Global Code Style
+  captionpos=b, % Position of the Caption (t for top, b for bottom)
+  extendedchars=true, % Allows 256 instead of 128 ASCII characters
+  tabsize=2, % number of spaces indented when discovering a tab
+  columns=fixed, % make all characters equal width
+  keepspaces=true, % does not ignore spaces to fit width, convert tabs to spaces
+  showstringspaces=false, % lets spaces in strings appear as real spaces
+  breaklines=true, % wrap lines if they don't fit
+  frame=trbl, % draw a frame at the top, right, left and bottom of the listing
+  frameround=tttt, % make the frame round at all four corners
+  framesep=4pt, % quarter circle size of the round corners
+  numbers=left, % show line numbers at the left
+  numberstyle=\tiny\ttfamily, % style of the line numbers
+  commentstyle=\color{eclipseGreen}, % style of comments
+  keywordstyle=\color{eclipsePurple}\bfseries, %, % style of keywords
+  stringstyle=\color{eclipseBlue}, % style of strings
+  emph={model_name, periods, eqtags, targets, expression, auxiliary_model_name, horizon,discount},emphstyle=\color{eclipseEmph}\bfseries,
+  literate={⟂}{{\ensuremath{\perp}}}{1},
+}
+
+
+
 
 
 \newenvironment{frcseries}{\fontfamily{frc}\selectfont}{}
@@ -776,8 +839,6 @@ stochastic extended path approach?\newline
 \end{table}
 
 
-
-
 We constructed Table~\ref{table:1} by simulating the model using the
 true solution, terminating the infinite sum after 800 periods, and
 comparing these "true data" with simulations generated via
@@ -936,18 +997,22 @@ function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
    \centering
    \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  | S[table-format=1.4] S[table-format=1.4]}
       \hline
-                                                     & {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} \\
+                                                     & {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} & {SEP(2++)} \\
       \hline\hline
-      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.2206             & 1.2532   & 0.0162              & 0.0163    \\
-      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.2202             & 1.2529   & 0.0155              & 0.0153    \\
-      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.2215             & 1.2542   & 0.0173              & 0.0177    \\
+      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.2206             & 1.2532   & 0.0162              & 0.0163    & 0.0004     \\
+      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.2202             & 1.2529   & 0.0155              & 0.0153    & 0.0000     \\
+      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.2215             & 1.2542   & 0.0173              & 0.0177    & 0.0014     \\
       \hline
    \end{tabular}
    \caption{\textbf{Comparison with the true solution.} The columns
       SEP$^{\star}(2)$ and SEP$(2)$ represent the second order
       stochastic extended paths, utilizing both a complete tree and a
       sparse tree. In contrast, the columns SEP$^{\star}(2+)$ and
-      SEP$(2+)$ correspond to their hybrid versions.}
+      SEP$(2+)$ correspond to their hybrid versions (based on a second
+      order approximation of the model). The final column, SEP$(2++)$,
+      represents the second-order stochastic extended path with a
+      sparse tree; however, the hybrid correction relies on a
+      fourth-order approximation of the model.}
    \label{table:3}
 \end{table}
 
@@ -960,15 +1025,24 @@ perturbation. Furthermore, additional unreported figures show a
 gradual decrease in accuracy errors as the order of the stochastic
 extended path increases.\newline
 
+To improve the accuracy of the hybrid stochastic extended path,
+incorporating higher-order perturbation corrections may be
+advantageous. The last column of Table \ref{table:3} demonstrates that
+applying corrections to the constant in the reduced form of a
+fourth-order local approximation of the model significantly enhances
+precision. In this context, pursuing a sixth-order (or higher) local
+approximation would not yield significant benefits. The primary reason
+for this is that the default tolerance parameter of 1e-5, employed by
+the nonlinear algorithm in Dynare, should be decreased to observe
+significant differences in the simulated data.\newline
 
 
 Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:\newline
 \begin{enumerate}
    \item A stochastic extended path method of order $p$ to handle large short-run
-         nonlinearities and occasionally binding constraints (such as a zero lower bound).
+         nonlinearities and occasionally binding constraints (such as a zero lower bound).\newline
    \item A perturbation-based correction, capturing how uncertainty well beyond
-         $p$ periods contributes to the current state via higher-moment (e.g.\ second-order)
-         terms.
+         $p$ periods contributes to the current state via higher-moment.\newline
 \end{enumerate}
 
 In doing so, we retain the key advantages of extended path for addressing strong
@@ -978,7 +1052,13 @@ underlying system of equations.
 
 \section{Numerical illustration}\label{sec:3}
 
-We consider a Real Business Cycle model with irreversible investment. The social planner problem is:
+Employing the stochastic extended path approach is justifiable
+primarily when the model exhibits significant deterministic
+nonlinearities, as seen in scenarios involving Occasionally Binding
+Constraints, or when the model is permitted to deviate substantially
+from its deterministic steady state. As an illustration, we consider a
+Real Business Cycle model with irreversible investment. The social
+planner problem is:
 \begin{equation*}
    %\label{eq:social-planner-problem:2}\tag{SP$_{2}$-1}
    \begin{split}
@@ -1002,14 +1082,15 @@ and
    %\label{eq:utility}\tag{SP-2}
    u(c_t,l_t) = \frac{\left(c_t^{\theta}(1-l_t)^{1-\theta}\right)^{1-\tau}}{1-\tau}
 \end{equation*}
-The innovation $\varepsilon_t$ is a Gaussian white noise with zero mean and
-variance $\sigma_{\varepsilon}^2$. This model is an interesting case for
-us because it has two sources of non linearity:
-\begin{enumerate}[(i)]
-   \item The technological and preference functional forms can be made arbitrarily nonlinear (for instance by decreasing the elasticity of output with respect to capital, $\frac{1}{1-\psi}$),
-   \item The occasionally binding constraint on investment.
-\end{enumerate}
-The first order conditions are given by:
+The innovation term $\varepsilon_t$ is modeled as Gaussian white noise
+with a mean of zero and a variance of $\sigma_{\varepsilon}^2$. This
+framework presents a compelling scenario due to the presence of two
+key sources of non-linearity: (\emph{i}) The functional forms related
+to technology and preferences can be rendered arbitrarily
+non-linear, for instance, by reducing the elasticity of output in
+relation to capital, represented as $\frac{1}{1-\psi}$; and
+(\emph{ii}) An occasionally binding constraint on investment is
+incorporated into the model. The first order conditions are given by\footnote{See annex \ref{appendix:rbc}.}:
 \begin{subequations}
    \label{eq:foc:2}
    \begin{equation*}
@@ -1030,29 +1111,72 @@ The first order conditions are given by:
    \end{equation*}
 \end{subequations}
 where $\mu_t$ is the Lagrange multiplier associated to the
-positiveness constraint on investment. The calibration is such that
-the economy hits the lower bound on investment: $\beta=0.990$,
-$\theta=0.357$, $\tau=2.000$, $\alpha=0.450$, $\psi=-0.500$,
-$\delta=0.020$, $\rho=0.995$, $A^\star=1$ and $\sigma=0.100$. With
-this calibration the elasticity of production with respect to physical
-capital is 2/3. Figures~\ref{example:1:invest:1} and~\ref{example:1:invest:2} show the solution paths for investment
-considering different approximation orders ($S=0,1,2,3$). A striking
-feature is that all the paths are perfectly ordered with respect to
-the approximation order $S$. The more we take into account future
-uncertainty, the higher is the level of investment. This observation
-is expected, and simply illustrates the precautionary motive for
-savings. Also, it is worth noting that the resulting differences when
-increasing the value of $S$ are decreasing. This suggests that, in
-this particular model, a low order approximation is enough to take
-into account the stochastic dimension of the non linearity.
+positiveness constraint on investment. This model is exclusively
+considered for evaluating our simulation approach. Our calibration
+lacks quantitative justification; it has been derived to ensure that
+the economy attains the minimum investment threshold, while
+experiencing substantial deviations from the deterministic steady
+state. The discount factor is $\beta=0.990$, the preference
+parameters $\theta$ and $\tau$ are respectively equal to $0.357$
+and $2.000$. The technology parameters $\alpha$ and $\psi$ are
+respectively equal to $0.450$ and $-0.200$. The depreciation rate
+is $\delta=0.010$. Finally, the parameters governing TFP
+are $\rho=0.800$, $A^\star=1$ and $\sigma=0.100$.\newline
+
+Figure~\ref{fig:rbc:reversible-investment} presents the results of
+stochastic extended path simulations for investment across various
+approximation orders (\(p=0,1,\ldots,10\)), specifically focusing on
+the model without a positivity constraint on investment. Notably, we
+observe substantial fluctuations around the deterministic steady
+state, with investment values occasionally dropping into negative
+territory during certain intervals. Incorporating future uncertainty
+does not alter the outcomes in this particular model\footnote{We would
+   obtain the same results with hybrid stochastic extended path.}. In
+contrast, Figure~\ref{fig:rbc:irreversible-investment-all} illustrates the
+results obtained from applying the same set of innovations to a model
+characterized by irreversible investment. We can now discern
+variations in the outcomes produced by the stochastic extended path
+algorithm as the approximation order changes. These differences remain
+minimal when the economy is significantly above the steady state, but
+they tend to increase as we approach or fall below that steady
+state. A noteworthy observation is that all the paths maintain a
+consistent order based on the approximation order \(p\). As we
+incorporate greater consideration for future uncertainty, the level of
+investment correspondingly rises. As the order of approximation
+increases, the likelihood of reaching the lower bound on investment
+diminishes. Figure~\ref{fig:rbc:irreversible-investment-short}
+illustrates the results of our simulations conducted on a subsample
+where the OBC is actively bidding. The figure employs a gradient color
+scheme ranging from black to red to denote the progression of the
+approximation order from 0 to 10. Notably, we observe that the
+discrepancies arising from increasing the approximation order \( p \)
+diminish as \( p \) increases. In fact, the differences between
+investments simulated at orders 8 and 9, as well as those at orders 9
+and 10, are barely discernible.This suggests that a tenth-order
+approximation using a sparse tree is sufficient to capture the
+implications of future uncertainty in this model.\newline
+
+The stochastic extended path approach offers great versatility and
+demands little extra effort from a \Dynare\, user, aside from simply
+writing the model's equations. The trade-off for this simplicity is
+that simulating long time series can be quite time-consuming,
+particularly as we raise the approximation order $p$.\newline
+
+Rather than simulating time series, a less time consuming approach
+would be to construct an Impulse Response Function (IRF) using the
+auxiliary model employed in each iteration of the stochastic extended
+path algorithm. By initializing the model at its steady state, the IRF
+in response to an unexpected shock in the first period can be defined
+by tracing the central nodes of the auxiliary model, \ref{sep:perfect:0}-\ref{sep:perfect:leafs} or
+\ref{sep:sparse:0}-\ref{sep:sparse:5}. For a sparse tree, the IRF is
+represented by the
+sequence
+\(y_t, y_{t,t+1}^1, y_{t+1,t+2}^1, \ldots, y_{t+p-1,t+p}^1, \ldots\).
+
 
 
 \addresseshere
 
-
-\newpage
-
-\printbibliography
 
 \newpage
 \appendix
@@ -1120,8 +1244,39 @@ into account the stochastic dimension of the non linearity.
 \end{figure}
 
 
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.5}{
+         \input{../../models/rbc/rbc.tikz}}
+   \end{center}
+   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 10 (sparse tree).}
+   \label{fig:rbc:reversible-investment}
+\end{figure}
 
-\newpage
+
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.5}{
+         \input{../../models/rbcii/rbcii.tikz}}
+   \end{center}
+   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 5 (sparse tree).}
+   \label{fig:rbc:irreversible-investment-all}
+\end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.5}{
+         \input{../../models/rbcii/rbcii_.tikz}}
+   \end{center}
+   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 10 (sparse tree).}
+   \label{fig:rbc:irreversible-investment-short}
+\end{figure}
+
+
 
 \setcounter{equation}{0}
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
@@ -1159,12 +1314,44 @@ into account the stochastic dimension of the non linearity.
 \end{equation}
 \newline
 
-Equation (\ref{annex:rbc:efficiency}) is the efficiency law of
-motion, (\ref{annex:rbc:euler}) is the Euler equation,
-(\ref{annex:rbc:labour}) is the first order condition for labour
-supply, (\ref{annex:rbc:capital_law_of_motion}) is physical capital
-stock law of motion and (\ref{annex:rbc:excl}) the complementary slackness condition
-associated with the positivity constraint on investment.\newline
+Equations \eqref{annex:rbc:efficiency} define the law of motion for
+efficiency, where \( a_t \) represents the centered logged total
+factor productivity (TFP). Equation \eqref{annex:rbc:euler} presents
+the Euler equation, while equation \eqref{annex:rbc:labour} outlines
+the first-order condition for labor supply. Equation
+\eqref{annex:rbc:capital_law_of_motion} describes the law of motion
+for the physical capital stock. Finally, equation
+\eqref{annex:rbc:excl} establishes the complementary slackness
+condition resulting from the investment positivity constraint.\newline
+
+\section{Dynare's equations for the RBC model}\label{appendix:rbc-mod}
+
+Incorporating a non-occasionally binding constraint into a model
+with the \verb+extended_path+ command is straightforward. This
+can be achieved by defining a slackness condition within the model
+block, following the guidelines provided for specifying Mixed
+Complementarity Problems, as outlined by
+\textcite{DynareManual}. Below is the \verb+model+ block employed to
+generate figures \ref{fig:rbc:reversible-investment} through
+\ref{fig:rbc:irreversible-investment-short}:
+
+\lstinputlisting[firstline=18,lastline=44,frame=none,basicstyle=\footnotesize,language=Dynare]{../../models/rbcii/rbcii.mod}
+
+An arbitrary number of Optimal Borrowing Constraints (OBC) can be
+established through the same methodology. Employing \Dynare's
+implementation of OccBin, introduced by \textcite{OccBin}, would prove
+to be more complex and is restricted to only two constraints. Note
+that the extended path approach, which does not depend on local
+approximations unlike OccBin, will yield different simulations unless
+the model is linear or remains in the vicinity of the deterministic
+steady state. Full codes are available here:
+\begin{center}
+   \url{https://github.com/stepan-a/ep-mj-30-years}
+\end{center}
+
+\newpage
+
+\printbibliography
 
 \end{document}
 
