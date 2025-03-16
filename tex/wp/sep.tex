@@ -1,4 +1,3 @@
-% Compiled with TeXLive 2011.
 \synctex=1
 \documentclass[a4paper,11pt]{amsart}
 
@@ -176,8 +175,27 @@
 
 
 \title[Stochastic Extended Path]{Stochastic Extended Path}\thanks{}
-\date{December, 2016}
+\date{March, 2025}
+
 \maketitle
+
+\begin{abstract}
+   The Stochastic Extended Path (SEP) method enhances the traditional
+   Extended Path technique by integrating numerical methods to estimate
+   conditional expectations. In contrast to the deterministic Extended
+   Path, which presumes that future shocks will align with their
+   expected values, SEP accommodates stochastic non-linearity by
+   performing integration over future shocks. We employ numerical
+   techniques, including Gaussian quadrature and unscented transforms,
+   to efficiently approximate integrals while alleviating the
+   challenges posed by the curse of dimensionality. To further enhance
+   accuracy, we propose a hybrid strategy that merges SEP with
+   perturbation methods to effectively address long-run uncertainty
+   effects. We evaluate the performance of SEP in an asset pricing
+   model with a closed-form solution and demonstrate the methodology
+   using a Real Business Cycle (RBC) model featuring irreversible
+   investment.
+\end{abstract}
 
 \section*{Introduction}
 
@@ -251,25 +269,34 @@ We assume that the model can be expressed in the following manner:
 \end{equation}
 
 where \( y_t \) is an \( n \times 1 \) vector of endogenous
-variables, \( \varepsilon_t \) is an \( n_s \times 1 \) vector of
-innovations, and \( f: \mathbb R^{3n+n_s} \rightarrow \mathbb R^n \)
-is a continuous function. The innovations are assumed to be
-independent and identically distributed and follow a Gaussian
+variables, \( \varepsilon_t \) is a \( n_s \times 1 \) random vector
+of innovations,
+and \( f: \mathbb R^{3n+n_s} \rightarrow \mathbb R^n \) is a
+continuous function. The innovations are assumed to be independent and
+identically distributed and follow a Gaussian
 distribution: \( \mathcal N(0,\Sigma) \). The assumption regarding the
 distribution of innovations can be relaxed; however, this would
-necessitate the use of different quadrature rules in section~\ref{sec:2}. The conditional expectation is presented above the
-function $f$, but we could readily extend this to consider conditional
-expectations under a nonlinear function by incorporating additional
-auxiliary variables. Similarly, we could address an arbitrary number
-of lags or leads by utilizing auxiliary variables. We do not assume
-that the function \(f\) is differentiable everywhere, which is why the
-extended path approach can accommodate scenarios where the left and
-right derivatives differ due to occasionally binding
-constraints. Nevertheless, it is evident that solving a model is
-always easier when \(f\) is differentiable at all points. We also
-assume that the model has a deterministic steady state and that the
-economy converges to this steady state in the long run. There exists a
-vector of endogenous variables \(y^{\star}\) such that:
+necessitate the use of different numerical integration rules in
+section~\ref{sec:2}. The conditional expectation is presented above
+the function $f$, but we could readily extend this to consider
+conditional expectations under a nonlinear function by incorporating
+additional auxiliary variables. Similarly, we could address an
+arbitrary number of lags or leads by utilizing auxiliary variables. We
+do not assume that the function \(f\) is differentiable everywhere,
+which is why the extended path approach can accommodate scenarios
+where the left and right derivatives differ due to occasionally
+binding constraints. Nevertheless, it is evident that solving a model
+is always easier when \(f\) is differentiable at all
+points\footnote{When calculating the derivatives of an equation that
+   includes the binary operators $\max$ or $\min$, \Dynare\
+   returns the derivative of the first argument in the event of a tie
+   between the two arguments. This behavior can lead to a deterministic
+   simulation failing with $\max\left(\varphi(y),\psi(y) \right)$ while
+   succeeding with $\max\left(\psi(y),\varphi(y)\right)$ in an
+   equation.}. We also assume that the model has a deterministic steady
+state and that the economy converges to this steady state in the long
+run. There exists a vector of endogenous variables \(y^{\star}\) such
+that:
 \[
    f\left(y^{\star},y^{\star},y^{\star}, 0\right) = 0
 \]
@@ -341,13 +368,14 @@ following approach: for each period in the stochastic simulation, draw
 a random vector of stochastic shocks \(\varepsilon_t\); run an
 auxiliary deterministic version of the model\footnote{It is important
    to note that we employ a relaxation method to solve the perfect
-   foresight auxiliary model in Dynare, while \textcite{FairTaylor1983}
-   utilized a shooting method, which is known to be less efficient and
-   accurate.}, assigning the shocks in the first period
+   foresight auxiliary model in \Dynare, while
+   \textcite{FairTaylor1983} utilized a shooting method, which is known
+   to be less efficient.}, assigning the shocks in the first period
 to \(\varepsilon_t\) while setting all future shocks to zero; then,
 use the values of the endogenous variables from the first period of
 this auxiliary model as the values of the endogenous variables in
-period \(t\) of the stochastic simulation. Below is a sketch of the algorithm:\newline
+period \(t\) of the stochastic simulation. Below is a sketch of the
+algorithm:\newline
 
 \algsetup{linenosize=\small,
    linenodelimiter=.
@@ -374,19 +402,23 @@ conditional expectations are approximated by setting the shocks to
 zero, their expected value. This method overlooks Jensen's inequality
 and simulates a stochastic scenario based on a form of certainty
 equivalence. Whether this poses a problem depends on the specific
-model being used. It is important to note that a perturbation approach
-utilizing a first-order approximation of the model would encounter
-similar limitations, failing to address the deterministic nonlinearity
-inherent in the model. In contrast, the Extended Path approach accepts
-certainty equivalence as a trade-off for comprehensively accounting
-for the deterministic nonlinearity. Another advantage of this approach
-is its ability to accurately simulate models with variables that
-significantly deviate from the deterministic steady state, where
-perturbation methods would yield inaccurate solutions. Finally, in
-contrast to perturbation-based solutions, this approach enables the
-incorporation of an arbitrary number of occasionally binding
-constraints, as we do not require the differentiability
-of \(f\).\newline
+model being used. In this model, agents operate under the premise that
+future shocks will not occur. However, in each subsequent period, they
+encounter new non-zero realizations of these shocks. Despite facing
+these fluctuations, they gain no insights about the future uncertainty
+from their experiences in each period. It is important to note that a
+perturbation approach based on a first-order approximation of the
+model would encounter similar limitations, failing to address the
+deterministic nonlinearity inherent in the model. In contrast, the
+Extended Path approach accepts certainty equivalence as a trade-off
+for comprehensively accounting for the deterministic
+nonlinearity. Another advantage of this approach is its ability to
+accurately simulate models with variables that significantly deviate
+from the deterministic steady state, where perturbation methods would
+yield inaccurate solutions. Finally, in contrast to perturbation-based
+solutions, this approach enables the incorporation of an arbitrary
+number of occasionally binding constraints, as we do not require the
+differentiability of \(f\).\newline
 
 The Extended Path approach allows for the simulation of large models
 with arbitrary precision, as the number of required operations
@@ -400,27 +432,30 @@ concerning the number of state variables.\newline
 
 \section{Stochastic Extended Path}\label{sec:2}
 
-\subsection{Numerical integration}
-
 To accommodate non-zero shocks in periods $t+1$, $t+2$, \dots, $t+p$
 ($p \geq 1$), it is necessary to explicitly compute the (conditional)
-expectations for the periods $t$, $t+1$, \dots, $t+p-1$. Different
-numerical approaches are available to achieve this.\newline
+expectations for the periods $t$, $t+1$, \dots, $t+p-1$. We begin by
+outlining various approaches employed in \Dynare\ for approximating
+integrals. Next, we detail the computation of conditional
+expectations. Following that, we assess the stochastic extended path
+approach by comparing its results with those of a model that has a
+closed-form solution. Lastly, based on the findings from this
+comparison, we suggest modifications to the stochastic extended path
+approach.\newline
 
+\subsection{Numerical integration}
 
 \subsubsection{Gaussian quadrature}
-Let $X$ be a Gaussian random
-variable with mean zero and variance $\sigma^2_x > 0$. We aim to
+Let $X$ be a Gaussian random variable with mean zero and
+variance $\sigma^2_x > 0$. We aim to
 evaluate $\mathbb{E}[\varphi(X)]$, where $\varphi$ is a continuous
-function. The expectation can be expressed as follows, utilizing the
-Gaussian probability density function:
+function. Calculating the expectation involves evaluating the following integral:
 
 \[
    \mathbb{E}[\varphi(X)] = \frac{1}{\sigma_x \sqrt{2\pi}} \int_{-\infty}^{\infty} \varphi(x) e^{-\frac{x^2}{2\sigma^2_x}} \mathrm{d}x.
 \]
 
-This integral can be approximated using a well-established result (see
-\cite{JuddBook1998}):
+which can be approximated using a well-established result (refer to \textcite{JuddBook1998}):
 
 \[
    \int_{-\infty}^{\infty} \phi(x) e^{-x^2} \mathrm{d}x = \sum_{i=1}^m \omega_i \phi(x_i) + \frac{m! \sqrt{m}}{2^m} \frac{\phi^{(2m)}(\xi)}{(2m)!}
@@ -435,7 +470,7 @@ order $2m$ derivative of the integrand. This result indicates that it
 is feasible to derive a sequence of weights $\omega_i$ such that
 evaluating the integral using the right-hand side provides exact
 results for any polynomial of order $2m-1$. The method described by
-\cite{GolubWelsch1969} outlines the process for calculating the
+\textcite{GolubWelsch1969} outlines the process for calculating the
 quadrature weights and nodes $(\omega_i,x_i)$ through the eigenvalues
 and eigenvectors of a symmetric tridiagonal matrix. A change of
 variables is required to evaluate $\mathbb{E}[\varphi(X)]$. We
@@ -445,11 +480,11 @@ set $z = \frac{x}{\sigma_x \sqrt{2}}$ and use the following approximation for th
    \mathbb{E}[\varphi(X)] \approx \frac{1}{\sqrt{\pi}} \sum_{i=1}^m \omega_i \varphi(z_i).
 \]
 
-In our models, we often encounter multiple sources of uncertainty,
-necessitating consideration of cases where $X$ is a random
-vector. If $X$ is a multivariate Gaussian random variable, we can
-employ a tensor product approach. Specifically, if $X$ is defined
-in $\mathbb{R}^{n_s}$ with $\mathbb{E}[X] = 0$
+In our models, we often have multiple sources of uncertainty,
+\emph{i.e.} more than one shock, necessitating consideration of cases
+where $X$ is a random vector. If $X$ is a multivariate Gaussian random
+variable, we can employ a tensor product approach. Specifically,
+if $X$ is defined in $\mathbb{R}^{n_s}$ with $\mathbb{E}[X] = 0$
 and $\mathbb{V}[X] = \Sigma$, and $\psi(\mathbf{x})$ is a function
 mapping $\mathbb{R}^{n_s}$ to $\mathbb{R}^n$, we utilize the following
 approximation:
@@ -476,37 +511,51 @@ alternatives exist.\newline
 As the number of shocks increases, the Gauss-Hermite formula and
 tensor products become impractical. An alternative approach is to
 utilize monomial formulas (refer to \textcite{Stroud1971}). Recently,
-the theory of unscented transformations has revisited this topic, as
+the theory of unscented transforms has revisited this topic, as
 discussed in \textcite{Julier2000} and \textcite{Julier2002}.\newline
 
-\textcite{Julier2000} propose an attractive and economical approach to
-integrate in $\mathbb R^{n_s}$ is to use a formula with \(2n_s + 1\)
-nodes. Defining matrix $P$ as \(P'P=\Sigma\), the nodes are given by:
+The Unscented Transform is a method used to estimate how a probability
+distribution evolves under a nonlinear mapping. Essentially, it
+provides a means to approximate an integral involving a nonlinear
+function of a random variable without depending on quadrature methods
+or Monte Carlo simulations. This technique has been developed within
+the framework of nonlinear filters designed to estimate nonlinear
+state space models. \textcite{Julier2000} present an appealing and
+cost-effective method for integration in $\mathbb{R}^{n_s}$, utilizing
+a formula that involves \(2n_s + 1\) nodes, referred to as sigma
+points in the literature. Defining the matrix \(P\) such that \(P'P = \Sigma\), the nodes are given by:
+
 \[
    \begin{cases}
-      x_1 = 0                                                            \\
-      x_{i} = \sqrt{n_s+\kappa P_i}\quad\text{for }i=1,\dots,n_s         \\
-      x_{i} = -\sqrt{n_s+\kappa P_i}\quad\text{for }i=n_s+1,\dots,2n_s+1 \\
+      x_1 = 0                                                                  \\
+      x_{i} = \sqrt{n_s + \kappa P_i}\quad\text{for }i=1,\dots,n_s             \\
+      x_{i} = -\sqrt{n_s + \kappa P_i}\quad\text{for }i=n_s + 1,\dots,2n_s + 1 \\
    \end{cases}
 \]
-where $\kappa$ is a real positive scaling parameter, and the corresponding weights are defined by:
+
+where \(\kappa\) is a positive real scaling parameter. The
+corresponding weights are defined as:
+
 \[
    \begin{cases}
-      \omega_1 = \frac{\kappa}{m+\kappa} \\
-      \omega_i = \frac{1}{2(m+\kappa)}\quad\text{for all } i>0
+      \omega_1 = \frac{\kappa}{m + \kappa} \\
+      \omega_i = \frac{1}{2(m + \kappa)}\quad\text{for all } i > 1
    \end{cases}
 \]
-The unscented transformation let us recover the mean and the
-covariance matrix exactly for any third order polynomial function
-of $X$. The arbitrary parameter $\kappa$ can be used to match another
-moment or characteristic of the distribution of $\varphi(X)$.\newline
+
+The unscented transformation allows us to accurately recover the mean
+and covariance matrix for any third-order polynomial function
+of \(X\). The adjustable parameter \(\kappa\) can be utilized to align
+with other moments or characteristics of the distribution
+of \(\varphi(X)\).\newline
 
 \subsection{Trees of possible futures}
 
-Given a set of weights and
-nodes \((\omega_i, \epsilon_i)_{i=1}^m\), a stochastic extended path
-simulation of order 1 is constructed by replacing the auxiliary
-perfect foresight model, as presented in equation \eqref{eq:pf}, with:
+Given a set of weights and nodes \((\omega_i, \epsilon_i)_{i=1}^m\)
+where \(m\) is odd, ensuring that \(\epsilon_1=0\) serves as the
+central node, we construct a stochastic extended path simulation of
+order 1 by substituting the auxiliary perfect foresight model, as
+detailed in equation \eqref{eq:pf}, with:
 
 \begin{equation}\label{eq:spf:1}
    \begin{split}
@@ -526,16 +575,33 @@ expectation for period \( t \). Following this block, there
 are \( m \) deterministic trajectories leading to the steady
 state. For each shock state \( \epsilon \) in period \( t+1 \), we
 must solve a perfect foresight problem over \( H-2 \) periods, akin to
-the formulation presented in equation \eqref{eq:pf}. It is important to
-recognize that these problems cannot be treated in isolation due to
+the formulation presented in equation \eqref{eq:pf}. It is important
+to recognize that these problems cannot be treated in isolation due to
 their shared initial condition, \(y_t\), which remains to be
-determined. The current system of equations is larger than the one
-addressed in section \eqref{sec:pf}, comprising \( n + nm(H-1) \)
-equations compared to the \( nH \) equations of the perfect foresight
-model. Nevertheless, we can still apply a similar Newton-based
-approach to tackle the auxiliary model. It is important to note,
-however, that the Jacobian matrix of the stacked equations is no
-longer block tridiagonal.\newline
+determined. Given that all possible futures share a common history
+($y_{t-1}$, which is predetermined, and $y_t$, which will be
+determined as part of the solution to the system of equations
+\eqref{eq:spf:1}), we cannot simply derive $y_t$ by averaging $m$
+perfect foresight simulations in parallel\footnote{It is indeed
+   feasible to explicitly parallelize the solution algorithm by
+   utilizing nested Newton solvers. For a specified value of $y_t$, we
+   can concurrently solve the $m$ perfect foresight models, employing
+   the strategy outlined in section~\ref{sec:pf}. Subsequently, we only
+   need to determine $y_t$ using another Newton-type algorithm that
+   integrates the parallelized solvers for the periods spanning
+   from $t+1$ to $t+H-1$. We did not explore this possibility as we
+   found the direct approach to be simpler; however, this strategy may
+   prove beneficial as the model scales, either due to the complexity
+   of the model itself or an increased number of integration
+   nodes.}.\newline
+
+This system of equations is larger than the one addressed in section
+\ref{sec:pf}, comprising \( n + nm(H-1) \) equations compared to
+the \( nH \) equations of the perfect foresight model. Nevertheless,
+we can still apply a similar Newton-based approach to tackle the
+auxiliary model. It is important to note, however, that the Jacobian
+matrix of the stacked equations is no longer block
+tridiagonal.\newline
 
 Obviously, we would like to go further by approximating the
 conditional expectations over the first p periods.\newline
@@ -557,7 +623,9 @@ At the base of the tree, corresponding to period \( t \) of the auxiliary model,
    \sum_{i_1=1}^m \omega_{i_1} f\left({\color{blue}y_{t-1}}, {\color{red}y_t}, y_{t+1}^{i_1}, \varepsilon_t \right) = 0
 \end{equation}
 
-Moving to the first level of the tree, representing period \( t+1 \) of the auxiliary model, we must satisfy the following \( m \) equations, one for each node:
+Moving to the first level of the tree, representing period \( t+1 \)
+of the auxiliary model, we must satisfy the following \( m \)
+equations, one for each node:
 
 \begin{equation}\label{sep:perfect:1}\tag{4.b}
    \sum_{i_2=1}^m \omega_{i_2} f\left({\color{red}y_{t}}, y_{t+1}^{i_1}, y_{t+1}^{i_2,i_1}, \epsilon_{i_1} \right) = 0\,\, \forall\, i_1\in \{1,\dots,m\}
@@ -569,13 +637,16 @@ In the second level of the tree, we encounter \( m^2 \) equations that must be f
    \sum_{i_3=1}^m \omega_{i_3} f\left(y_{t+1}^{i_1}, y_{t+2}^{i_2, i_1}, y_{t+3}^{i_3,i_2,i_1}, \epsilon_{i_2} \right) = 0\,\,  \forall\, (i_1,i_2)\in \{1,\dots,m\}^2
 \end{equation}
 
-This process continues up to level \(p-1\) of the tree, where \(m^{p-1}\) equations must similarly be satisfied:
+This process continues up to level \(p-1\) of the tree,
+where \(m^{p-1}\) equations must similarly be satisfied:
 
 \begin{equation}\label{sep:perfect:p}\tag{4.d}
    \sum_{i_p=1}^m \omega_{i_p} f\left(y_{t+p-2}^{i_{p-2},\ldots,i_1}, y_{t+p-1}^{i_{p-1},\ldots,i_1}, y_{t+p}^{i_p,\ldots,i_1}, \epsilon_{i_{p-1}} \right) = 0\,\,  \forall\, (i_1,\ldots,i_{p-1})\in \{1,\dots,m\}^{p-1}
 \end{equation}
 
-Subsequently, starting from the terminal nodes of the \(m\)-ary tree of height \( p \), we must resolve \(m^p\) perfect foresight problems over \(H-p-1\) periods:
+Subsequently, starting from the terminal nodes of the \(m\)-ary tree
+of height \( p \), we must resolve \(m^p\) perfect foresight problems
+over \(H-p-1\) periods:
 
 \begin{equation}\label{sep:perfect:leafs}\tag{4.e}
    \begin{split}
@@ -600,11 +671,13 @@ unknown vectors of size $n \times 1$ can be expressed as follows:
                                 & = \frac{m^p - 1}{m - 1} + m^p(H - p)
    \end{split}
 \]
-This indicates that the size of the linear system to be resolved in
-each iteration of the Newton algorithm is given
+This indicates that the size of the linear system to be solved in each
+iteration of the Newton algorithm is given
 by $n \mathcal C^{\star}(m,p,H)$. Moreover, the Jacobian matrix is
-sparse, and the total number of non-zero $n \times n$ blocks can be
-computed as:
+sparse, and the total number of non-zero $n \times n$
+blocks\footnote{Typically, these blocks are sparse matrices themselves,
+   as not all variables appear in every equation within a standard
+   model.} can be computed as:
 \[
    \mathrm{nnz}^{\star}(m,p,H) = 1 + m + (2 + m) \frac{m^p - m}{m - 1} + 3m^p(H - p) - m^p
 \]
@@ -618,7 +691,7 @@ practical applications involving this tree structure, we can only
 consider moderate orders of the stochastic extended path algorithm.\newline
 
 \subsubsection{Sparse tree of future innovations}\label{sec:fishbone-tree} Employing the
-complete $m$-ary tree presented above is infeasible for large values
+perfect $m$-ary tree presented above is infeasible for large values
 of $p$ or $m$. Trimming the tree by eliminating branches with low
 probabilities (as determined by the products of quadrature weights)
 offers limited benefits, as the pruned tree would still expand
@@ -824,9 +897,9 @@ stochastic extended path approach?\newline
       \hline
                                                      & {P1}   & {P2}   & {EP}   & {SEP$^{\star}$(2)} & {SEP(2)} \\
       \hline\hline
-      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.4261 & 0.0193 & 1.4241 & 1.2205             & 1.2531   \\
-      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.4239 & 0.0000 & 1.4236 & 0.8874             & 0.9201   \\
-      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.4707 & 0.0527 & 1.4250 & 1.6366             & 1.6690   \\
+      $100\times\textrm{mean}(|\hat v_t - v_t|/v_t)$ & 1.4261 & 0.0193 & 1.4241 & 1.2206             & 1.2532   \\
+      $100\times\textrm{min}(|\hat v_t - v_t|/v_t)$  & 1.4239 & 0.0000 & 1.4236 & 1.2202             & 1.2509   \\
+      $100\times\textrm{max}(|\hat v_t - v_t|/v_t)$  & 1.4707 & 0.0527 & 1.4250 & 1.2215             & 1.2542   \\
       \hline
    \end{tabular}
    \caption{\textbf{Comparison with the true solution.} Columns P1 and
@@ -834,7 +907,7 @@ stochastic extended path approach?\newline
       second order perturbations. EP denotes the extended path (which
       assumes no future uncertainty), while the SEP$^{\star}$ and SEP
       columns correspond to the second order stochastic extended path,
-      using a complete tree and a sparse tree, respectively.}
+      using a perfect tree and a sparse tree, respectively.}
    \label{table:1}
 \end{table}
 
@@ -847,21 +920,31 @@ extended path simulations closely resemble those produced by a
 first-order approximation around the steady state. While the accuracy
 errors are marginally lower with the extended path approach, both
 methodologies operate under certainty equivalence. The second-order
-stochastic extended path, whether implemented through a complete tree
+stochastic extended path, whether implemented through a perfect tree
 or a sparse tree, demonstrates notable improvements compared to the
 extended path method. However, we still observe a significant gap in
 accuracy compared to the local second-order approximation around the
 deterministic steady state. Our analysis indicates that accuracy
 errors diminish as the order of approximation in the stochastic
 extended path increases; however, the improvement tends to be rather
-slow as the approximation order increases.\newline
+slow as the approximation order increases. In conclusion, a notable
+characteristic of the accuracy errors associated with (S)EP is their
+significantly lower volatility compared to those derived from
+perturbation methods, as evidenced by the difference between the
+minimum and maximum errors. This observation suggests that the erros
+do not depend much on the state of the economy and that the component
+we are overlooking remains relatively constant.\newline
 
-How large should the approximation order be to beat the second order
-perturbation? To obtain a lower bound we can compute analytically the
-unconditional expectation of $v$ when the model is solved with
-stochastic extended path, under the assumption that there
-are no accuracy errors in the quadratures used in each node of the tree
-of future histories. For the extended path we have:
+What order of approximation is necessary to beat the second-order
+perturbation or to obtain an unconditional expectation for $v$ that is
+closer to its true value? To establish a lower bound, we can
+analytically compute the unconditional expectation of \( v \) when
+utilizing the stochastic extended path approach, assuming that there
+are no accuracy errors in the quadratures employed at each node of the
+tree representing future histories.\footnote{We calculate the exact
+   solution of the asset pricing model under the assumption that
+   non-zero future shocks will occur solely within the next $p$
+   periods.}. For the extended path we have:
 \[
    v_t^{(0)} = \sum_{i=1}^\infty \beta^i e^{a_i^{(0)} + b_i (x_t-\mu)}
 \]
@@ -896,7 +979,7 @@ and the unconditional expectation derived from extended path
 simulation, $\mathbb E\left[ v_t^{(0)}\right]$, is narrowed as we
 incorporate various orders of the stochastic extended path. To
 effectively capture the impacts of future uncertainty in our
-calibration, a large value of \(p\) is essential. In this context, the
+calibration, a large value of \(p\) is essential. In this regard, the
 perturbation approach proves to be considerably more
 efficient.\newline
 
@@ -956,7 +1039,7 @@ so that the original model \eqref{eq:model} is satisfied. Plugging $g$ into this
 From the perspective of the expectation operator $\mathbb E_t$, $\eta_{t+1}$ is the relevant source of uncertainty.\newline
 
 The \emph{hybrid stochastic extended path} approach considers a Taylor expansion
-of $\mathcal F$ in the single direction of $\sigma$. That is, we expand
+of $\mathcal F$ in the sole direction of $\sigma$. That is, we expand
 $\mathbb E_t f(\cdot)$ in powers of $\sigma$:
 \[
    \begin{split}
@@ -974,7 +1057,9 @@ first $p$ periods, starting in period $t+p-1$, the deterministic
 solution (with zero shocks) corresponds to the leading term of the
 above expansion.  A perturbation expansion in the direction
 of $\sigma$ can correct for longer-run volatility effects after
-period $t+p-1$.\newline
+period $t+p-1$. We maintain the terminal condition of the auxiliary
+model, ensuring that each leaf converges to the deterministic steady
+state at the end..\newline
 
 Specifically, in the deterministic problems at the terminal
 nodes\footnote{In the case of a perfect m-ary tree, there are $m^p$
@@ -995,7 +1080,7 @@ function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
 
 \begin{table}[H]
    \centering
-   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  | S[table-format=1.4] S[table-format=1.4]}
+   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] |  S[table-format=1.4]  S[table-format=1.4] | S[table-format=1.4]}
       \hline
                                                      & {SEP$^{\star}$(2)} & {SEP(2)} & {SEP$^{\star}$(2+)} & {SEP(2+)} & {SEP(2++)} \\
       \hline\hline
@@ -1006,7 +1091,7 @@ function with respect to $\sigma$ evaluated at $\sigma = 0$.\newline
    \end{tabular}
    \caption{\textbf{Comparison with the true solution.} The columns
       SEP$^{\star}(2)$ and SEP$(2)$ represent the second order
-      stochastic extended paths, utilizing both a complete tree and a
+      stochastic extended paths, utilizing both a perfect tree and a
       sparse tree. In contrast, the columns SEP$^{\star}(2+)$ and
       SEP$(2+)$ correspond to their hybrid versions (based on a second
       order approximation of the model). The final column, SEP$(2++)$,
@@ -1025,16 +1110,18 @@ perturbation. Furthermore, additional unreported figures show a
 gradual decrease in accuracy errors as the order of the stochastic
 extended path increases.\newline
 
-To improve the accuracy of the hybrid stochastic extended path,
-incorporating higher-order perturbation corrections may be
-advantageous. The last column of Table \ref{table:3} demonstrates that
-applying corrections to the constant in the reduced form of a
-fourth-order local approximation of the model significantly enhances
-precision. In this context, pursuing a sixth-order (or higher) local
-approximation would not yield significant benefits. The primary reason
-for this is that the default tolerance parameter of 1e-5, employed by
-the nonlinear algorithm in Dynare, should be decreased to observe
-significant differences in the simulated data.\newline
+We can improve the accuracy of the hybrid stochastic extended path by
+incorporating higher-order perturbation corrections. The final column
+of Table \ref{table:3} illustrates that
+substituting $\frac{1}{2}g_{\sigma^2}$ with the correction to the
+constant derived from fourth-order perturbation significantly improves
+precision.. In this context, pursuing a sixth-order (or higher) local
+approximation would not yield significant benefits. The main reason
+for this is that the default tolerance parameter
+of \(1 \times 10^{-5}\), used by the nonlinear solvers in \Dynare,
+should be reduced to observe notable differences in the simulated
+data, albeit at the expense of additional iterations in the Newton
+solver.\newline
 
 
 Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:\newline
@@ -1045,10 +1132,12 @@ Thus, the \emph{hybrid stochastic extended path} approach merges two strategies:
          $p$ periods contributes to the current state via higher-moment.\newline
 \end{enumerate}
 
-In doing so, we retain the key advantages of extended path for addressing strong
-nonlinearities in the near term, while perturbation handles the average impact
-of random fluctuations in the longer run without exploding the size of the
-underlying system of equations.
+By adopting this approach, we maintain the essential benefits of the
+extended path method for managing significant nonlinearities in the
+short term, while employing perturbation techniques to account for the
+average effects of random fluctuations over the longer term, all
+without excessively increasing the complexity of the underlying system
+of equations.
 
 \section{Numerical illustration}\label{sec:3}
 
@@ -1113,9 +1202,9 @@ incorporated into the model. The first order conditions are given by\footnote{Se
 where $\mu_t$ is the Lagrange multiplier associated to the
 positiveness constraint on investment. This model is exclusively
 considered for evaluating our simulation approach. Our calibration
-lacks quantitative justification; it has been derived to ensure that
-the economy attains the minimum investment threshold, while
-experiencing substantial deviations from the deterministic steady
+does not have quantitative objectives; rather, it has been designed to
+ensure that the economy reaches the minimum investment threshold while
+undergoing significant deviations from the deterministic steady
 state. The discount factor is $\beta=0.990$, the preference
 parameters $\theta$ and $\tau$ are respectively equal to $0.357$
 and $2.000$. The technology parameters $\alpha$ and $\psi$ are
@@ -1130,9 +1219,10 @@ the model without a positivity constraint on investment. Notably, we
 observe substantial fluctuations around the deterministic steady
 state, with investment values occasionally dropping into negative
 territory during certain intervals. Incorporating future uncertainty
-does not alter the outcomes in this particular model\footnote{We would
-   obtain the same results with hybrid stochastic extended path.}. In
-contrast, Figure~\ref{fig:rbc:irreversible-investment-all} illustrates the
+does not alter the outcomes in this particular model. The
+stochastic nonlinearity is entirely masked by the deterministic
+nonlinearity resulting from the very large fluctuations. In contrast,
+Figure~\ref{fig:rbc:irreversible-investment-all} illustrates the
 results obtained from applying the same set of innovations to a model
 characterized by irreversible investment. We can now discern
 variations in the outcomes produced by the stochastic extended path
@@ -1154,13 +1244,15 @@ diminish as \( p \) increases. In fact, the differences between
 investments simulated at orders 8 and 9, as well as those at orders 9
 and 10, are barely discernible.This suggests that a tenth-order
 approximation using a sparse tree is sufficient to capture the
-implications of future uncertainty in this model.\newline
+implications of future uncertainty in this model\footnote{Note also
+   that, for this model, the simulations using the hybrid version of
+   the stochastic extended path would be nearly identical.}.\newline
 
 The stochastic extended path approach offers great versatility and
 demands little extra effort from a \Dynare\, user, aside from simply
 writing the model's equations. The trade-off for this simplicity is
 that simulating long time series can be quite time-consuming,
-particularly as we raise the approximation order $p$.\newline
+particularly as we raise the approximation order $p$. \newline
 
 
 
@@ -1326,7 +1418,7 @@ generate figures \ref{fig:rbc:reversible-investment} through
 
 \lstinputlisting[firstline=18,lastline=44,frame=none,basicstyle=\footnotesize,language=Dynare]{../../models/rbcii/rbcii.mod}
 
-An arbitrary number of Optimal Borrowing Constraints (OBC) can be
+An arbitrary number of occasionally borrowing constraints (OBC) can be
 established through the same methodology. Employing \Dynare's
 implementation of OccBin, introduced by \textcite{OccBin}, would prove
 to be more complex and is restricted to only two constraints. Note
