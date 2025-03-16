@@ -1162,17 +1162,6 @@ writing the model's equations. The trade-off for this simplicity is
 that simulating long time series can be quite time-consuming,
 particularly as we raise the approximation order $p$.\newline
 
-Rather than simulating time series, a less time consuming approach
-would be to construct an Impulse Response Function (IRF) using the
-auxiliary model employed in each iteration of the stochastic extended
-path algorithm. By initializing the model at its steady state, the IRF
-in response to an unexpected shock in the first period can be defined
-by tracing the central nodes of the auxiliary model, \ref{sep:perfect:0}-\ref{sep:perfect:leafs} or
-\ref{sep:sparse:0}-\ref{sep:sparse:5}. For a sparse tree, the IRF is
-represented by the
-sequence
-\(y_t, y_{t,t+1}^1, y_{t+1,t+2}^1, \ldots, y_{t+p-1,t+p}^1, \ldots\).
-
 
 
 \addresseshere
