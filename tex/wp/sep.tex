@@ -242,7 +242,7 @@ poorly behaved due to high non-linearity or kinks, which makes it
 challenging to approximate. However, a drawback is that it does not
 leverage the problem's recursive structure, limiting its ability to
 fully account for future uncertainty. Specifically, it requires
-integration over shocks in all future periods, which may not be feasible.\footnote{Note that the pertubation
+integration over shocks in all future periods, which may not be feasible\footnote{Note that the pertubation
    approach fully account for future uncertainty conditionally on a
    given approximation order, in this sense it does not account for all
    the future uncertainty.}.
@@ -1236,7 +1236,7 @@ investment correspondingly rises. As the order of approximation
 increases, the likelihood of reaching the lower bound on investment
 diminishes. Figure~\ref{fig:rbc:irreversible-investment-short}
 illustrates the results of our simulations conducted on a subsample
-where the OBC is actively bidding. The figure employs a gradient color
+where the constraint on investment is actively binding. The employs figure a gradient color
 scheme ranging from black to red to denote the progression of the
 approximation order from 0 to 10. Notably, we observe that the
 discrepancies arising from increasing the approximation order \( p \)
@@ -1248,12 +1248,32 @@ implications of future uncertainty in this model\footnote{Note also
    that, for this model, the simulations using the hybrid version of
    the stochastic extended path would be nearly identical.}.\newline
 
+\section*{Conclusion}
+
 The stochastic extended path approach offers great versatility and
 demands little extra effort from a \Dynare\, user, aside from simply
 writing the model's equations. The trade-off for this simplicity is
 that simulating long time series can be quite time-consuming,
-particularly as we raise the approximation order $p$. \newline
+particularly as we raise the approximation order $p$.\newline
 
+A clear application of this approach is that it allows for
+straightforward verification that the Extended Path method produces
+accurate simulations for a given model. For example, Section
+\ref{sec:3} demonstrates that future uncertainty need not be
+considered in the RBC model when investment is reversible; however,
+such considerations are essential when investment is irreversible.\newline
+
+One possible extension of this approach lies in its application to
+estimation. A simple method to consider is the Simulated Method of
+Moments; however, due to the computational cost of the SEP, which
+would be further intensified by a simulation-based approach, a
+conditional likelihood method may prove to be more beneficial. To
+implement this, we just need to invert the model by identifying the
+unexpected innovations necessary to align the observed endogenous
+variables with the data for each period within the sample. If there
+are \( k \) observed variables, this can be achieved by replacing
+the \( k \) observed endogenous variables with \( k \) innovations in
+period \( t \) of the auxiliary model.\newline
 
 
 \addresseshere
@@ -1407,7 +1427,7 @@ condition resulting from the investment positivity constraint.\newline
 
 \section{Dynare's equations for the RBC model}\label{appendix:rbc-mod}
 
-Incorporating a non-occasionally binding constraint into a model
+Incorporating an occasionally binding constraint into a model
 with the \verb+extended_path+ command is straightforward. This
 can be achieved by defining a slackness condition within the model
 block, following the guidelines provided for specifying Mixed
@@ -1418,8 +1438,8 @@ generate figures \ref{fig:rbc:reversible-investment} through
 
 \lstinputlisting[firstline=18,lastline=44,frame=none,basicstyle=\footnotesize,language=Dynare]{../../models/rbcii/rbcii.mod}
 
-An arbitrary number of occasionally borrowing constraints (OBC) can be
-established through the same methodology. Employing \Dynare's
+An arbitrary number of occasionally binding constraints (OBC) can be
+defined through the same methodology. Employing \Dynare's
 implementation of OccBin, introduced by \textcite{OccBin}, would prove
 to be more complex and is restricted to only two constraints. Note
 that the extended path approach, which does not depend on local
