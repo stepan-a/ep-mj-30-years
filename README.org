@@ -1,0 +1,1 @@
+Sources for /Stochastic Extended Path/  [[https://stephane-adjemian.fr/papers/sep-2025.pdf][{WP}]],  [[https://stephane-adjemian.fr/dynare/slides/sep-2025.pdf][{Slides}]].
