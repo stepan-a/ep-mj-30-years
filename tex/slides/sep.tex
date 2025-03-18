@@ -207,9 +207,9 @@
       \begin{algorithmic}[1]
          \STATE $H \leftarrow$ Set the horizon of the perfect foresight (PF) model.
          \STATE $y^\star \leftarrow$ Compute steady state of the model
-         \STATE $y_{t-1} \leftarrow$ Choose an initial condition for the state variables
-         \FOR{$\tau=t$ to $t+H-1$}
-         \STATE $u_\tau  \leftarrow$ Draw random shocks for the current period
+         \STATE $y_{0} \leftarrow$ Choose an initial condition for the state variables
+         \FOR{$t=1$ to $T$}
+         \STATE $\varepsilon_t  \leftarrow$ Draw random shocks for the current period
          \STATE $y_t \leftarrow$ Solve a PF with $y_{t+H}=y^{\star}$
          \ENDFOR
       \end{algorithmic}
@@ -633,7 +633,7 @@
       \item In period $t+1$ we have:
             \[
                \begin{split}
-                   & \sum_{i=1}^m\omega_i f\left( y_t, y_{t,t+1}^1, y_{t+1, t+2}^i, \epsilon_i \right) = 0 \\
+                   & \sum_{i=1}^m\omega_i f\left( y_t, y_{t,t+1}^1, y_{t+1, t+2}^i, \epsilon_1 \right) = 0 \\
                    & f\left(y_t, y_{t,t+1}^i, y_{t,t+2}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}
                \end{split}
             \]
@@ -643,7 +643,7 @@
       \item In period $t+2$ we have:
             \[
                \begin{split}
-                   & \sum_{i=1}^m\omega_i f\left( y_{t,t+1}^1, y_{t+1,t+1}^1, y_{t+2, t+3}^i, \epsilon_i \right) = 0   \\
+                   & \sum_{i=1}^m\omega_i f\left( y_{t,t+1}^1, y_{t+1,t+1}^1, y_{t+2, t+3}^i, \epsilon_1 \right) = 0   \\
                    & f\left(y_{t,t+1}^i, y_{t,t+2}^i, y_{t,t+3}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}      \\
                    & f\left(y_{t,t+1}^1, y_{t+1,t+2}^i, y_{t+1, t+3}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\} \\
                \end{split}
@@ -663,7 +663,7 @@
       \item In period $t+h$, with $h<p$, we have:
             \[
                \begin{split}
-                   & \sum_{i=1}^m\omega_i f\left( y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^1, y_{t+h, t+h+1}^i, \epsilon_i \right) = 0      \\
+                   & \sum_{i=1}^m\omega_i f\left( y_{t+h-2,t+h-1}^1, y_{t+h-1,t+h}^1, y_{t+h, t+h+1}^i, \epsilon_1 \right) = 0      \\
                    & f\left(y_{t,t+h-1}^i, y_{t,t+h}^i, y_{t,t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}               \\
                    & f\left(y_{t+1,t+h-1}^i, y_{t+1,t+h}^i, y_{t+1, t+h+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}        \\
                    & \,\vdots                                                                                                       \\
@@ -685,10 +685,10 @@
       \item In period $t+p$ we have:
             \[
                \begin{split}
-                   & f\left(y_{t+p-2,t+p-1}^1, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, \omega_i\right) = 0 \quad \forall\, i\in\{1,\ldots,m\} \\
-                   & f\left(y_{t,t+p-1}^i, y_{t,t+p}^i, y_{t,t+p+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}                    \\
-                   & f\left(y_{t+1,t+p-1}^i, y_{t+1,t+p}^i, y_{t+1, t+p+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}              \\
-                   & \,\vdots                                                                                                             \\
+                   & f\left(y_{t+p-2,t+p-1}^1, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, \epsilon_i\right) = 0 \quad \forall\, i\in\{1,\ldots,m\} \\
+                   & f\left(y_{t,t+p-1}^i, y_{t,t+p}^i, y_{t,t+p+1}^i, 0\right) = 0 \quad \forall\, i\in\{2,\ldots,m\}                      \\
+                   & f\left(y_{t+1,t+p-1}^i, y_{t+1,t+p}^i, y_{t+1, t+p+1}^i, 0\right) = 0\quad \forall\, i\in\{2,\ldots,m\}                \\
+                   & \,\vdots                                                                                                               \\
                    & f\left(y_{t+p-2,t+p-1}^i, y_{t+p-1,t+p}^i, y_{t+p-1,t+p+1}^i, 0 \right) = 0 \quad \forall\, i\in\{2,\ldots,m\}
                \end{split}
             \]
