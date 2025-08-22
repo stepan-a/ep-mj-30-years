@@ -1,4 +1,7 @@
-[[./rbcii_mod][rbcii_.mod]] and [[./rbcii.mod][rbcii.mod]] are .mod files for the same model and calibration. [[./rbcii_mod][rbcii_.mod]] produces a plot on a shorter time span with higher approximation orders.
+[[./rbcii_mod][rbcii_.mod]] and [[./rbcii.mod][rbcii.mod]] are .mod files for the same model and
+calibration. [[./rbcii_mod][rbcii_.mod]] generates a plot over a shorter timeframe,
+utilizing higher approximation orders. The color gradient ranges from
+black for order 0 to red for order 10.
 
 #+CAPTION: Simulation of investment over 100 periods (SEP order=0, ..., 5)
 #+NAME:   fig:sep-100
