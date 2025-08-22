@@ -1,0 +1,9 @@
+[[./rbcii_mod][rbcii_.mod]] and [[./rbcii.mod][rbcii.mod]] are .mod files for the same model and calibration. [[./rbcii_mod][rbcii_.mod]] produces a plot on a shorter time span with higher approximation orders.
+
+#+CAPTION: Simulation of investment over 100 periods (SEP order=0, ..., 5)
+#+NAME:   fig:sep-100
+[[./rbcii.pdf]]
+
+#+CAPTION: Simulation of investment over 50 periods (SEP order=0, ..., 10)
+#+NAME:   fig:sep-50
+[[./rbcii_.pdf]]
