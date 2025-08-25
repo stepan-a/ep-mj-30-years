@@ -36,15 +36,8 @@ varexo epsilon;
 
 parameters beta, theta, tau, alpha, psi, delta, Effstar, rho, sigma;
 
-Effstar =  1.000 ;
-beta    =  0.990 ;
-theta   =  0.357 ;
-tau     =  2.000 ;
-alpha   =  0.450 ;
-psi     = -0.200 ;
-delta   =  0.010 ;
-rho     =  0.800 ;
-effstar =  1.000 ;
+@#include "calibration.m"
+
 sigma   =  @{SIGMA_VALUE} ;
 
 model(use_dll);
