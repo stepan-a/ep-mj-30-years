@@ -1,4 +1,4 @@
-function ts = compute_euler_lhs(filename)
+function ts = compute_euler_lhs(arg1)
 
 % Return a dseries object with all the endogenous variables and the LHS of the Euler equation.
 %
@@ -8,7 +8,13 @@ function ts = compute_euler_lhs(filename)
 % OUTPUTS
 % - ts          [dseries]  updated dseries object with the left hand side of the Euler equation.
 
-    ts = dseries(filename);
+    if isdseries(arg1)
+        ts = arg1;
+    elseif ischar(arg1)
+        ts = dseries(arg1);
+    else
+        error('Wrong argument type.')
+    end
 
     calibration;
 
