@@ -4,16 +4,19 @@ varexo epsilon;
 
 parameters beta, theta, tau, alpha, psi, delta, Effstar, rho, sigma;
 
+@#define ZLB = .85
+
 Effstar =  1.000 ;
 beta    =  0.990 ;
 theta   =  0.357 ;
 tau     =  2.000 ;
 alpha   =  0.450 ;
 psi     = -0.200 ;
-delta   =  0.010 ;
-rho     =  0.800 ;
+delta   =  0.025 ;
+rho     =  0.950 ;
 effstar =  1.000 ;
-sigma   =  0.100 ;
+
+sigma   =  0.007 ;
 
 model(use_dll);
 
@@ -39,7 +42,7 @@ model(use_dll);
   Investment = Output - Consumption;
 
   // Lagrange multiplier associated to the positivity constraint on investment
-  LagrangeMultiplier = 0 ⟂ Investment > 0;
+  LagrangeMultiplier = 0 ⟂ Investment > @{ZLB}*0.241741953339345;
 
 end;
 
@@ -92,9 +95,9 @@ verbatim;
   for order=0:maxorder
     set_dynare_seed(0);
     options_.ep.stochastic.order = order;
-    ts = extended_path(oo_.steady_state, 80, [], options_, M_, oo_);
-    dd = ts.Investment.data(35:80);
-    fh = plot(35:80,dd);
+    ts = extended_path(oo_.steady_state, 220, [], options_, M_, oo_);
+    dd = ts.Investment.data(120:220);
+    fh = plot(120:220,dd);
     fh.Color = (1-order/maxorder)*[0,0,0] + (order/maxorder)*[1 0 0];
     if order==0
       fh.LineWidth = 2;
@@ -103,7 +106,8 @@ verbatim;
 end;
 
 % Plot steady state
-plot([35 80], oo_.steady_state(strcmp('Investment',M_.endo_names))*[1 1], '--b', 'linewidth', 2)
+plot([120 220], oo_.steady_state(strcmp('Investment', M_.endo_names))*[1 1], '--b', 'linewidth', 2)
+plot([120 220], oo_.steady_state(strcmp('Investment', M_.endo_names))*[1 1]*0.85, '--b', 'linewidth', 2)
 
 hold off
 ylabel('Investment')
@@ -111,5 +115,6 @@ axis tight
 box on
 
 print -depsc2 rbcii_.eps
+!epstopdf rbcii_.eps
 
 matlab2tikz( 'rbcii_.tikz' );
