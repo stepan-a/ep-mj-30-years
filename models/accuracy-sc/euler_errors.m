@@ -51,6 +51,9 @@ ts_2_0.save('euler-014-sep-2-algo-0-hybrid-0.nozlb');
 ts_2_0 = compute_euler_residuals('rbcii-007-sep-2-algo-0-hybrid-4.nozlb.mat', 3, options_, M_, oo_);
 ts_2_0.save('euler-007-sep-2-algo-0-hybrid-4.nozlb');
 
+ts_5_0 = compute_euler_residuals('rbcii-007-sep-5-algo-1-hybrid-0.nozlb.mat', 3, options_, M_, oo_);
+ts_5_0.save('euler-007-sep-5-algo-1-hybrid-0.nozlb');
+
 ts_5_4 = compute_euler_residuals('rbcii-007-sep-5-algo-1-hybrid-4.nozlb.mat', 3, options_, M_, oo_);
 ts_5_4.save('euler-007-sep-5-algo-1-hybrid-4.nozlb');
 
@@ -110,6 +113,9 @@ ts_2_0.save('euler-014-sep-2-algo-0-hybrid-0');
 
 ts_2_0 = compute_euler_residuals('rbcii-007-sep-2-algo-0-hybrid-4.mat', 3, options_, M_, oo_);
 ts_2_0.save('euler-007-sep-2-algo-0-hybrid-4');
+
+ts_5_0 = compute_euler_residuals('rbcii-007-sep-5-algo-1-hybrid-0.mat', 3, options_, M_, oo_);
+ts_5_0.save('euler-007-sep-5-algo-1-hybrid-0');
 
 ts_5_4 = compute_euler_residuals('rbcii-007-sep-5-algo-1-hybrid-4.mat', 3, options_, M_, oo_);
 ts_5_4.save('euler-007-sep-5-algo-1-hybrid-4');
