@@ -13,8 +13,12 @@ at={(1.011in,0.642in)},
 scale only axis,
 xmin=0.205480660338443,
 xmax=0.329751089341623,
+xlabel style={font=\color{white!15!black}},
+xlabel={Investment},
 ymin=-13.4404432988143,
 ymax=-2.71077942333342,
+ylabel style={font=\color{white!15!black}},
+ylabel={$\log_{10}|\xi_c|$},
 axis background/.style={fill=white}
 ]
 \addplot [color=black, only marks, mark=*, mark options={solid, black}, forget plot]

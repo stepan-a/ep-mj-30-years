@@ -36,10 +36,43 @@ plot(ts5_nozlb.Investment.data(2:end), log10(abs(ts5_nozlb.EulerErrors_c.data(2:
 hold off
 axis tight
 box on
+xlabel('Investment')
+ylabel('$\log_{10}|\xi_c|$','Interpreter','latex')
 
 print -depsc2 rbcii_euler_nozlb.eps
 !epstopdf rbcii_euler_nozlb.eps
+
 matlab2tikz( 'rbcii_euler_nozlb.tikz' );
+
+
+figure(11)
+tiledlayout(2,2)
+nexttile
+[f0,xf0] = kde(log10(abs(ts0_nozlb.EulerErrors_c.data(2:end)/100)));
+plot(xf0,f0, '-k', 'linewidth', 2)
+box on
+xlabel('EP')
+nexttile
+[f1,xf1] = kde(log10(abs(ts1_nozlb.EulerErrors_c.data(2:end)/100)));
+plot(xf1,f1, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(1)')
+nexttile
+[f2,xf2] = kde(log10(abs(ts2_nozlb.EulerErrors_c.data(2:end)/100)));
+plot(xf2,f2, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(2)')
+nexttile
+[f5,xf5] = kde(log10(abs(ts5_nozlb.EulerErrors_c.data(2:end)/100)));
+plot(xf5,f5, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(5)')
+
+print -depsc2 rbcii_euler_nozlb_d.eps
+!epstopdf rbcii_euler_nozlb_d.eps
+
+matlab2tikz( 'rbcii_euler_nozlb_d.tikz' );
+
 
 
 ts1_nozlb_hybrid = dseries('euler-007-sep-1-algo-1-hybrid-4.nozlb.mat');
@@ -78,10 +111,43 @@ plot(ts5_nozlb_hybrid.Investment.data(2:end), log10(abs(ts2_nozlb_hybrid.EulerEr
 hold off
 axis tight
 box on
+xlabel('Investment')
+ylabel('$\log_{10}|\xi_c|$','Interpreter','latex')
+
 
 print -depsc2 rbcii_euler_nozlb_hybrid.eps
 !epstopdf rbcii_euler_nozlb_hybrid.eps
+
 matlab2tikz( 'rbcii_euler_nozlb_hybrid.tikz' );
+
+figure(12)
+tiledlayout(2,2)
+nexttile
+[f0,xf0] = kde(log10(abs(ts0_nozlb.EulerErrors_c.data(2:end)/100)));
+plot(xf0,f0, '-k', 'linewidth', 2)
+box on
+xlabel('EP')
+nexttile
+[f1,xf1] = kde(log10(abs(ts1_nozlb_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf1,f1, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(1+)')
+nexttile
+[f2,xf2] = kde(log10(abs(ts2_nozlb_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf2,f2, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(2+)')
+nexttile
+[f5,xf5] = kde(log10(abs(ts5_nozlb_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf5,f5, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(5+)')
+
+print -depsc2 rbcii_euler_nozlb_hybrid_d.eps
+!epstopdf rbcii_euler_nozlb_hybrid_d.eps
+
+matlab2tikz( 'rbcii_euler_nozlb_hybrid_d.tikz' );
+
 
 
 ts0 = dseries('euler-007-sep-0-algo-1-hybrid-0.mat');
@@ -121,10 +187,41 @@ plot(ts5.Investment.data(2:end), log10(abs(ts5.EulerErrors_c.data(2:end)/100)), 
 hold off
 axis tight
 box on
+xlabel('Investment')
+ylabel('$\log_{10}|\xi_c|$','Interpreter','latex')
 
 print -depsc2 rbcii_euler.eps
 !epstopdf rbcii_euler.eps
+
 matlab2tikz( 'rbcii_euler.tikz' );
+
+figure(13)
+tiledlayout(2,2)
+nexttile
+[f0,xf0] = kde(log10(abs(ts0.EulerErrors_c.data(2:end)/100)));
+plot(xf0,f0, '-k', 'linewidth', 2)
+box on
+xlabel('EP')
+nexttile
+[f1,xf1] = kde(log10(abs(ts1.EulerErrors_c.data(2:end)/100)));
+plot(xf1,f1, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(1)')
+nexttile
+[f2,xf2] = kde(log10(abs(ts2.EulerErrors_c.data(2:end)/100)));
+plot(xf2,f2, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(2)')
+nexttile
+[f5,xf5] = kde(log10(abs(ts5.EulerErrors_c.data(2:end)/100)));
+plot(xf5,f5, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(5)')
+
+print -depsc2 rbcii_euler_d.eps
+!epstopdf rbcii_euler_d.eps
+
+matlab2tikz( 'rbcii_euler_nozlb_hybrid_d.tikz' );
 
 
 ts1_hybrid = dseries('euler-007-sep-1-algo-1-hybrid-4.mat');
@@ -164,7 +261,38 @@ plot(ts5_hybrid.Investment.data(2:end), log10(abs(ts5_hybrid.EulerErrors_c.data(
 hold off
 axis tight
 box on
+xlabel('Investment')
+ylabel('$\log_{10}|\xi_c|$','Interpreter','latex')
 
 print -depsc2 rbcii_euler_hybrid.eps
 !epstopdf rbcii_euler_hybrid.eps
+
 matlab2tikz( 'rbcii_euler_hybrid.tikz' );
+
+figure(14)
+tiledlayout(2,2)
+nexttile
+[f0,xf0] = kde(log10(abs(ts0.EulerErrors_c.data(2:end)/100)));
+plot(xf0,f0, '-k', 'linewidth', 2)
+box on
+xlabel('EP')
+nexttile
+[f1,xf1] = kde(log10(abs(ts1_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf1,f1, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(1+)')
+nexttile
+[f2,xf2] = kde(log10(abs(ts2_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf2,f2, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(2+)')
+nexttile
+[f5,xf5] = kde(log10(abs(ts5_hybrid.EulerErrors_c.data(2:end)/100)));
+plot(xf5,f5, '-k', 'linewidth', 2)
+box on
+xlabel('SEP(5+)')
+
+print -depsc2 rbcii_euler_hybrid_d.eps
+!epstopdf rbcii_euler_hybrid_d.eps
+
+matlab2tikz( 'rbcii_euler_hybrid_d.tikz' );
