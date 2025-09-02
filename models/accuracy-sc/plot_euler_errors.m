@@ -221,7 +221,7 @@ xlabel('SEP(5)')
 print -depsc2 rbcii_euler_d.eps
 !epstopdf rbcii_euler_d.eps
 
-matlab2tikz( 'rbcii_euler_nozlb_hybrid_d.tikz' );
+matlab2tikz( 'rbcii_euler_d.tikz' );
 
 
 ts1_hybrid = dseries('euler-007-sep-1-algo-1-hybrid-4.mat');
