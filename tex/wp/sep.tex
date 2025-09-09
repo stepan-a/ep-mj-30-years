@@ -305,8 +305,13 @@ that:
 and $\lim_{h\rightarrow\infty}y_{t+h} = y^{\star}$ for all $y_{t-1}$.
 This assumption could be relaxed; what is essential is a terminal
 condition for the endogenous variables. As long as we know where the
-economy goes in the long run (for instance, along a balanced growth
-path), the method described below can be accommodated.
+economy goes in the long run (along a balanced growth path if the
+model is not rewritten in a stationary form), the method described
+below can be accommodated.  Furthermore, the assumption of a unique
+steady state can also be loosened, as long as we can identify the
+steady state for a given initial condition\footnote{It is important to
+  highlight, however, that \Dynare\ does not provide an interface for
+  this purpose.}.
 
 \subsection{Perfect foresight model}\label{sec:pf}
 
