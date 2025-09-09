@@ -41,7 +41,7 @@ model(use_dll);
   // Investment
   Investment = Output - Consumption;
 
-  // Lagrange multiplier associated to the positivity constraint on investment
+  // Lagrange multiplier
   LagrangeMultiplier = 0 ⟂ Investment > @{ZLB}*0.241741953339345;
 
 end;
