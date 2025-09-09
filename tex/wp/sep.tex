@@ -181,19 +181,19 @@
 \maketitle
 
 \begin{abstract}
-  The Extended Path (EP) method solves DSGE models under certainty
-  equivalence, capturing nonlinearities and occasionally binding
-  constraints but ignoring the role of uncertainty. We propose the
-  Stochastic Extended Path (SEP), which restores this channel by
-  computing conditional expectations with quadrature and unscented
-  transforms. To avoid the exponential explosion of a full tree of
-  future shocks, we introduce a sparse tree representation that scales
-  linearly with the horizon. We further develop a hybrid SEP,
-  combining SEP with perturbation corrections to capture long-run
-  effects of volatility at low cost. Accuracy is benchmarked in an
-  asset pricing model with a closed-form solution, where hybrid SEP
-  outperforms perturbation methods. We then illustrate the approach in
-  an RBC model with a lower bound on investment.
+   The Extended Path (EP) method solves DSGE models under certainty
+   equivalence, capturing nonlinearities and occasionally binding
+   constraints but ignoring the role of uncertainty. We propose the
+   Stochastic Extended Path (SEP), which restores this channel by
+   computing conditional expectations with quadrature and unscented
+   transforms. To avoid the exponential explosion of a full tree of
+   future shocks, we introduce a sparse tree representation that scales
+   linearly with the horizon. We further develop a hybrid SEP,
+   combining SEP with perturbation corrections to capture long-run
+   effects of volatility at low cost. Accuracy is benchmarked in an
+   asset pricing model with a closed-form solution, where hybrid SEP
+   outperforms perturbation methods. We then illustrate the approach in
+   an RBC model with a lower bound on investment.
 \end{abstract}
 
 \section*{Introduction}
@@ -343,8 +343,8 @@ model is not rewritten in a stationary form), the method described
 below can be accommodated.  Furthermore, the assumption of a unique
 steady state can also be loosened, as long as we can identify the
 steady state for a given initial condition\footnote{It is important to
-  highlight, however, that \Dynare\ does not provide an interface for
-  this purpose.}.
+   highlight, however, that \Dynare\ does not provide an interface for
+   this purpose.}.
 
 \subsection{Perfect foresight model}\label{sec:pf}
 
@@ -376,14 +376,14 @@ large simulation horizon, $H$.\newline
 
 The horizon $H$ must be selected such that the economy is
 approximately at the steady state in period $t+H$\footnote{ To
-  determine if the value of \( H \) is sufficiently large, we can
-  compare the results with those derived from a broader horizon,
-  ensuring they remain consistent (within the limits of numerical
-  precision). For the algorithms detailed in the following sections
-  (EP and SEP), it is sufficient to verify that the solutions for the
-  endogenous variables at time $t$ remain unchanged following a
-  variation in the horizon $H$, without the necessity to examine the
-  complete trajectory toward the steady state.}. The value of $H$ is
+   determine if the value of \( H \) is sufficiently large, we can
+   compare the results with those derived from a broader horizon,
+   ensuring they remain consistent (within the limits of numerical
+   precision). For the algorithms detailed in the following sections
+   (EP and SEP), it is sufficient to verify that the solutions for the
+   endogenous variables at time $t$ remain unchanged following a
+   variation in the horizon $H$, without the necessity to examine the
+   complete trajectory toward the steady state.}. The value of $H$ is
 clearly specific to each model and its calibration; a model with
 greater persistence necessitates a larger value of $H$. The size of
 the nonlinear problem to be solved grows linearly with $H$. It is
@@ -393,9 +393,9 @@ conditions. For instance, instead of imposing a terminal condition on
 the level, we can consider a terminal condition on the variations,
 which should equal zero at the steady state. This approach frequently
 permits a reduction in the horizon $H$\footnote{It also has the
-  advantage of allowing the model to be simulated without the need for
-  explicit computation of the steady state. In this case, the steady
-  state emerges as a result of the perfect foresight solver.}.\newline
+   advantage of allowing the model to be simulated without the need for
+   explicit computation of the steady state. In this case, the steady
+   state emerges as a result of the perfect foresight solver.}.\newline
 
 Concatenating all the vectors of endogenous variables in
 the \(nH\times 1\)
@@ -438,9 +438,9 @@ method, integrating unexpected shocks throughout periods 1,
 \dots, $T$, to produce time series for the endogenous variables. This
 is the Extended Path simulation approach proposed by
 \textcite{FairTaylor1983}\footnote{It is important to note that we
-  employ a relaxation method to solve the perfect foresight auxiliary
-  model in \Dynare, while \textcite{FairTaylor1983} utilized a
-  shooting method, which is known to be less efficient.}. Below is a
+   employ a relaxation method to solve the perfect foresight auxiliary
+   model in \Dynare, while \textcite{FairTaylor1983} utilized a
+   shooting method, which is known to be less efficient.}. Below is a
 sketch of the algorithm:\newline
 
 \algsetup{linenosize=\small,
@@ -1245,7 +1245,7 @@ planner problem is:
       \qquad y_t                                          & = c_t + i_t                                                       \\
       \qquad y_t                                          & = A_tf(k_t,l_t)                                                   \\
       \qquad k_{t+1}                                      & = i_t + (1-\delta)k_t                                             \\
-      \qquad i_t                                          & \geq 0.85 i^{\star}                                                            \\
+      \qquad i_t                                          & \geq 0.85 i^{\star}                                               \\
       \qquad A_{t}                                        & = {A^{\star}}e^{a_{t}}                                            \\
       \qquad a_{t}                                        & = \rho a_{t-1} + \varepsilon_t
    \end{split}
@@ -1329,7 +1329,7 @@ pointwise evaluation of these rules. Given the state of the economy in
 period $t$, represented by $k_t$ and $A_t$, we can determine the
 subsequent state if the economy experiences a TFP shock $\varepsilon$
 in period $t+1$. Throughout a simulated time series\footnote{Generated
-  using SEP at an arbitrary order of approximation.}, in period $t$,
+   using SEP at an arbitrary order of approximation.}, in period $t$,
 we observe the state of the economy along with the
 variables $c_t$, $l_t$, and $\mu_t$, enabling us to readily evaluate
 the left-hand side of the Euler equation (\ref{eq:foc:2:euler}). On the right-hand side we have the expectation of a nonlinear combination of variables at
@@ -1338,15 +1338,15 @@ approximation detailed in section \ref{sec:gaussian_quadrature}. For
 each integration node, which corresponds to a potential next period
 TFP innovation, we can solve the auxiliary model
 (\ref{sep:sparse:0})-(\ref{sep:sparse:5})\footnote{Alternatively, one
-  may consider (\ref{sep:perfect:0})-(\ref{sep:perfect:leafs}) for a
-  perfect tree of potential futures. For the Extended Path simulations
-  we solve (\ref{eq:pf}) in $t+1$ for each node of the Gaussian
-  quadrature}$^{,}$\footnote{We consider a quadrature method with three
-  nodes. During each period, the three corresponding auxiliary models
-  can be solved concurrently. However, we first address the problem
-  associated to the central node (0) and subsequently solve the problems
-  defined by the non-zero nodes in parallel, using the solution
-  from the first problem as an initial guess.}  to obtain the
+   may consider (\ref{sep:perfect:0})-(\ref{sep:perfect:leafs}) for a
+   perfect tree of potential futures. For the Extended Path simulations
+   we solve (\ref{eq:pf}) in $t+1$ for each node of the Gaussian
+   quadrature}$^{,}$\footnote{We consider a quadrature method with three
+   nodes. During each period, the three corresponding auxiliary models
+   can be solved concurrently. However, we first address the problem
+   associated to the central node (0) and subsequently solve the problems
+   defined by the non-zero nodes in parallel, using the solution
+   from the first problem as an initial guess.}  to obtain the
 endogenous variables at \(t+1\) and compute the nonlinear term below
 the expectation. By averaging across the nodes and multiplying by the
 discount factor $\beta$, we arrive at an evaluation of the right-hand
@@ -1362,14 +1362,14 @@ implied by the expectation on the right hand-side.\newline
    \centering
    \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
       \hline
-                        & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
-      EP                & -5.360                                         & -5.319                                & -5.402                                \\
-      SEP(1)            & -5.385                                         & -5.346                                & -5.423                                \\
-      SEP(2)            & -5.401                                         & -5.364                                & -5.438                                \\
-      SEP(5)            & -5.423                                         & -5.387                                & -5.458                                \\ \hline
-      SEP(1+)           & -7.023                                         & -6.067                                & -10.603                               \\
-      SEP(2+)           & -7.043                                         & -6.081                                & -10.800                               \\
-      SEP(5+)           & -7.066                                         & -6.109                                & -11.077                               \\ \hline\hline
+              & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
+      EP      & -5.360                                         & -5.319                                & -5.402                                \\
+      SEP(1)  & -5.385                                         & -5.346                                & -5.423                                \\
+      SEP(2)  & -5.401                                         & -5.364                                & -5.438                                \\
+      SEP(5)  & -5.423                                         & -5.387                                & -5.458                                \\ \hline
+      SEP(1+) & -7.023                                         & -6.067                                & -10.603                               \\
+      SEP(2+) & -7.043                                         & -6.081                                & -10.800                               \\
+      SEP(5+) & -7.066                                         & -6.109                                & -11.077                               \\ \hline\hline
    \end{tabular}
    \caption{\textbf{Accuracy along a path (without OBC).} Accuracy measures, calculated as the base-10 logarithm of the Euler equation error in terms of consumption, were computed over a simulated sample of 10,000 periods. The first row presents measures for the Extended Path, while the second, third and fourth rows provide measures for the Stochastic Extended Path of orders 1, 2 and 5, utilizing a sparse tree of potential futures. The second block of rows displays accuracy measures for hybrid (order 4) Stochastic Extended Path simulations.}
    \label{table:accuracy_noobc}
@@ -1379,14 +1379,14 @@ implied by the expectation on the right hand-side.\newline
    \centering
    \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
       \hline
-                        & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
-      EP                & -5.082                                         & -2.711                                & -5.425                                \\
-      SEP(1)            & -4.909                                         & -2.938                                & -6.340                                \\
-      SEP(2)            & -4.917                                         & -3.081                                & -7.371                                \\
-      SEP(5)            & -4.969                                         & -3.240                                & -6.813                                \\ \hline
-      SEP(1+)           & -6.054                                         & -2.897                                & -10.463                               \\
-      SEP(2+)           & -6.071                                         & -3.052                                & -13.440                               \\
-      SEP(5+)           & -6.118                                         & -3.242                                & -11.575                               \\ \hline\hline
+              & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
+      EP      & -5.082                                         & -2.711                                & -5.425                                \\
+      SEP(1)  & -4.909                                         & -2.938                                & -6.340                                \\
+      SEP(2)  & -4.917                                         & -3.081                                & -7.371                                \\
+      SEP(5)  & -4.969                                         & -3.240                                & -6.813                                \\ \hline
+      SEP(1+) & -6.054                                         & -2.897                                & -10.463                               \\
+      SEP(2+) & -6.071                                         & -3.052                                & -13.440                               \\
+      SEP(5+) & -6.118                                         & -3.242                                & -11.575                               \\ \hline\hline
    \end{tabular}
    \caption{\textbf{Accuracy along a path (with OBC).} Similar to Table \ref{table:accuracy_noobc}, but incorporating an Occasionally Binding Constraint on investment, which cannot fall below $0.85 \times i^{\star}$.}
    \label{table:accuracy_withobc}
