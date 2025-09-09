@@ -1202,7 +1202,7 @@ primarily when the model exhibits significant deterministic
 nonlinearities, as seen in scenarios involving Occasionally Binding
 Constraints, or when the model is permitted to deviate substantially
 from its deterministic steady state. As an illustration, we consider a
-Real Business Cycle model with irreversible investment. The social
+Real Business Cycle model with a lower bound on investment. The social
 planner problem is:
 \begin{equation*}
    %\label{eq:social-planner-problem:2}\tag{SP$_{2}$-1}
@@ -1212,7 +1212,7 @@ planner problem is:
       \qquad y_t                                          & = c_t + i_t                                                       \\
       \qquad y_t                                          & = A_tf(k_t,l_t)                                                   \\
       \qquad k_{t+1}                                      & = i_t + (1-\delta)k_t                                             \\
-      \qquad i_t                                          & \geq 0                                                            \\
+      \qquad i_t                                          & \geq 0.85 i^{\star}                                                            \\
       \qquad A_{t}                                        & = {A^{\star}}e^{a_{t}}                                            \\
       \qquad a_{t}                                        & = \rho a_{t-1} + \varepsilon_t
    \end{split}
@@ -1235,74 +1235,165 @@ to technology and preferences can be rendered arbitrarily
 non-linear, for instance, by reducing the elasticity of output in
 relation to capital, represented as $\frac{1}{1-\psi}$; and
 (\emph{ii}) An occasionally binding constraint on investment is
-incorporated into the model. The first order conditions are given by\footnote{See annex \ref{appendix:rbc}.}:
+incorporated into the model: investment cannot fall below 85\% of its steady state level. The first order conditions are given by\footnote{See annex \ref{appendix:rbc}.}:
 \begin{subequations}
    \label{eq:foc:2}
-   \begin{equation*}
-      %\label{eq:foc:2:euler}
+   \begin{equation}
+      \label{eq:foc:2:euler}\tag{6.a}
       u_c(c_t,l_t) - \mu_t = \beta \mathbb E_t\left[ u_c(c_{t+1},l_{t+1})\Bigl(A_{t+1}f_k(k_{t+1},l_{t+1}) + 1 -\delta\Bigr) - \mu_{t+1}(1-\delta)\right]
-   \end{equation*}
-   \begin{equation*}
-      %\label{eq:foc:2:labour}
+   \end{equation}
+   \begin{equation}
+      \label{eq:foc:2:labour}\tag{6.b}
       -\frac{u_{l}(c_t,l_t)}{u_c(c_t,l_t)} - A_tf_l(k_t,l_t) = 0
-   \end{equation*}
-   \begin{equation*}
-      %\label{eq:cno:2:capital_law_of_motion}
+   \end{equation}
+   \begin{equation}
+      \label{eq:cno:2:capital_law_of_motion}\tag{6.c}
       c_t + k_{t+1} - A_tf(k_t,l_t)- (1-\delta)k_t = 0
-   \end{equation*}
-   \begin{equation*}
-      %\label{eq:cno:2:complementarity_slackness}
-      \mu_t \left( k_{t+1} - (1-\delta)k_t \right) = 0
-   \end{equation*}
+   \end{equation}
+   \begin{equation}
+      \label{eq:cno:2:complementarity_slackness}\tag{6.d}
+      \mu_t \left( k_{t+1} - (1-\delta)k_t - 0.85 i^{\star}\right) = 0
+   \end{equation}
 \end{subequations}
-where $\mu_t$ is the Lagrange multiplier associated to the
-positiveness constraint on investment. This model is exclusively
-considered for evaluating our simulation approach. Our calibration
-does not have quantitative objectives; rather, it has been designed to
-ensure that the economy reaches the minimum investment threshold while
-undergoing significant deviations from the deterministic steady
-state. The discount factor is $\beta=0.990$, the preference
+where $\mu_t$ is the Lagrange multiplier associated to the constraint
+on investment. We consider a standard calibration for this
+model, ensuring that the likelihood of reaching the lower bound on
+investment stays above zero. The discount factor is $\beta=0.990$, the preference
 parameters $\theta$ and $\tau$ are respectively equal to $0.357$
 and $2.000$. The technology parameters $\alpha$ and $\psi$ are
 respectively equal to $0.450$ and $-0.200$. The depreciation rate
-is $\delta=0.010$. Finally, the parameters governing TFP
-are $\rho=0.800$, $A^\star=1$ and $\sigma=0.100$.\newline
+is $\delta=0.025$. Finally, the parameters governing TFP
+are $\rho=0.950$, $A^\star=1$ and $\sigma=0.007$.\newline
 
-Figure~\ref{fig:rbc:reversible-investment} presents the results of
-stochastic extended path simulations for investment across various
-approximation orders (\(p=0,1,\ldots,10\)), specifically focusing on
-the model without a positivity constraint on investment. Notably, we
-observe substantial fluctuations around the deterministic steady
-state, with investment values occasionally dropping into negative
-territory during certain intervals. Incorporating future uncertainty
-does not alter the outcomes in this particular model. The
-stochastic nonlinearity is entirely masked by the deterministic
-nonlinearity resulting from the very large fluctuations. In contrast,
-Figure~\ref{fig:rbc:irreversible-investment-all} illustrates the
-results obtained from applying the same set of innovations to a model
-characterized by irreversible investment. We can now discern
-variations in the outcomes produced by the stochastic extended path
-algorithm as the approximation order changes. These differences remain
-minimal when the economy is significantly above the steady state, but
-they tend to increase as we approach or fall below that steady
-state. A noteworthy observation is that all the paths maintain a
-consistent order based on the approximation order \(p\). As we
-incorporate greater consideration for future uncertainty, the level of
-investment correspondingly rises. As the order of approximation
-increases, the likelihood of reaching the lower bound on investment
-diminishes. Figure~\ref{fig:rbc:irreversible-investment-short}
-illustrates the results of our simulations conducted on a subsample
-where the constraint on investment is actively binding. The employs figure a gradient color
-scheme ranging from black to red to denote the progression of the
-approximation order from 0 to 10. Notably, we observe that the
-discrepancies arising from increasing the approximation order \( p \)
-diminish as \( p \) increases. In fact, the differences between
-investments simulated at orders 8 and 9, as well as those at orders 9
-and 10, are barely discernible.This suggests that a tenth-order
-approximation using a sparse tree is sufficient to capture the
-implications of future uncertainty in this model\footnote{Note also
-   that, for this model, the simulations using the hybrid version of
-   the stochastic extended path would be nearly identical.}.\newline
+We simulate long time series extending over 10,000 periods for this
+model using both Extended Path and Stochastic Extended Path methods at
+orders 1 to 10 with a sparse tree
+approach. Figure~\ref{fig:rbc:irreversible-investment-short} displays
+the outcomes of our simulations on a subsample where the investment
+constraint is actively binding in some periods. A gradient color
+scheme is employed, transitioning from black (representing Extended
+Path) to red, to indicate the progression of the approximation order
+from 1 to 10. The differences among various approximation orders are
+not easily noticeable when investment levels are above their
+steady-state values. However, these differences become apparent as
+investment approaches its lower bound. There is a clear hierarchy:
+investment levels are higher for models utilizing higher approximation
+orders. As we incorporate greater consideration for future
+uncertainty, the level of investment correspondingly
+rises. Additionally, the discrepancies that arise from increasing the
+approximation order \(p\) decrease as \(p\) increases. In fact, the
+differences in investments simulated at orders greater than 4 are
+nearly indistinguishable. This suggests that, for this model, a
+relatively low order of approximation \( p \) is adequate.\newline
+
+A more quantitative assessment of the accuracy of the Stochastic
+Extended Path approach can be achieved by calculating the Euler
+equation errors throughout the simulated time series and verifying
+that these errors decrease as we increase the approximation
+order \(p\). The (Stochastic) Extended Path approach does not offer an
+approximation of policy rules or expectations; instead, it enables a
+pointwise evaluation of these rules. Given the state of the economy in
+period $t$, represented by $k_t$ and $A_t$, we can determine the
+subsequent state if the economy experiences a TFP shock $\varepsilon$
+in period $t+1$. Throughout a simulated time series\footnote{Generated
+  using SEP at an arbitrary order of approximation.}, in period $t$,
+we observe the state of the economy along with the
+variables $c_t$, $l_t$, and $\mu_t$, enabling us to readily evaluate
+the left-hand side of the Euler equation (\ref{eq:foc:2:euler}). On the right-hand side we have the expectation of a nonlinear combination of variables at
+time \(t+1\). This expectation can be calculated using the quadrature
+approximation detailed in section \ref{sec:gaussian_quadrature}. For
+each integration node, which corresponds to a potential next period
+TFP innovation, we can solve the auxiliary model
+(\ref{sep:sparse:0})-(\ref{sep:sparse:5})\footnote{Alternatively, one
+  may consider (\ref{sep:perfect:0})-(\ref{sep:perfect:leafs}) for a
+  perfect tree of potential futures. For the Extended Path simulations
+  we solve (\ref{eq:pf}) in $t+1$ for each node of the Gaussian
+  quadrature}$^{,}$\footnote{We consider a quadrature method with three
+  nodes. During each period, the three corresponding auxiliary models
+  can be solved concurrently. However, we first address the problem
+  associated to the central node (0) and subsequently solve the problems
+  defined by the non-zero nodes in parallel, using the solution
+  from the first problem as an initial guess.}  to obtain the
+endogenous variables at \(t+1\) and compute the nonlinear term below
+the expectation. By averaging across the nodes and multiplying by the
+discount factor $\beta$, we arrive at an evaluation of the right-hand
+side of the Euler equation. The Euler equation error in period $t$ is
+simply the difference between the left and right hand sides. This
+error can be expressed in terms of consumption, $\xi_{c,t}$, by
+computing the difference between the actual consumption level and one
+implied by the expectation on the right hand-side.\newline
+
+
+\begin{table}[H]
+   \centering
+   \centering
+   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
+      \hline
+                        & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
+      EP                & -5.360                                         & -5.319                                & -5.402                                \\
+      SEP(1)            & -5.385                                         & -5.346                                & -5.423                                \\
+      SEP(2)            & -5.401                                         & -5.364                                & -5.438                                \\
+      SEP(5)            & -5.423                                         & -5.387                                & -5.458                                \\ \hline
+      SEP(1+)           & -7.023                                         & -6.067                                & -10.603                               \\
+      SEP(2+)           & -7.043                                         & -6.081                                & -10.800                               \\
+      SEP(5+)           & -7.066                                         & -6.109                                & -11.077                               \\ \hline\hline
+   \end{tabular}
+   \caption{\textbf{Accuracy along a path (without OBC).} Accuracy measures, calculated as the base-10 logarithm of the Euler equation error in terms of consumption, were computed over a simulated sample of 10,000 periods. The first row presents measures for the Extended Path, while the second, third and fourth rows provide measures for the Stochastic Extended Path of orders 1, 2 and 5, utilizing a sparse tree of potential futures. The second block of rows displays accuracy measures for hybrid (order 4) Stochastic Extended Path simulations.}
+   \label{table:accuracy_noobc}
+\end{table}
+\begin{table}[H]
+   \centering
+   \centering
+   \begin{tabular}{l | S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
+      \hline
+                        & {$\textrm{mean}\left(\log_{10}|\xi_c|\right)$} & {$\max\left(\log_{10}|\xi_c|\right)$} & {$\min\left(\log_{10}|\xi_c|\right)$} \\ \hline
+      EP                & -5.082                                         & -2.711                                & -5.425                                \\
+      SEP(1)            & -4.909                                         & -2.938                                & -6.340                                \\
+      SEP(2)            & -4.917                                         & -3.081                                & -7.371                                \\
+      SEP(5)            & -4.969                                         & -3.240                                & -6.813                                \\ \hline
+      SEP(1+)           & -6.054                                         & -2.897                                & -10.463                               \\
+      SEP(2+)           & -6.071                                         & -3.052                                & -13.440                               \\
+      SEP(5+)           & -6.118                                         & -3.242                                & -11.575                               \\ \hline\hline
+   \end{tabular}
+   \caption{\textbf{Accuracy along a path (with OBC).} Similar to Table \ref{table:accuracy_noobc}, but incorporating an Occasionally Binding Constraint on investment, which cannot fall below $0.85 \times i^{\star}$.}
+   \label{table:accuracy_withobc}
+\end{table}
+
+Table \ref{table:accuracy_noobc} displays accuracy measures for
+simulated time series spanning 10,000 periods, in a variant of the
+model that omits the Occasionally Binding Constraint on
+investment. This includes Extended Path, Stochastic Extended Path at
+orders 1, 2, and 5, as well as a hybrid SEP . Notably, the first block
+of rows indicates that while increasing the approximation order
+enhances accuracy, the improvement is somewhat marginal. In contrast,
+the inclusion of the hybrid SEP yields a much more substantial
+enhancement in accuracy.\newline
+
+Table \ref{table:accuracy_withobc} presents the results of the same
+exercise under the condition that the investment constraint can be
+binding. As anticipated, the additional non-linearity introduced by
+the OBC degrades accuracy; however, the overall ranking remains
+unchanged. The figures reported in this table obscure the
+heterogeneity of the Euler errors. Figure \ref{fig:euler_nozlb_hybrid}
+illustrates the distribution of the Euler equation errors in the model
+without OBC. Consistent with Table \ref{table:accuracy_noobc},
+increasing the approximation order results in a leftward shift of the
+distribution, indicating smaller errors. In contrast, figure
+\ref{fig:euler_nozlb_hybrid} shows the distribution of errors when the
+investment is constrained from falling below $.85 i^{\star}$. The
+resulting distributions are markedly different and are no longer
+unimodal. The leftmost mode can be described as the ``normal''
+mode. The probability mass around this mode reflects times when the
+economy is at or exceeds its steady state. In this area, the Euler
+equation errors are akin to those observed in the unconstrained
+model. In contrast, the probability mass around the second mode, which
+is marked by larger Euler equation errors, corresponds to situations
+where investment is below its steady state level and closer to its
+lower bound. Finally, \ref{fig:euler_conditional_hybrid} illustrates
+the distribution of Euler equation errors conditional on an investment
+level near its lower bound. Once again, we observe that the
+probability mass shifts to the left, \emph{i.e.} accuracy improves, as
+the approximation order increases.
 
 \section*{Conclusion}
 
