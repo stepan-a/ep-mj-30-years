@@ -182,86 +182,120 @@
 \maketitle
 
 \begin{abstract}
-   The Stochastic Extended Path (SEP) method enhances the traditional
-   Extended Path technique by integrating numerical methods to estimate
-   conditional expectations. In contrast to the deterministic Extended
-   Path, which presumes that future shocks will align with their
-   expected values, SEP accommodates stochastic non-linearity by
-   performing integration over future shocks. We employ numerical
-   techniques, including Gaussian quadrature and unscented transforms,
-   to efficiently approximate integrals while alleviating the
-   challenges posed by the curse of dimensionality. To further enhance
-   accuracy, we propose a hybrid strategy that merges SEP with
-   perturbation methods to effectively address long-run uncertainty
-   effects. We evaluate the performance of SEP in an asset pricing
-   model with a closed-form solution and demonstrate the methodology
-   using a Real Business Cycle (RBC) model featuring irreversible
-   investment.
+  The Extended Path (EP) method solves DSGE models under certainty
+  equivalence, capturing nonlinearities and occasionally binding
+  constraints but ignoring the role of uncertainty. We propose the
+  Stochastic Extended Path (SEP), which restores this channel by
+  computing conditional expectations with quadrature and unscented
+  transforms. To avoid the exponential explosion of a full tree of
+  future shocks, we introduce a sparse tree representation that scales
+  linearly with the horizon. We further develop a hybrid SEP,
+  combining SEP with perturbation corrections to capture long-run
+  effects of volatility at low cost. Accuracy is benchmarked in an
+  asset pricing model with a closed-form solution, where hybrid SEP
+  outperforms perturbation methods. We then illustrate the approach in
+  an RBC model with a lower bound on investment.
 \end{abstract}
 
 \section*{Introduction}
 
-The extended path approach, initially introduced by
-\textcite{FairTaylor1983} and implemented in \Dynare, utilizes perfect
-foresight model solvers to effectively address deterministic
-nonlinearities related to preferences, technology functional forms, or
-occasionally binding constraints. In each period of the simulation,
-exogenous innovations are treated as surprise shocks occurring in the
-first period of a deterministic simulation, with shocks thereafter set
-to their expected values. This approach offers significant advantages
-over other global approximation methods, including the ability to
-simulate very large models and its simplicity, as it is not
-model-dependent and requires no more effort than composing a \Dynare\,
-\verb+*.mod+ file.\newline
+The Extended Path (EP) method, first introduced by
+\textcite{FairTaylor1983} and implemented in \Dynare, offers a
+framework for simulating dynamic general equilibrium models while
+fully considering deterministic nonlinearity. At its core, EP solves
+the model period by period using an auxiliary perfect foresight
+problem, in which exogenous shocks are realized in the current period
+and then set to their expected values in all future periods. By
+construction, this approach operates under certainty equivalence:
+agents behave as if future innovations were equal to their
+expectations.\newline
 
-This approach, which relies on perfect foresight model solvers,
-inherently overlooks Jensen's inequality. While the extended path
-method can handle deterministic non-linearity with arbitrary
-precision, it remains unaddressed regarding stochastic
-non-linearity. Since future shocks are anticipated to equal their
-expectations, current agent behavior is unaffected by future
-uncertainty. According to \textcite{Gagnon1990} and
-\textcite{Love2009}, who analyze an RBC model, this approximation has
-minimal effects. However, \textcite{AdjemianJuillard2011}
-demonstrated, in the context of an NK model with a zero lower bound on
-nominal interest rates, that neglecting future uncertainty is
-inconsequential only when the interest rate constraint is
-non-binding. In this paper, we propose relaxing the assumption about
-future shocks by employing numerical integration to approximate
-conditional expectations.\newline
+This feature has both advantages and drawbacks. On the positive side,
+the EP method can accommodate any form of deterministic nonlinearity,
+whether arising from preferences, production technologies, or
+occasionally binding constraints such as borrowing limits or the zero
+lower bound on nominal interest rates. Unlike local perturbation
+methods, whose validity is confined to a neighborhood around the
+steady state, EP remains accurate even when the economy is driven far
+away from its deterministic steady state. It also scales well: since
+the auxiliary perfect foresight model is solved using sparse Newton
+methods, the computational burden grows only polynomially with the
+number of state variables, making EP attractive for large-scale DSGE
+models.\newline
 
-The Stochastic Extended Path approach (SEP), similar to the
-deterministic Extended Path approach, generates time series for the
-model's endogenous variables without explicitly calculating a reduced
-form that links choice variables to state variables\footnote{Note
-   however that, in a subsequent stage, one can estimate this
-   relationship using the time series generated by the SEP
-   approach. The fitted polynomial can serve as an initial guess for
-   the Parameterized Expectations Algorithm or be used to extend the
-   simulation with significantly reduced computational costs.}. This
-method is advantageous in cases where the model's reduced form is
-poorly behaved due to high non-linearity or kinks, which makes it
-challenging to approximate. However, a drawback is that it does not
-leverage the problem's recursive structure, limiting its ability to
-fully account for future uncertainty. Specifically, it requires
-integration over shocks in all future periods, which may not be feasible\footnote{Note that the pertubation
-   approach fully account for future uncertainty conditionally on a
-   given approximation order, in this sense it does not account for all
-   the future uncertainty.}.
-The Stochastic Extended Path of order \( p \) simplifies future
-uncertainty by positing that shocks will occur in the next \( p \)
-periods, with subsequent shocks set to their expected
-values.  Agents then expect that the
-economy goes back to the deterministic steady state.\newline
+On the negative side, certainty equivalence implies that uncertainty
+plays no role in shaping current decisions. Jensen’s inequality is
+ignored: the conditional expectation operator is effectively moved
+inside the model’s nonlinear equations. This simplification is
+innocuous in some environments. For instance, \textcite{Gagnon1990}
+and \textcite{Love2009} showed that in RBC models, the effect of
+neglecting future uncertainty is limited. But in other contexts, the
+approximation can be highly
+misleading. \textcite{AdjemianJuillard2011} demonstrated, in the
+context of an NK model with a zero lower bound on nominal interest
+rates, that neglecting future uncertainty is inconsequential only when
+the interest rate constraint is non-binding. More generally, whenever
+welfare, asset pricing, or risk-related questions are at stake,
+ignoring stochastic nonlinearity is not an option.\newline
 
-Section~\ref{sec:1} introduces the class of models being examined and
-the Extended Path approach. Section~\ref{sec:2} addresses
+How can uncertainty be brought back into the EP framework? In
+principle, one could do so by enlarging the system of equations solved
+at each step: rather than assuming future shocks equal their expected
+values, one would approximate the conditional expectation by
+integrating over possible realizations of shocks in future
+periods. The proposed Stochastic Extended Path (SEP) method adopts
+this approach by integrating non-zero shocks over the subsequent $p$
+periods. This leads naturally to a perfect $m$-ary tree of future
+histories, where each shock in each period is discretized into $m$
+nodes, and all combinations are treated as distinct
+trajectories. While conceptually straightforward, this approach
+suffers from exponential growth: the number of paths explodes with
+both $m$ and $p$, quickly rendering the auxiliary system
+intractable. To mitigate this curse of dimensionality, we introduce a
+sparse tree of future histories. Instead of branching fully at each
+period, the sparse tree retains only a central trunk along which
+expectations are computed, and attaches short one-period branches to
+capture the effect of non-zero integration nodes. In this way, the
+number of trajectories grows only linearly with $m$ and $p$, while
+still allowing the algorithm to account for the leading effects of
+future uncertainty. The trade-off is that the sparse tree is an
+approximation, but one that greatly improves computational feasibility
+without obliviating the interaction between nonlinearity and
+uncertainty.\newline
+
+An hybrid approach, mixing SEP with perturbation, is also
+proposed. The auxiliary problem solved in each period of the SEP is
+modified by adding a simple correction based on a pertubation
+approach. The hybrid approach preserves the strengths of EP in
+handling nonlinearities and Occasionally Binding Constraints, while
+also incorporating the risk adjustments that matter over time, without
+significant computational cost.\newline
+
+We illustrate the methodology in two steps. First, we benchmark SEP
+against an asset pricing model with a closed-form solution
+(\textcite{Burnside1998}). This allows us to quantify approximation
+errors directly. We show that SEP substantially reduces the bias
+inherent in EP, though high orders may be needed to fully match
+perturbation methods. The hybrid SEP, by contrast, achieves high
+accuracy even at low orders. Second, we apply SEP to a Real Business
+Cycle model with a lower bound on the level of investment. Here, we document how
+investment dynamics are shaped by the consideration of future
+uncertainty: as the approximation order increases, investment rises
+relative to standard EP, reflecting agents’ precautionary behavior. We
+also report Euler equation errors and verify that the accuracy
+improves with the approximation order $p$ and that the hybrid approach
+brings noticeable improvement.\newline
+
+The remainder of the paper is structured as
+follows. Section~\ref{sec:1} introduces the class of models being
+examined and the Extended Path approach. Section~\ref{sec:2} addresses
 modifications to the Extended Path approach to incorporate the impact
 of future uncertainty. Additionally, we conduct accuracy checks using
 a model where future uncertainty is significant and for which a
 closed-form solution is available. Section~\ref{sec:3} presents a
 numerical illustration considering a Real Business Cycle (RBC) model
-with irreversible investment.
+with a lower bound on investment. \newline
+
 
 \section{Extended Path}\label{sec:1}
 
