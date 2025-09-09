@@ -341,6 +341,29 @@ funtion. Assumption \emph{(ii)} is less concerning, as the distance to
 the steady state can be made arbitrarily small with a sufficiently
 large simulation horizon, $H$.\newline
 
+The horizon $H$ must be selected such that the economy is
+approximately at the steady state in period $t+H$\footnote{ To
+  determine if the value of \( H \) is sufficiently large, we can
+  compare the results with those derived from a broader horizon,
+  ensuring they remain consistent (within the limits of numerical
+  precision). For the algorithms detailed in the following sections
+  (EP and SEP), it is sufficient to verify that the solutions for the
+  endogenous variables at time $t$ remain unchanged following a
+  variation in the horizon $H$, without the necessity to examine the
+  complete trajectory toward the steady state.}. The value of $H$ is
+clearly specific to each model and its calibration; a model with
+greater persistence necessitates a larger value of $H$. The size of
+the nonlinear problem to be solved grows linearly with $H$. It is
+possible to reduce the value of $H$, thereby accelerating the
+resolution of the model, by exploring alternative terminal
+conditions. For instance, instead of imposing a terminal condition on
+the level, we can consider a terminal condition on the variations,
+which should equal zero at the steady state. This approach frequently
+permits a reduction in the horizon $H$\footnote{It also has the
+  advantage of allowing the model to be simulated without the need for
+  explicit computation of the steady state. In this case, the steady
+  state emerges as a result of the perfect foresight solver.}.\newline
+
 Concatenating all the vectors of endogenous variables in
 the \(nH\times 1\)
 vector \(Y_t = \left(y_t',y_{t+1}', \ldots, y_{t+H-1}' \right)\)' the
