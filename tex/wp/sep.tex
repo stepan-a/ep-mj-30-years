@@ -1290,17 +1290,17 @@ period \(t\) of the auxiliary model.\newline
          \tikzset{execute at begin node=\strut}
          \tikzset{every tree node/.style={anchor=base west}}
          \Tree [.$\varepsilon_t$ [.$\epsilon^2_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
-         [.$\epsilon^1_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
-         [.$\epsilon^3_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]]
+                  [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+               [.$\epsilon^1_{t+1}$
+                  [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+               [.$\epsilon^3_{t+1}$
+                  [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]]
       \end{tikzpicture}}
    \bigskip\bigskip
    \caption{\textbf{Paths of  future innovations as a perfect tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Perfect ternary tree of length 3, followed by sequences of zeros (the leafs). Conditional expectations are estimated at the root of the tree and at three non-terminal nodes (integration nodes in $t+1$). The leafs, after the terminal nodes of the perfect tree (integration nodes in $t+2$), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
@@ -1312,16 +1312,16 @@ period \(t\) of the auxiliary model.\newline
    \centering
    {\tiny
       \begin{tikzpicture}
-         \tikzset{grow'=right,level distance=80pt}
+         \tikzset{grow=right,level distance=80pt}
          \tikzset{execute at begin node=\strut}
          \tikzset{every tree node/.style={anchor=base west}}
          \Tree [.$\varepsilon_t$
-         [.$\epsilon^2_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]
-         [.$\epsilon^1_{t+1}$
-         [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
-         [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
-         [.$\epsilon^3_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]]
+            [.$\epsilon^2_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]
+               [.$\epsilon^1_{t+1}$
+                  [.{$\epsilon^2_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^1_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]
+                     [.{$\epsilon^3_{t+2}$}  [.0 \edge[dashed]; \node{0};] ]]
+               [.$\epsilon^3_{t+1}$ [ .0  [.0 \edge[dashed]; \node{0};]]]]
       \end{tikzpicture}}
    \bigskip\bigskip
    \caption{\textbf{Paths of  future innovations as a sparse tree.} Stochastic extended path of order $p=2$ with $m=3$ integration nodes. Sparse tree of length 2, followed by sequences of zeros (the leafs). Conditional expectations are estimated along the trunk (here in periods $t$ and $t+1$). The leafs, after the terminal nodes of the sparse tree ($\epsilon_{t+1}^2$, $\epsilon_{t+1}^3$, $\epsilon_{t+2}^2$, $\epsilon_{t+2}^1$ and $\epsilon_{t+2}^3$)), correspond to the deterministic trajectories leading to the steady state for the endogenous variables.}
@@ -1349,33 +1349,45 @@ period \(t\) of the auxiliary model.\newline
    \centering
    \begin{center}
       \scalebox{.5}{
-         \input{../../models/rbc/rbc.tikz}}
-   \end{center}
-   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 10 (sparse tree).}
-   \label{fig:rbc:reversible-investment}
-\end{figure}
-
-
-\begin{figure}[H]
-   \centering
-   \begin{center}
-      \scalebox{.5}{
-         \input{../../models/rbcii/rbcii.tikz}}
-   \end{center}
-   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 5 (sparse tree).}
-   \label{fig:rbc:irreversible-investment-all}
-\end{figure}
-
-
-\begin{figure}[H]
-   \centering
-   \begin{center}
-      \scalebox{.5}{
          \input{../../models/rbcii/rbcii_.tikz}}
    \end{center}
-   \caption{\textbf{Simulation of the RBC model with reversible investment.} Stochastic extended path with orders 0 to 10 (sparse tree).}
+   \caption{\textbf{Simulation of the RBC model with $i_t\geq 0.85 i^{\star}$.} Stochastic extended path with orders 0 to 10 (sparse tree). A gradient of color from black (EP) to red (SEP(10)) is used.}
    \label{fig:rbc:irreversible-investment-short}
 \end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.7}{
+         \input{../../models/accuracy-sc/rbcii_euler_nozlb_hybrid_d.tikz}}
+   \end{center}
+   \caption{\textbf{Distribution of Euler errors (without OBC).} The accuracy, quantified by the base-10 logarithm of the Euler errors expressed in terms of consumption, for Extended Path simulation (EP) and Stochasti Extended Path simulations at order 1, 2 and 5 (SEP(1+), SEP(2+) and SEP(5+)).}
+   \label{fig:euler_nozlb_hybrid}
+\end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.7}{
+         \input{../../models/accuracy-sc/rbcii_euler_hybrid_d.tikz}}
+   \end{center}
+   \caption{\textbf{Distribution of Euler errors (with OBC).} The accuracy, quantified by the base-10 logarithm of the Euler errors expressed in terms of consumption, for Extended Path simulation (EP) and Stochasti Extended Path simulations at order 1, 2 and 5 (SEP(1+), SEP(2+) and SEP(5+)).}
+   \label{fig:euler_hybrid}
+\end{figure}
+
+
+\begin{figure}[H]
+   \centering
+   \begin{center}
+      \scalebox{.5}{
+         \input{../../models/accuracy-sc/rbcii_euler_hybrid_conditional_d.tikz}}
+   \end{center}
+   \caption{\textbf{Conditional distribution of Euler errors (with OBC).} The accuracy, quantified by the base-10 logarithm of the Euler errors expressed in terms of consumption, for Extended Path simulation (EP) and Stochasti Extended Path simulations at order 1 and 5 (SEP(1+), and SEP(5+)). The distrubtions are conditional on investment being close to the lower bound (\emph{i.e.} $i_t\in[.85 i^{\star},.87 i^{\star})$).}
+   \label{fig:euler_conditional_hybrid}
+\end{figure}
+
 
 
 
@@ -1432,11 +1444,9 @@ with the \verb+extended_path+ command is straightforward. This
 can be achieved by defining a slackness condition within the model
 block, following the guidelines provided for specifying Mixed
 Complementarity Problems, as outlined by
-\textcite{DynareManual}. Below is the \verb+model+ block employed to
-generate figures \ref{fig:rbc:reversible-investment} through
-\ref{fig:rbc:irreversible-investment-short}:
+\textcite{DynareManual}.
 
-\lstinputlisting[firstline=18,lastline=44,frame=none,basicstyle=\footnotesize,language=Dynare]{../../models/rbcii/rbcii.mod}
+\lstinputlisting[firstline=21,lastline=49,frame=none,basicstyle=\footnotesize,language=Dynare]{../../models/rbcii/rbcii.mod}
 
 An arbitrary number of occasionally binding constraints (OBC) can be
 defined through the same methodology. Employing \Dynare's
