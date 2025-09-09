@@ -1174,7 +1174,26 @@ extended path method for managing significant nonlinearities in the
 short term, while employing perturbation techniques to account for the
 average effects of random fluctuations over the longer term, all
 without excessively increasing the complexity of the underlying system
-of equations.
+of equations.\newline
+
+The idea of combining EP with perturbation has been suggested by other
+authors. \textcite{AndreasenKronborg2022} also propose an integration of
+EP and perturbation methods, although their approaches differ
+significantly. Our modification to the EP (SEP) problem involves
+incorporating the constant component of the perturbation reduced form
+solution, whereas they introduce the high-order reduced form solution
+alongside the EP solution. Our focus is on modifying the problem,
+while they propose to alter the EP solution. A clear advantage of this
+alternative is in terms of execution speed. Furthermore, integrating
+the whole perturbation reduced form helps in capturing the effect of
+uncertainty on the dynamics at low computational cost. With our
+approach, these effects are only captured by SEP, since we only use
+the constant correction of perturbation. A notable limitation of the
+alternative proposed by \textcite{AndreasenKronborg2022}, compared to
+ours, is with respect to OBC. Even if the constraint was integrated
+into the EP component, the additional perturbation component would
+overshadow it. To address OBC, their paper resorts to the use of an
+\emph{ad-hoc} smoothing function.\newline
 
 \section{Numerical illustration}\label{sec:3}
 
